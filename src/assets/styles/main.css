@@ -1,0 +1,32 @@
+@import "./variables.css";
+@import "./link.css";
+@import "./input.css";
+
+body {
+    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-size: var(--fontSize);
+    font-weight: normal;
+    font-style: normal;
+    margin: 0;
+    color: var(--color-text);
+    background-color: var(--color-background);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+main {
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}

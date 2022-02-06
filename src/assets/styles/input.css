@@ -1,0 +1,15 @@
+.input__input {
+    color: var(--color-text);
+    font-size: var(--fontSize);
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid var(--colorGray);
+    width: var(--inputWidth);
+    outline: none;
+}
+
+.input__label {
+    display: block;
+    color: var(--colorGray);
+    font-size: var(--fontSizeSmall);
+}

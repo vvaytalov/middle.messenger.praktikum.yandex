@@ -1,0 +1,26 @@
+---
+title: Вход
+card:
+    title: Вход
+    className: auth__title
+fields:
+    -
+        id: login
+        label: Логин
+        name: login
+        type: login
+    -
+        id: password
+        label: Пароль
+        name: password
+        type: password
+submit:
+    href: ./user_card_profile.hbs
+    text: Авторизация
+cancel:
+    className: auth__to-sign-up-link
+    href: ./auth_signup.hbs
+    text: Нет аккаунта?
+---
+
+ {{!< auth}}
