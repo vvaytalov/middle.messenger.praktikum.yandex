@@ -20,7 +20,7 @@
 
 В проекте настроен автодеплой на Netlify.
 
-[Netlify](<https://fervent-rosalind-4890c8.netlify.app/>)
+[Netlify](https://ya-messenger-vvaytalov.netlify.app/auth_signup.html)
 
 # Макет
 
