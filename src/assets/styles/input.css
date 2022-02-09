@@ -8,6 +8,10 @@
     outline: none;
 }
 
+.input__input:focus {
+    border-bottom: 1px solid var(--color-primary);
+}
+
 .input__label {
     display: block;
     color: var(--colorGray);
