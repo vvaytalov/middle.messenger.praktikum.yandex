@@ -1,0 +1,91 @@
+@import "../back.css";
+@import "../button.css";
+@import "../main.css";
+
+.profile__avatar {
+    display: flex;
+    height: calc(16 * var(--space));
+    justify-content: center;
+    background-image: url("../../img/noavatar.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.profile__avatar:hover {
+    cursor: pointer;
+}
+
+.profile__input-field {
+    display: grid;
+    margin: calc(6 * var(--space)) 0 0;
+    grid-template-columns: repeat(1, 1fr);
+    gap: calc(3 * var(--space));
+}
+
+.profile__display-name {
+    text-align: center;
+    font-size: var(--fontSizeHeader);
+    font-weight: var(--fontWeight);
+}
+
+.profile__button-wrap {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-white);
+    padding: calc(2 * var(--space)) 0 calc(2 * var(--space));
+}
+
+.profile__button-wrap:last-child,
+.profile__wrap:last-child {
+    border-bottom: none;
+}
+
+.profile__button-exit {
+    color: var(--color-error);
+    text-decoration: none;
+}
+
+.profile__button-exit:hover {
+    cursor: pointer;
+    color: var(--color-errorHover);
+}
+
+.profile__buttons-comb {
+    margin-top: calc(8 * var(--space));
+}
+
+.profile__button-change {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.profile__button-change:hover {
+    cursor: pointer;
+    color: var(--color-primaryHover);
+}
+
+.profile__group {
+    margin-top: calc(2 * var(--space));
+}
+
+.avatar {
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+.upload {
+    display: flex;
+    cursor: pointer;
+    width: 131px;
+    height: 131px;
+    margin: 0 auto;
+}
+
+.upload_input {
+    display: none;
+}
+.upload__for-avatar {
+    position: absolute;
+    bottom: -14px;
+    right: -14px;
+}

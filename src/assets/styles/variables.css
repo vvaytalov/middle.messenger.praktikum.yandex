@@ -1,0 +1,40 @@
+:root {
+    --space: 8px;
+    --heightElement: 35px;
+
+    --buttonHeight: 40px;
+    --buttonWidth: 280px;
+    --buttonSize: 45px;
+
+    --inputWidth: 280px;
+
+    --heightHeader: 90px;
+    --widthCard: 600px;
+    --minMessageWidth: 250px;
+    --avatarSize: 60px;
+    --borderRadius: var(--space);
+
+    --fontSizeSmall: 9px;
+    --fontSize: 14px;
+    --fontSizeTitle: 18px;
+    --fontSizeHeader: 20px;
+    --fontSizeLarge: 40px;
+    --fontWeight: 600;
+    --fontSizeSmall: 10px;
+
+    --color-backBackground: #323232;
+    --color-background: #212121;
+    --color-white: #ffffff;
+    --color-text: #ffffff;
+    --color-primary: #3369f3;
+    --color-primaryHover: #267bff;
+    --color-secondary: #808080;
+    --color-error: #ff0000;
+    --color-errorHover: #ff4040;
+    --color-success: #7ab671;
+    --colorGray: #999999;
+    --colorGray100: #424242;
+    --colorGray200: #e0e0e0;
+    --colorGray300: #d9d9d9;
+    --colorDanger: #5d0000;
+}

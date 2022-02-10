@@ -1,0 +1,8 @@
+.link {
+    text-decoration: none;
+    color: var(--color-primary);
+}
+
+.link:hover {
+    color: var(--color-primaryHover);
+}

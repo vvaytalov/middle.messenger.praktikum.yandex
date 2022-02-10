@@ -1,0 +1,64 @@
+---
+title: Профиль
+card:
+    title: Иван
+    className: profile__display-name
+fields:
+    -
+        id: email
+        label: Почта
+        name: email
+        type: email
+        value: pochta@yandex.ru
+    -
+        id: login
+        label: Логин
+        name: login
+        type: text
+        value: ivanivanov
+    -
+        id: first_name
+        label: Имя
+        name: first_name
+        type: text
+        value: Иван
+    -
+        id: second_name
+        label: Фамилия
+        name: second_name
+        type: text
+        value: Иванов
+    -
+        id: display_name
+        label: Имя в чате
+        name: text
+        type: text
+        value: Иван
+    -
+        id: tel
+        label: Телефон
+        name: tel
+        type: tel
+        value: +7 (909) 967 30 30
+submit:
+    href: ./auth_signin.hbs
+    text: Сохранить
+    className: button
+user:
+    name: Иван
+    src: ../assets/img/noavatar.svg
+avatar:
+    id: avatar
+    name: avatar
+cancel:
+    -
+        href: ./user_card_password.hbs
+        text: Изменить пароль
+        className: profile__button-change
+    -
+        href: ./auth_signin.hbs
+        text: Выход
+        className: profile__button-exit
+---
+
+{{!< user_card}}
