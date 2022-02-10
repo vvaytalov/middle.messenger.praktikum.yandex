@@ -13,7 +13,7 @@
 
 .auth__input-field {
     display: grid;
-    margin: 48px 0 0;
+    margin: calc(6 * var(--space)) 0 0;
     grid-template-columns: repeat(1, 1fr);
     gap: calc(3 * var(--space));
 }

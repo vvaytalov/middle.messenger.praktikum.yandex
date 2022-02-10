@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #323232;
+    background-color: var(--color-backBackground);
     width: calc(8 * var(--space));
     height: 100vh;
     position: absolute;
@@ -11,7 +11,6 @@
 }
 
 .back:hover {
-    background-color: #323232;
     border-right: 2px solid var(--colorGray100);
     cursor: pointer;
     box-shadow: 3px 1px 12px #313131;
