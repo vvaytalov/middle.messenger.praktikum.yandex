@@ -1,0 +1,28 @@
+.link {
+    text-decoration: none;
+    color: var(--color-primary);
+}
+
+.link:hover {
+    color: var(--color-primaryHover);
+}
+
+.link__red {
+    text-decoration: none;
+    color: var(--color-error);
+}
+
+.link__red:hover {
+    color: var(--color-errorHover);
+}
+
+.link__button-wrap {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-white);
+    padding: calc(2 * var(--space)) 0 calc(2 * var(--space));
+}
+
+.link__button-wrap:last-child {
+    border-bottom: none;
+}
