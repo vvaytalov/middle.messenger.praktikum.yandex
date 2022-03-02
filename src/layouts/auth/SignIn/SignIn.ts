@@ -5,6 +5,8 @@ import { template } from "./SignIn.tmpl";
 import { compile } from "../../../utils/templator";
 import Link from "../../../components/link/link";
 import "../auth.css";
+import validateForm from "../../../utils/valideteForm";
+import { REGEX_LOGIN, REGEX_PASSWORD } from "../../../utils/regEx";
 
 class SignInPage extends Block {
     constructor() {
@@ -18,7 +20,7 @@ class SignInPage extends Block {
                     {
                         label: "Нет аккаунта ?",
                         link: "/sign-up.html",
-                    }
+                    },
                 ],
             }),
             form: {
@@ -26,21 +28,44 @@ class SignInPage extends Block {
                     {
                         type: "text",
                         name: "login",
-                        label: "Логин",
-                        value: "ivanivanov",
+                        placeholder: "Логин",
+                        validation: {
+                            pattern: REGEX_LOGIN,
+                            maxlength: 30,
+                            required: true,
+                            "data-error": "Англ. буквы, от 3 до 16 символов",
+                        },
+                        onInput: (value: string) =>
+                            console.log("Login:", value),
+                        onValidate: () => this.validate(),
                     },
                     {
                         type: "password",
                         name: "password",
-                        label: "Пароль",
+                        placeholder: "Пароль",
+                        validation: {
+                            pattern: REGEX_PASSWORD,
+                            maxlength: 20,
+                            required: true,
+                            "data-error": "Добавьте символы: !@#$%^&*",
+                        },
+                        onInput: (value: string) =>
+                            console.log("Password:", value),
+                        onValidate: () => this.validate(),
                     },
                 ],
                 buttons: [
                     {
                         type: "submit",
                         label: "Авторизация",
+                        onClick: () => {
+                            this.validate();
+                        },
                     },
                 ],
+            },
+            events: {
+                submit: (event: Event) => this.handleSubmit(event),
             },
         });
 
@@ -50,6 +75,30 @@ class SignInPage extends Block {
         this.props.Input = this.props.form.fields.map(
             (field: any) => new Input(field)
         );
+
+        this.validate = this.validate.bind(this);
+    }
+
+    handleSubmit(evt: Event) {
+        evt.preventDefault();
+        const { elements } = evt.target as HTMLFormElement;
+        const fields = Array.from(elements).filter(
+            (el) => el.nodeName === "INPUT"
+        );
+        const formData = fields.reduce(
+            (acc: Record<string, string>, field: HTMLInputElement) => {
+                acc[field.name] = field.value;
+                return acc;
+            },
+            {}
+        );
+        console.log(formData);
+    }
+
+    validate() {
+        const formElement: HTMLFormElement | null =
+            this.getContent().querySelector(`.auth`);
+        validateForm(formElement);
     }
 
     render() {

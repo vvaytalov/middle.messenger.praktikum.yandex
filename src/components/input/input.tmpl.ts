@@ -2,11 +2,7 @@ import { IProps } from "../../modules/Block";
 import { setAttributes } from "../../utils/templator";
 
 export const template = (props: IProps): string => `
-<template class="${
-    props.classNameRoot
-        ? `{{ className }} {{ classNameRoot }}`
-        : `{{ className }}`
-}">
+<template class="{{ className }}">
 <input
   class="{{ classNameInput }}"
   type="{{ type }}"

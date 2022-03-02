@@ -6,6 +6,13 @@
     font-weight: var(--fontWeight);
 }
 
+.auth__main {
+    width: 100%;
+    max-width: 340px;
+    padding: 24px;
+    border-radius: 12px;
+}
+
 .auth__input:focus {
     border-bottom: 1px solid var(--color-primary);
 }
@@ -14,7 +21,7 @@
     display: grid;
     margin: calc(6 * var(--space)) 0 0;
     grid-template-columns: repeat(1, 1fr);
-    gap: calc(3 * var(--space));
+    gap: calc(4 * var(--space));
 }
 
 .auth__input-button {

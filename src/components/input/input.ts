@@ -83,14 +83,28 @@ export default class Input extends Block {
                 const errorMessage = inputElement.validationMessage;
                 const customErrorMessage = inputElement.dataset.error || "";
                 errorElement.textContent = customErrorMessage || errorMessage;
-                inputElement.className = "field";
+                inputElement.className =
+                    "input__field input__field_color_error";
+
+                if (inputElement.value === "") {
+                    errorElement.textContent = "Обязательное поле";
+                } else if (
+                    inputElement.value.length < 8 &&
+                    inputElement.name === "password"
+                ) {
+                    errorElement.textContent = "От 8 до 20 символов";
+                }
+
                 if (labelElement) {
-                    labelElement.className = "label";
+                    labelElement.className =
+                        "input__label input__label_color_error";
                 }
             } else {
-                inputElement.className = "field";
+                inputElement.className =
+                    "input__field input__field_color_success";
                 if (labelElement) {
-                    labelElement.className = "label";
+                    labelElement.className =
+                        "input__label input__label_color_success";
                 }
             }
         }

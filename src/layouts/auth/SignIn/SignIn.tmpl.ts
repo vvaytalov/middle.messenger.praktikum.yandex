@@ -3,7 +3,7 @@ import generateForm from "../../../utils/generateForm";
 
 export const template = (props: IProps) => `
 <template class="{{ className }}">
-    <div class="card">
+    <div class="{{ className }}__main">
         <div class="{{className}}__title">{{title}}</div>
         <div class='{{className}}__input-field'>
             ${generateForm(props.form, "{{className}}")}
