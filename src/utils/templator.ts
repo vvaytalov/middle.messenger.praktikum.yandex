@@ -75,7 +75,6 @@ class Templator {
         // Получаем значение из контекста по ключу
         const value = this._getValueFromContext(key);
 
-        // Если значение не определено
         if (value === undefined) {
             return `{{ ${key} }}`;
         }
@@ -88,23 +87,22 @@ class Templator {
             // Найти вложения в тег компонента ({{ children }})
             const { children } =
                 found.match(
-                    /<(?<tag>[A-Z]+\w+).*?>(?<children>.*?)<\/\k<tag>>/s,
+                    /<(?<tag>[A-Z]+\w+).*?>(?<children>.*?)<\/\k<tag>>/s
                 )?.groups || {};
             if (children) {
                 const compiledChildren = this.compile(
                     () => children,
-                    this.context,
+                    this.context
                 );
                 value.setProps({
                     children: compiledChildren,
                 });
             }
 
-            // Итерация
             if (Array.isArray(value) && typeof props.key === 'string') {
                 if (!('key' in props)) {
                     throw new Error(
-                        'Компонентам внутри итерации необходим уникальный key="number", указывающий на экземпляр в массиве',
+                        'Компонентам внутри итерации необходим уникальный key="number", указывающий на экземпляр в массиве'
                     );
                 }
                 const { key } = props;
@@ -134,7 +132,7 @@ class Templator {
 
     public compile(
         templateFunction: (props: IProps) => string,
-        context: IProps,
+        context: IProps
     ): string {
         this.context = context;
         const template = templateFunction(context);
@@ -146,7 +144,7 @@ class Templator {
 function join(templates: string[]) {
     if (!Array.isArray(templates)) {
         throw new Error(
-            `Функция join ожидает массив, был передан ${typeof templates}`,
+            `Функция join ожидает массив, был передан ${typeof templates}`
         );
     }
     return templates.join('');
@@ -169,4 +167,4 @@ function setAttributes(attrs?: Record<string, string | number | boolean>) {
 }
 
 export const { compile } = new Templator();
-export { join, stylize, setAttributes };
+export { join, setAttributes };

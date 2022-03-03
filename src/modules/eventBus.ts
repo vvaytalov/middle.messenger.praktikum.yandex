@@ -4,7 +4,6 @@ export default class EventBus {
     readonly listeners: Record<string, Function[]>;
 
     constructor() {
-        // Для наполнения событиями
         this.listeners = {};
     }
 
@@ -24,7 +23,7 @@ export default class EventBus {
         }
 
         this.listeners[event] = this.listeners[event].filter(
-            (listener) => listener !== callback,
+            (listener) => listener !== callback
         );
     }
 

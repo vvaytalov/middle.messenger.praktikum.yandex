@@ -7,9 +7,9 @@ import MessageInput from '../../components/chat/messageInput/messageInput';
 import { contacts, messages } from './mock/mock';
 import { compile } from '../../utils/templator';
 import { template } from './chat.tmpl';
+import Link from '../../components/link/link';
 
 import './chat.css';
-import Link from '../../components/link/link';
 
 export default class Chat extends Block {
     constructor() {

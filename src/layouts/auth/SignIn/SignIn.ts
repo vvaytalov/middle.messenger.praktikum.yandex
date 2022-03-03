@@ -4,10 +4,10 @@ import Input from '../../../components/input/input';
 import { template } from './SignIn.tmpl';
 import { compile } from '../../../utils/templator';
 import Link from '../../../components/link/link';
-import '../auth.css';
 import validateForm from '../../../utils/valideteForm';
 import { REGEX_LOGIN, REGEX_PASSWORD } from '../../../utils/regEx';
 
+import '../auth.css';
 class SignInPage extends Block {
     constructor() {
         super('main', {
@@ -45,7 +45,7 @@ class SignInPage extends Block {
                         placeholder: 'Пароль',
                         validation: {
                             pattern: REGEX_PASSWORD,
-                            maxlength: 20,
+                            maxlength: 40,
                             required: true,
                             'data-error': 'Добавьте символы: !@#$%^&*',
                         },
@@ -70,10 +70,10 @@ class SignInPage extends Block {
         });
 
         this.props.Button = this.props.form.buttons.map(
-            (button: any) => new Button(button),
+            (button: any) => new Button(button)
         );
         this.props.Input = this.props.form.fields.map(
-            (field: any) => new Input(field),
+            (field: any) => new Input(field)
         );
 
         this.validate = this.validate.bind(this);
@@ -83,14 +83,14 @@ class SignInPage extends Block {
         evt.preventDefault();
         const { elements } = evt.target as HTMLFormElement;
         const fields = Array.from(elements).filter(
-            (el) => el.nodeName === 'INPUT',
+            (el) => el.nodeName === 'INPUT'
         );
         const formData = fields.reduce(
             (acc: Record<string, string>, field: HTMLInputElement) => {
                 acc[field.name] = field.value;
                 return acc;
             },
-            {},
+            {}
         );
         console.log(formData);
     }

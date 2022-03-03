@@ -33,7 +33,7 @@ export default class ChangePassword extends Block {
                         type: 'password',
                         validation: {
                             pattern: REGEX_PASSWORD,
-                            maxlength: 200,
+                            maxlength: 40,
                             required: true,
                             'data-error': 'Добавьте символы: !@#$%^&*',
                         },
@@ -50,7 +50,7 @@ export default class ChangePassword extends Block {
                         type: 'password',
                         validation: {
                             pattern: REGEX_PASSWORD,
-                            maxlength: 200,
+                            maxlength: 40,
                             required: true,
                             'data-error': 'Добавьте символы: !@#$%^&*',
                         },
