@@ -25,3 +25,7 @@
 # Макет
 
 [figma](<https://www.figma.com/file/DAz7bJDUY3YJiLA1A4Y7O1/Chat-(Copy)?node-id=0%3A1>)
+
+## Pull requests
+
+https://github.com/vvaytalov/middle.messenger.praktikum.yandex/pull/2
