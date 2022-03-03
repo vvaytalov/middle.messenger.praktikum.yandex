@@ -1,9 +1,9 @@
 export function getObjectVal(
     obj: object,
     path: string,
-    defaultValue?: unknown
+    defaultValue?: unknown,
 ): unknown {
-    const keys = path.split(".");
+    const keys = path.split('.');
 
     let result = obj;
     for (const key of keys) {

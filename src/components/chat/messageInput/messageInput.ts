@@ -1,12 +1,13 @@
-import { compile } from "../../../utils/templator";
-import { template } from "./messageInput.tmpl";
-import sendIcon from "../../../assets/img/message-arrow.svg";
-import Block from "../../../modules/Block";
-import Input from "../../input/input";
-import Button from "../../button/button";
-import defaultIcon from "../../../assets/img/attach.svg";
+import { compile } from '../../../utils/templator';
+import { template } from './messageInput.tmpl';
+import sendIcon from '../../../assets/img/message-arrow.svg';
+import Block from '../../../modules/Block';
+import Input from '../../input/input';
+import Button from '../../button/button';
+import defaultIcon from '../../../assets/img/attach.svg';
+import validateForm from '../../../utils/valideteForm';
 
-import "./messageInput.css";
+import './messageInput.css';
 
 interface IMessageInput {
     onMessageInput: (value: string) => void;
@@ -15,23 +16,49 @@ interface IMessageInput {
 
 export default class MessageInput extends Block {
     constructor(props: IMessageInput) {
-        super("div", {
-            className: "message-input",
-            classNameForm: "message-input__form",
+        super('div', {
+            className: 'message-input',
+            classNameForm: 'message-input__form',
             icon: defaultIcon,
             MessageInput: new Input({
-                placeholder: "Cообщение",
-                classMix: "message-input__input",
-                name: "message",
+                placeholder: 'Cообщение',
+                classMix: 'message-input__input',
+                name: 'message',
                 onInput: props.onMessageInput,
             }),
             SendButton: new Button({
-                type: "submit",
+                type: 'submit',
                 icon: sendIcon,
                 light: true,
             }),
             onMessageSend: props.onMessageSend,
+            events: {
+                submit: (evt: Event) => this.handleSubmit(evt),
+            },
         });
+        this.validate = this.validate.bind(this);
+    }
+
+    validate() {
+        const formElement: HTMLFormElement | null =
+            this.getContent().querySelector(`.${this.props.classNameForm}`);
+        validateForm(formElement);
+    }
+
+    handleSubmit(evt: Event) {
+        evt.preventDefault();
+        const { elements } = evt.target as HTMLFormElement;
+        const fields = Array.from(elements).filter(
+            (el) => el.nodeName === 'INPUT',
+        );
+        const formData = fields.reduce(
+            (acc: Record<string, string>, field: HTMLInputElement) => {
+                acc[field.name] = field.value;
+                return acc;
+            },
+            {},
+        );
+        this.props.onMessageSend(formData);
     }
 
     render() {

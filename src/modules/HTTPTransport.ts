@@ -1,18 +1,18 @@
 const METHODS = {
-    GET: "GET",
-    POST: "POST",
-    PUT: "PUT",
-    DELETE: "DELETE",
+    GET: 'GET',
+    POST: 'POST',
+    PUT: 'PUT',
+    DELETE: 'DELETE',
 };
 
 function queryStringify(data: Object) {
-    if (typeof data !== "object") {
-        throw new Error("Not object");
+    if (typeof data !== 'object') {
+        throw new Error('Not object');
     }
 
     return Object.entries(data).reduce(
-        (acc, [key, val], i) => `${acc}${i === 0 ? "?" : "&"}${key}=${val}`,
-        ""
+        (acc, [key, val], i) => `${acc}${i === 0 ? '?' : '&'}${key}=${val}`,
+        '',
     );
 }
 
@@ -30,7 +30,7 @@ export default class HTTPTransport {
         return this.request(
             url,
             { ...options, method: METHODS.GET },
-            options.timeout
+            options.timeout,
         );
     };
 
@@ -38,7 +38,7 @@ export default class HTTPTransport {
         return this.request(
             url,
             { ...options, method: METHODS.POST },
-            options.timeout
+            options.timeout,
         );
     };
 
@@ -46,7 +46,7 @@ export default class HTTPTransport {
         return this.request(
             url,
             { ...options, method: METHODS.PUT },
-            options.timeout
+            options.timeout,
         );
     };
 
@@ -54,7 +54,7 @@ export default class HTTPTransport {
         return this.request(
             url,
             { ...options, method: METHODS.DELETE },
-            options.timeout
+            options.timeout,
         );
     };
 
@@ -63,7 +63,7 @@ export default class HTTPTransport {
 
         return new Promise(function (resolve, reject) {
             if (!method) {
-                reject("No method");
+                reject('No method');
                 return;
             }
 
@@ -72,11 +72,11 @@ export default class HTTPTransport {
 
             xhr.open(
                 method,
-                isGet && !!data ? `${url}${queryStringify(data)}` : url
+                isGet && !!data ? `${url}${queryStringify(data)}` : url,
             );
 
             Object.keys(headers).forEach((key) =>
-                xhr.setRequestHeader(key, headers[key])
+                xhr.setRequestHeader(key, headers[key]),
             );
 
             xhr.onload = function () {

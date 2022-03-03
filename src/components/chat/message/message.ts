@@ -1,9 +1,9 @@
-import { compile } from "../../../utils/templator";
-import { template } from "./message.tmpl";
-import defaultAvatar from "../../../assets/img/noavatar.svg";
-import Block from "../../../modules/Block";
+import { compile } from '../../../utils/templator';
+import { template } from './message.tmpl';
+import defaultAvatar from '../../../assets/img/noavatar.svg';
+import Block from '../../../modules/Block';
 
-import "./message.css";
+import './message.css';
 
 interface IMessage {
     id: string;
@@ -17,8 +17,8 @@ interface IMessage {
 
 export default class Message extends Block {
     constructor(props: IMessage) {
-        super("div", {
-            className: "message",
+        super('div', {
+            className: 'message',
             id: props.id,
             ownerId: props.ownerId,
             authorId: props.authorId,

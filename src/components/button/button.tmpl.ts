@@ -1,17 +1,17 @@
-import { IProps } from "../../modules/Block";
+import { IProps } from '../../modules/Block';
 
 export const template = (props: IProps) => `
   <template
     class="{{ className }}"
     type="{{ type }}"
-    ${props.title ? 'title="{{ title }}"' : ""}
-    ${props.menuIndex ? 'data-menu-index="{{ menuIndex }}"' : ""}
-    ${props.menuName ? 'data-menu-name="{{ menuName }}"' : ""}
+    ${props.title ? 'title="{{ title }}"' : ''}
+    ${props.menuIndex ? 'data-menu-index="{{ menuIndex }}"' : ''}
+    ${props.menuName ? 'data-menu-name="{{ menuName }}"' : ''}
   >
     ${
         props.icon
             ? '<img class="{{ className }}__icon" src="{{ icon }}" alt="" />'
-            : ""
+            : ''
     }
     {{ label }}
   </template>

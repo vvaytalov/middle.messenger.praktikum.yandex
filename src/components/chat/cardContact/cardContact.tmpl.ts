@@ -1,4 +1,4 @@
-import { IProps } from "../../../modules/Block";
+import { IProps } from '../../../modules/Block';
 
 export const template = (props: IProps) => `
   <template class="{{ className }}">
@@ -16,7 +16,7 @@ export const template = (props: IProps) => `
             ? `<span class="{{ className }}__counter-unread-messages">
           {{ counterUnreadMessages }}
         </span>`
-            : ""
+            : ''
     }
     <date class="{{ className }}__updated-at" datetime="{{ updatedAt }}">{{ date }}</date>
   </template>

@@ -1,7 +1,7 @@
-import Block from "../../modules/Block";
-import { compile } from "../../utils/templator";
-import { template } from "./link.tmpl";
-import "./link.css";
+import Block from '../../modules/Block';
+import { compile } from '../../utils/templator';
+import { template } from './link.tmpl';
+import './link.css';
 
 interface ILink {
     type?: string;
@@ -15,8 +15,8 @@ interface ILink {
 
 export default class Link extends Block {
     constructor(props: ILink) {
-        super("div", {
-            className: "link",
+        super('div', {
+            className: 'link',
             field: props.field ?? [],
         });
     }

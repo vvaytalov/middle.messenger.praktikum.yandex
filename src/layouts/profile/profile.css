@@ -1,6 +1,11 @@
 @import "../../assets/styles/back.css";
 @import "../../assets/styles/main.css";
 
+.profile__main {
+    width: 100%;
+    max-width: calc(35 * var(--space));
+}
+
 .profile__avatar {
     display: block;
     height: calc(16 * var(--space));

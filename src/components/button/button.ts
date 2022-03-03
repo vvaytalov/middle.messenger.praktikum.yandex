@@ -1,7 +1,7 @@
-import Block from "../../modules/Block";
-import { compile } from "../../utils/templator";
-import { template } from "./button.tmpl";
-import "./button.css";
+import Block from '../../modules/Block';
+import { compile } from '../../utils/templator';
+import { template } from './button.tmpl';
+import './button.css';
 
 interface IButton {
     classMix?: string;
@@ -16,14 +16,14 @@ interface IButton {
 
 export default class Button extends Block {
     constructor(props: IButton) {
-        super("button", {
-            className: "button",
-            type: props.type ?? "button",
-            icon: props.icon ?? "",
+        super('button', {
+            className: 'button',
+            type: props.type ?? 'button',
+            icon: props.icon ?? '',
             light: props.light ?? false,
-            color: props.color ?? "",
-            label: props.label ?? "",
-            title: props.title ?? "",
+            color: props.color ?? '',
+            label: props.label ?? '',
+            title: props.title ?? '',
             events: {
                 click: props.onClick,
             },

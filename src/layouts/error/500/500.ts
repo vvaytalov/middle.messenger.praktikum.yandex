@@ -1,15 +1,15 @@
-import Error from "../../../components/error/error";
-import Block from "../../../modules/Block";
-import { compile } from "../../../utils/templator";
-import { template } from "./500.tmpl";
+import Error from '../../../components/error/error';
+import Block from '../../../modules/Block';
+import { compile } from '../../../utils/templator';
+import { template } from './500.tmpl';
 
 class Error500Page extends Block {
     constructor() {
-        super("div", {
-            className: "error",
+        super('div', {
+            className: 'error',
             Error: new Error({
-                codeError: "500",
-                messageError: "Мы уже фиксим",
+                codeError: '500',
+                messageError: 'Мы уже фиксим',
             }),
         });
     }

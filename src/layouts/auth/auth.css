@@ -8,9 +8,7 @@
 
 .auth__main {
     width: 100%;
-    max-width: 340px;
-    padding: 24px;
-    border-radius: 12px;
+    max-width: calc(35 * var(--space));
 }
 
 .auth__input:focus {

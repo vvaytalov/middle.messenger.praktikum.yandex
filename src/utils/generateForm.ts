@@ -1,4 +1,4 @@
-import { join } from "./templator";
+import { join } from './templator';
 
 export type IFormField = {
     type?: string;
@@ -22,13 +22,13 @@ export default function generateForm(props: IForm, formClassName: string) {
             <div class='${formClassName}__input-field'>
                 ${join(
                     props.fields.map(
-                        (_: unknown, i: number) => `<Input key="${i}" />`
-                    )
+                        (_: unknown, i: number) => `<Input key="${i}" />`,
+                    ),
                 )}
             </div>
             <div class='${formClassName}__input-button'>
                 ${props.buttons.map(
-                    (_: unknown, i: number) => `<Button key="${i}" />`
+                    (_: unknown, i: number) => `<Button key="${i}" />`,
                 )}
             </div>
         </form>

@@ -1,62 +1,150 @@
-import Link from "../../../components/link/link";
-import Block from "../../../modules/Block";
-import Button from "../../../components/button/button";
-import Input from "../../../components/input/input";
-import avatarImage from "../../../assets/img/noavatar.svg";
-import { compile } from "../../../utils/templator";
-import { template } from "./change_password.tmpl";
+import Link from '../../../components/link/link';
+import Block from '../../../modules/Block';
+import Button from '../../../components/button/button';
+import Input from '../../../components/input/input';
+import avatarImage from '../../../assets/img/noavatar.svg';
+import { compile } from '../../../utils/templator';
+import { template } from './change_password.tmpl';
 
-import "../profile.css";
+import '../profile.css';
+import { REGEX_PASSWORD } from '../../../utils/regEx';
+import validateForm from '../../../utils/valideteForm';
 
 export default class ChangePassword extends Block {
     constructor() {
-        super("main", {
-            className: "profile",
+        super('main', {
+            className: 'profile',
+            title: '@vvaytalov',
             avatar: avatarImage,
             Link: new Link({
                 field: [
                     {
-                        label: "В профиль",
-                        link: "/profile.html",
+                        label: 'В профиль',
+                        link: '/profile.html',
                     },
                 ],
             }),
             form: {
                 fields: [
                     {
-                        id: "oldPassword",
-                        placeholder: "Старый пароль",
-                        name: "oldPassword",
-                        type: "password",
+                        id: 'oldPassword',
+                        placeholder: 'Старый пароль',
+                        name: 'oldPassword',
+                        type: 'password',
+                        validation: {
+                            pattern: REGEX_PASSWORD,
+                            maxlength: 200,
+                            required: true,
+                            'data-error': 'Добавьте символы: !@#$%^&*',
+                        },
+                        onInput: (value: string) => {
+                            console.log('Password:', value);
+                            this.props.repeatedPasswordValidate();
+                        },
+                        onValidate: () => this.validate(),
                     },
                     {
-                        id: "newPassword",
-                        placeholder: "Новый пароль",
-                        name: "newPassword",
-                        type: "password",
+                        id: 'newPassword',
+                        placeholder: 'Новый пароль',
+                        name: 'newPassword',
+                        type: 'password',
+                        validation: {
+                            pattern: REGEX_PASSWORD,
+                            maxlength: 200,
+                            required: true,
+                            'data-error': 'Добавьте символы: !@#$%^&*',
+                        },
+                        onInput: (value: string) => {
+                            console.log('Password:', value);
+                            this.props.repeatedPasswordValidate();
+                        },
+                        onValidate: () => this.validate(),
                     },
                     {
-                        id: "newPassword",
-                        placeholder: "Повторите новый пароль",
-                        name: "newPassword",
-                        type: "password",
+                        id: 'repeateNewPassword',
+                        placeholder: 'Повторите новый пароль',
+                        name: 'repeateNewPassword',
+                        type: 'password',
+                        validation: {
+                            required: true,
+                        },
+                        useValidation: (validate: () => void) => {
+                            this.props.repeatedPasswordValidate = validate;
+                        },
+                        onInput: (value: string) => {
+                            const password: HTMLInputElement | null =
+                                this.getContent().querySelector(
+                                    '[name=newPassword]',
+                                );
+                            const SecondPassword: HTMLInputElement | null =
+                                this.getContent().querySelector(
+                                    '[name=repeateNewPassword]',
+                                );
+
+                            if (!password || !SecondPassword) {
+                                return;
+                            }
+
+                            if (password.value === value) {
+                                SecondPassword.setCustomValidity('');
+                                this.props.repeatedPasswordValidate();
+                            } else {
+                                SecondPassword.setCustomValidity(
+                                    'Пароли не совпадают',
+                                );
+                                this.props.repeatedPasswordValidate();
+                            }
+                        },
+                        onValidate: () => this.validate(),
                     },
                 ],
                 buttons: [
                     {
-                        type: "submit",
-                        label: "Сохранить",
+                        type: 'submit',
+                        label: 'Сохранить',
+                        onClick: () => {
+                            this.validate();
+                        },
                     },
                 ],
+            },
+            events: {
+                submit: (event: Event) => this.handleSubmit(event),
             },
         });
 
         this.props.Button = this.props.form.buttons.map(
-            (button: any) => new Button(button)
+            (button: any) => new Button(button),
         );
         this.props.Input = this.props.form.fields.map(
-            (field: any) => new Input(field)
+            (field: any) => new Input(field),
         );
+
+        this.validate = this.validate.bind(this);
+    }
+
+    handleSubmit(evt: Event) {
+        evt.preventDefault();
+        const { elements } = evt.target as HTMLFormElement;
+        const fields = Array.from(elements).filter(
+            (el) => el.nodeName === 'INPUT',
+        );
+
+        const formData = fields.reduce(
+            (acc: Record<string, string>, field: HTMLInputElement) => {
+                acc[field.name] = field.value;
+                return acc;
+            },
+            {},
+        );
+
+        console.log(formData);
+    }
+
+    validate() {
+        const formElement: HTMLFormElement | null =
+            this.getContent().querySelector('.profile');
+        validateForm(formElement);
     }
 
     render(): string | void {

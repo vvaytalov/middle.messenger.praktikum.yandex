@@ -1,5 +1,5 @@
-import { IProps } from "../../../modules/Block";
-import { join } from "../../../utils/templator";
+import { IProps } from '../../../modules/Block';
+import { join } from '../../../utils/templator';
 
 export const template = (props: IProps) => `
   <template class="{{ className }}">
@@ -9,8 +9,8 @@ export const template = (props: IProps) => `
       <li class="{{ className }}__item">
         <ContactCard key="${index}" />
       </li>
-    `
-        )
+    `,
+        ),
     )}
   </template>
 `;

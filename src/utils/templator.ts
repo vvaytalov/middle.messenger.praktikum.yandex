@@ -1,4 +1,4 @@
-import { IProps } from "../modules/Block";
+import { IProps } from '../modules/Block';
 
 declare global {
     interface Window {
@@ -17,19 +17,19 @@ class Templator {
         this._handleFound = this._handleFound.bind(this);
         this.compile = this.compile.bind(this);
         if (!window._componentStore) {
-            window["_componentStore"] = {};
+            window['_componentStore'] = {};
         }
     }
 
     // Обработчик получения значения из контекста
     private _getValueFromContext(key: string) {
         // Если ключ без точки
-        if (!key.includes(".")) {
+        if (!key.includes('.')) {
             // Вернуть значение из корня контекста
             return this.context[key];
         }
         // Иначе, поделить ключ по точке и ...
-        const path = key.split(".");
+        const path = key.split('.');
         // Использовать как путь для извлечения из контекста
         return path.reduce((acc, k) => acc[k], this.context);
     }
@@ -43,7 +43,7 @@ class Templator {
             const [propsKey] = prop.match(/[^<][\w.]+/) || [];
 
             // Получаем значение после =
-            const propValue = prop.split(/="/)[1].replace(/"/, "").trim();
+            const propValue = prop.split(/="/)[1].replace(/"/, '').trim();
             // Проверяем, является ли ключом к контексту (prop="{{ key }}")
             const { key: propValueContextKey } =
                 propValue.match(/{{\s*?(?<key>\w+?)\s*?}}/)?.groups || {};
@@ -51,9 +51,9 @@ class Templator {
             // Если это ключ к контексту
             if (propValueContextKey) {
                 // Строки {{ true }} и {{ false }} превращаем в соответствующие значения
-                if (propValueContextKey === "true") {
+                if (propValueContextKey === 'true') {
                     props[propsKey] = true;
-                } else if (propValueContextKey === "false") {
+                } else if (propValueContextKey === 'false') {
                     props[propsKey] = false;
                 } else {
                     // Сохраняем под ключом пропса текущий контекст
@@ -81,19 +81,19 @@ class Templator {
         }
 
         if (key[0] === key[0].toUpperCase()) {
-            const componentOpenTag = found.split(">")[0];
+            const componentOpenTag = found.split('>')[0];
             const attributes = componentOpenTag.match(/\w+=".*?"/g) || [];
             const props = this._transformAttributesToProps(attributes);
 
             // Найти вложения в тег компонента ({{ children }})
             const { children } =
                 found.match(
-                    /<(?<tag>[A-Z]+\w+).*?>(?<children>.*?)<\/\k<tag>>/s
+                    /<(?<tag>[A-Z]+\w+).*?>(?<children>.*?)<\/\k<tag>>/s,
                 )?.groups || {};
             if (children) {
                 const compiledChildren = this.compile(
                     () => children,
-                    this.context
+                    this.context,
                 );
                 value.setProps({
                     children: compiledChildren,
@@ -101,10 +101,10 @@ class Templator {
             }
 
             // Итерация
-            if (Array.isArray(value) && typeof props.key === "string") {
-                if (!("key" in props)) {
+            if (Array.isArray(value) && typeof props.key === 'string') {
+                if (!('key' in props)) {
                     throw new Error(
-                        'Компонентам внутри итерации необходим уникальный key="number", указывающий на экземпляр в массиве'
+                        'Компонентам внутри итерации необходим уникальный key="number", указывающий на экземпляр в массиве',
                     );
                 }
                 const { key } = props;
@@ -134,7 +134,7 @@ class Templator {
 
     public compile(
         templateFunction: (props: IProps) => string,
-        context: IProps
+        context: IProps,
     ): string {
         this.context = context;
         const template = templateFunction(context);
@@ -146,26 +146,26 @@ class Templator {
 function join(templates: string[]) {
     if (!Array.isArray(templates)) {
         throw new Error(
-            `Функция join ожидает массив, был передан ${typeof templates}`
+            `Функция join ожидает массив, был передан ${typeof templates}`,
         );
     }
-    return templates.join("");
+    return templates.join('');
 }
 
 // Установщик атрибутов из объекта
 function setAttributes(attrs?: Record<string, string | number | boolean>) {
     if (!attrs) {
-        return "";
+        return '';
     }
     return Object.entries(attrs).reduce((acc, [key, value]) => {
-        if (typeof value === "boolean") {
+        if (typeof value === 'boolean') {
             if (!value) {
                 return `${acc}`;
             }
             return `${acc} ${key}`;
         }
         return `${acc} ${key}="${value}"`;
-    }, "");
+    }, '');
 }
 
 export const { compile } = new Templator();

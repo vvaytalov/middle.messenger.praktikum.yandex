@@ -1,7 +1,7 @@
-import Block from "../../modules/Block";
-import { compile } from "../../utils/templator";
-import { template } from "./input.tmpl";
-import "./input.css";
+import Block from '../../modules/Block';
+import { compile } from '../../utils/templator';
+import { template } from './input.tmpl';
+import './input.css';
 
 interface IInput {
     className?: string;
@@ -20,17 +20,19 @@ interface IInput {
 
 export default class Input extends Block {
     constructor(props: IInput) {
-        super("label", {
-            className: "input",
+        console.log(props.classMix);
+
+        super('label', {
+            className: 'input',
             classNameRoot: props.classMix,
-            classNameInput: "input__field",
-            classNameLabel: "input__label",
-            classNameError: "input__error",
-            name: props.name ?? "",
-            label: props.label ?? "",
-            value: props.value ?? "",
-            placeholder: props.placeholder ?? props.label ?? "",
-            type: props.type ?? "text",
+            classNameInput: 'input__field',
+            classNameLabel: 'input__label',
+            classNameError: 'input__error',
+            name: props.name ?? '',
+            label: props.label ?? '',
+            value: props.value ?? '',
+            placeholder: props.placeholder ?? props.label ?? '',
+            type: props.type ?? 'text',
             validation: props.validation ?? null,
             onInput: props.onInput ?? null,
             onValidate: props.onValidate ?? null,
@@ -40,7 +42,7 @@ export default class Input extends Block {
                     if (this.props.onInput) {
                         this.validate();
                         this.props.onInput(
-                            (evt.target as HTMLInputElement).value
+                            (evt.target as HTMLInputElement).value,
                         );
                     }
                 },
@@ -61,15 +63,15 @@ export default class Input extends Block {
         if (this.props.onValidate) {
             const inputElement: HTMLInputElement | null =
                 this.getContent().querySelector(
-                    `.${this.props.classNameInput}`
+                    `.${this.props.classNameInput}`,
                 );
             const labelElement: HTMLElement | null =
                 this.getContent().querySelector(
-                    `.${this.props.classNameLabel}`
+                    `.${this.props.classNameLabel}`,
                 );
             const errorElement: HTMLElement | null =
                 this.getContent().querySelector(
-                    `.${this.props.classNameError}`
+                    `.${this.props.classNameError}`,
                 );
 
             if (!inputElement || !errorElement) {
@@ -81,30 +83,30 @@ export default class Input extends Block {
 
             if (!validity) {
                 const errorMessage = inputElement.validationMessage;
-                const customErrorMessage = inputElement.dataset.error || "";
+                const customErrorMessage = inputElement.dataset.error || '';
                 errorElement.textContent = customErrorMessage || errorMessage;
                 inputElement.className =
-                    "input__field input__field_color_error";
+                    'input__field input__field_color_error';
 
-                if (inputElement.value === "") {
-                    errorElement.textContent = "Обязательное поле";
+                if (inputElement.value === '') {
+                    errorElement.textContent = 'Обязательное поле';
                 } else if (
                     inputElement.value.length < 8 &&
-                    inputElement.name === "password"
+                    inputElement.name === 'password'
                 ) {
-                    errorElement.textContent = "От 8 до 20 символов";
+                    errorElement.textContent = 'От 8 до 20 символов';
                 }
 
                 if (labelElement) {
                     labelElement.className =
-                        "input__label input__label_color_error";
+                        'input__label input__label_color_error';
                 }
             } else {
                 inputElement.className =
-                    "input__field input__field_color_success";
+                    'input__field input__field_color_success';
                 if (labelElement) {
                     labelElement.className =
-                        "input__label input__label_color_success";
+                        'input__label input__label_color_success';
                 }
             }
         }

@@ -1,10 +1,10 @@
-import { IProps } from "../../../modules/Block";
+import { IProps } from '../../../modules/Block';
 
 export const template = (props: IProps) => `
   <template class="${
       props.authorId === props.ownerId
-          ? `{{ className }}`
-          : `{{ className }} {{ className }}_outgoing-message`
+          ? '{{ className }}'
+          : '{{ className }} {{ className }}_outgoing-message'
   }">
     <img
       class="{{ className }}__avatar"

@@ -1,19 +1,19 @@
-import Block from "../../../modules/Block";
-import { compile } from "../../../utils/templator";
-import { template } from "./listCard.tmpl";
-import ContactCard from "../cardContact/cardContact";
+import Block from '../../../modules/Block';
+import { compile } from '../../../utils/templator';
+import { template } from './listCard.tmpl';
+import ContactCard from '../cardContact/cardContact';
 
-import "./listCard.css";
+import './listCard.css';
 interface IContactCardList {
     contacts: any[];
 }
 
 export default class ContactCardList extends Block {
     constructor(props: IContactCardList) {
-        super("ul", {
-            className: "contact-card-list",
+        super('ul', {
+            className: 'contact-card-list',
             ContactCard: props.contacts.map(
-                (contact) => new ContactCard(contact)
+                (contact) => new ContactCard(contact),
             ),
         });
     }

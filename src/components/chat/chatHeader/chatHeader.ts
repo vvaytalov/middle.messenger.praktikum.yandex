@@ -1,9 +1,9 @@
-import { compile } from "../../../utils/templator";
-import { template } from "./chatHeader.tmpl";
-import defaultAvatar from "../../../assets/img/noavatar.svg";
-import Block from "../../../modules/Block";
+import { compile } from '../../../utils/templator';
+import { template } from './chatHeader.tmpl';
+import defaultAvatar from '../../../assets/img/noavatar.svg';
+import Block from '../../../modules/Block';
 
-import "./chatHeader.css";
+import './chatHeader.css';
 
 interface IChatHeader {
     name: string;
@@ -12,10 +12,10 @@ interface IChatHeader {
 
 class ChatHeader extends Block {
     constructor(props: IChatHeader) {
-        super("div", {
-            className: "chat-header",
+        super('div', {
+            className: 'chat-header',
             avatar: props.avatar ?? defaultAvatar,
-            name: props.name ?? "",
+            name: props.name ?? '',
         });
     }
 

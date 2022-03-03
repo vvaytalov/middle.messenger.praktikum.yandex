@@ -1,17 +1,17 @@
-import { compile } from "../../../utils/templator";
-import { template } from "./messageList.tmpl";
-import Block from "../../../modules/Block";
-import Message from "../message/Message";
+import { compile } from '../../../utils/templator';
+import { template } from './messageList.tmpl';
+import Block from '../../../modules/Block';
+import Message from '../message/Message';
 
-import "./messageList.css";
+import './messageList.css';
 interface IMessageList {
     messages: any[];
 }
 
 export default class MessageList extends Block {
     constructor(props: IMessageList) {
-        super("ul", {
-            className: "message-list",
+        super('ul', {
+            className: 'message-list',
             Message: props.messages.map((message) => new Message(message)),
         });
     }

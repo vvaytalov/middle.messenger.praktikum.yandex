@@ -1,6 +1,6 @@
-import { v4 as uuid } from "uuid";
-import EventBus from "./eventBus";
-import getElementsFromString from "../utils/getTemplate";
+import { v4 as uuid } from 'uuid';
+import EventBus from './eventBus';
+import getElementsFromString from '../utils/getTemplate';
 
 export type IProps = Record<string, any>;
 
@@ -16,13 +16,13 @@ export default class Block {
     public props: IProps;
 
     static EVENTS = {
-        INIT: "init",
-        FLOW_CDM: "flow:component-did-mount",
-        FLOW_CDU: "flow:component-did-update",
-        FLOW_RENDER: "flow:render",
+        INIT: 'init',
+        FLOW_CDM: 'flow:component-did-mount',
+        FLOW_CDU: 'flow:component-did-update',
+        FLOW_RENDER: 'flow:render',
     };
 
-    constructor(tagName: string = "div", props: IProps = {}) {
+    constructor(tagName: string = 'div', props: IProps = {}) {
         const eventBus = new EventBus();
 
         this._meta = {
@@ -90,7 +90,7 @@ export default class Block {
         Object.entries(events).forEach(
             ([eventName, event]: [string, (evt: Event) => {}]) => {
                 this._element.addEventListener(eventName, event);
-            }
+            },
         );
     }
 
@@ -125,17 +125,17 @@ export default class Block {
                 template.getAttributeNames().forEach((name) => {
                     this._element.setAttribute(
                         name,
-                        template.getAttribute(name) || ""
+                        template.getAttribute(name) || '',
                     );
                 });
 
                 const blockElements = template.content.cloneNode(true);
-                this._element.innerHTML = "";
+                this._element.innerHTML = '';
                 this._element.append(blockElements);
                 const markerElements =
-                    this._element.querySelectorAll("[data-uuid]");
+                    this._element.querySelectorAll('[data-uuid]');
                 this._renderChildComponents(markerElements);
-                this._element.removeAttribute("data-uuid");
+                this._element.removeAttribute('data-uuid');
             }
         }
         this._addEvents();
@@ -155,27 +155,27 @@ export default class Block {
                 this.eventBus().emit(
                     Block.EVENTS.FLOW_CDU,
                     this._meta.props,
-                    target
+                    target,
                 );
                 return true;
             },
             deleteProperty: () => {
-                throw new Error("Нет доступа");
+                throw new Error('Нет доступа');
             },
         });
     }
 
     private _createDocumentElement(tagName: string) {
         const element = document.createElement(tagName);
-        element.setAttribute("data-uuid", this._uuid);
+        element.setAttribute('data-uuid', this._uuid);
         return element;
     }
 
     show() {
-        this.getContent().style.display = "block";
+        this.getContent().style.display = 'block';
     }
 
     hide() {
-        this.getContent().style.display = "none";
+        this.getContent().style.display = 'none';
     }
 }
