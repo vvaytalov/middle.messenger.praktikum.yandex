@@ -15,7 +15,10 @@
 
 `npm run build` - сборка приложения в папку dist
 
-`npn instal` - установка зависимостей
+`npm instal` - установка зависимостей
+
+`npm lint` - проверка синтаксиса
+`npm fix` - исправление ошибок синтаксиса
 
 # Автодеплой
 
@@ -26,3 +29,7 @@
 # Макет
 
 [figma](<https://www.figma.com/file/DAz7bJDUY3YJiLA1A4Y7O1/Chat-(Copy)?node-id=0%3A1>)
+
+## Pull requests
+
+[Sprint 2](https://github.com/vvaytalov/middle.messenger.praktikum.yandex/pull/2)
