@@ -3,10 +3,10 @@
     "version": "1.0.0",
     "description": "vvaytalov chat for yandex",
     "scripts": {
+        "build": "parcel build src/static/*.html",
         "watch": "parcel watch build src/static/*.html",
-        "build": "parcel build src/static/*.html --no-minify",
         "dev": "npm run watch & node server.js",
-        "start": "parcel build src/static/*.html --no-minify && node server.js",
+        "start": "parcel build src/static/*.html && node server.js",
         "stylelint": "stylelint '**/*.css'",
         "lint": "eslint src --ext .js,.ts && npx stylelint \"**/*.css\"",
         "fix": "eslint src --ext .js,.ts --fix && npx stylelint \"**/*.css\" --fix"
