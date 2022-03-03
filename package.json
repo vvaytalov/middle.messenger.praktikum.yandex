@@ -3,10 +3,10 @@
     "version": "1.0.0",
     "description": "vvaytalov chat for yandex",
     "scripts": {
-        "build": "parcel build src/static/*.html",
-        "watch": "parcel watch build src/static/*.html",
+        "build": "parcel build src/static/*.html --no-minify",
         "dev": "npm run watch & node server.js",
-        "start": "parcel build src/static/*.html && node server.js",
+        "start": "parcel build src/static/*.html --no-minify && node server.js",
+        "watch": "parcel watch build src/static/*.html",
         "stylelint": "stylelint '**/*.css'",
         "lint": "eslint src --ext .js,.ts && npx stylelint \"**/*.css\"",
         "fix": "eslint src --ext .js,.ts --fix && npx stylelint \"**/*.css\" --fix"
@@ -24,7 +24,6 @@
         "eslint-config-airbnb-base": "^15.0.0",
         "eslint-config-airbnb-typescript": "^16.1.0",
         "eslint-plugin-import": "^2.25.4",
-        "parcel": "^2.2.1",
         "parcel-bundler": "^1.12.5",
         "postcss": "^8.4.7",
         "postcss-calc": "^8.2.4",
