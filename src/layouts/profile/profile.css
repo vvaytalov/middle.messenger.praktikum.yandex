@@ -1,0 +1,70 @@
+@import "../../assets/styles/back.css";
+@import "../../assets/styles/main.css";
+
+.profile__main {
+    width: 100%;
+    max-width: calc(35 * var(--space));
+}
+
+.profile__avatar {
+    display: block;
+    height: calc(16 * var(--space));
+    margin-bottom: calc(15 * var(--space));
+    text-align: center;
+}
+
+.profile__avatar:hover {
+    cursor: pointer;
+}
+
+.profile__input-button {
+    display: flex;
+    justify-content: center;
+    margin-top: calc(8 * var(--space));
+    margin-bottom: calc(2 * var(--space));
+}
+
+.profile__input-field {
+    display: grid;
+    margin: calc(6 * var(--space)) 0 0;
+    grid-template-columns: repeat(1, 1fr);
+    gap: calc(3 * var(--space));
+}
+
+.profile__display-name {
+    text-align: center;
+    font-size: var(--fontSizeHeader);
+    font-weight: var(--fontWeight);
+}
+
+.profile__wrap:last-child {
+    border-bottom: none;
+}
+
+.profile__button-exit {
+    color: var(--color-error);
+    text-decoration: none;
+}
+
+.profile__button-exit:hover {
+    cursor: pointer;
+    color: var(--color-errorHover);
+}
+
+.profile__buttons-comb {
+    margin-top: calc(8 * var(--space));
+}
+
+.profile__button-change {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+.profile__button-change:hover {
+    cursor: pointer;
+    color: var(--color-primaryHover);
+}
+
+.profile__group {
+    margin-top: calc(2 * var(--space));
+}

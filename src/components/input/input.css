@@ -1,0 +1,104 @@
+@import "../../assets/styles/main.css";
+
+.input {
+    position: relative;
+    display: block;
+}
+
+.input__label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: block;
+    padding: 0 4px;
+    transition: top 0.15s, font-size 0.15s;
+    pointer-events: none;
+    color: var(--color-secondary);
+}
+
+.input__label_color_error {
+    color: var(--color-error);
+}
+
+.input__label_color_success {
+    color: var(--color-success);
+}
+
+.input_color_error {
+    color: var(--color-error);
+}
+
+.input_color_success {
+    color: var(--color-success);
+}
+
+.input__field {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: calc(5 * var(--space));
+    margin: 0;
+    padding: 0 16px;
+    transition: box-shadow 0.25s;
+    border: 0;
+    border-radius: 8px;
+    outline: none;
+    background: var(--colorGray100);
+    color: var(--color-white);
+}
+
+.input__field_color_error {
+    color: var(--color-error);
+    box-shadow: inset 0 0 0 1px var(--color-error);
+}
+
+.input__field_color_success {
+    box-shadow: inset 0 0 0 1px var(--color-success);
+}
+
+.input__field::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+.input__field:-webkit-autofill {
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.input__field:focus {
+    box-shadow: inset 0 0 0 1px var(--color-selected);
+}
+
+.input__field_color_error:focus {
+    box-shadow: inset 0 0 0 2px var(--color-error);
+}
+
+.input__field_color_success:focus {
+    box-shadow: inset 0 0 0 1px var(--color-success),
+        0 0 0 2px var(--color-selected-success);
+}
+
+.input__field:not(:placeholder-shown) ~ .input__label {
+    font-size: 13px;
+    position: absolute;
+    top: -8px;
+    background: var(--color-background);
+}
+
+.input__error {
+    position: absolute;
+    top: 36px;
+    left: 12px;
+    right: 12px;
+    font-size: 13px;
+    color: var(--color-white);
+    background-color: var(--color-error);
+    padding: 4px 8px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.25s;
+    z-index: 1;
+}
+
+.input__field:focus:invalid ~ .input__error {
+    opacity: 1;
+}

@@ -1,0 +1,20 @@
+.chat-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 20px 24px;
+    gap: 8px;
+    width: 100%;
+    background: var(--color-background-aside);
+}
+.chat-header__avatar {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+.chat-header__name {
+    font-weight: 600;
+}
