@@ -3,21 +3,22 @@ import { compile } from '../../utils/templator';
 import { template } from './link.tmpl';
 import './link.css';
 
+interface IField {
+    label?: string;
+    link?: string;
+    color?: boolean;
+}
 interface ILink {
     type?: string;
     color?: boolean;
-    field: {
-        label?: string;
-        link?: string;
-        color?: boolean;
-    }[];
+    links: IField[];
 }
 
 export default class Link extends Block {
     constructor(props: ILink) {
         super('div', {
             className: 'link',
-            field: props.field ?? [],
+            links: props.links ?? [],
         });
     }
 

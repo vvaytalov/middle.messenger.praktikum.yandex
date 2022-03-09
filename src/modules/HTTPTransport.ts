@@ -1,3 +1,5 @@
+import { queryStringify } from '../utils/queryStringify';
+
 const METHODS = {
     GET: 'GET',
     POST: 'POST',
@@ -5,22 +7,9 @@ const METHODS = {
     DELETE: 'DELETE',
 };
 
-function queryStringify(data: Object) {
-    if (typeof data !== 'object') {
-        throw new Error('Not object');
-    }
-
-    return Object.entries(data).reduce(
-        (acc, [key, val], i) => `${acc}${i === 0 ? '?' : '&'}${key}=${val}`,
-        '',
-    );
-}
-
 interface IOptions {
     data: string;
-    headers: {
-        [key: number]: unknown;
-    };
+    headers: Record<string, string>;
     method: string;
     timeout: number;
 }
@@ -30,7 +19,7 @@ export default class HTTPTransport {
         return this.request(
             url,
             { ...options, method: METHODS.GET },
-            options.timeout,
+            options.timeout
         );
     };
 
@@ -38,7 +27,7 @@ export default class HTTPTransport {
         return this.request(
             url,
             { ...options, method: METHODS.POST },
-            options.timeout,
+            options.timeout
         );
     };
 
@@ -46,7 +35,7 @@ export default class HTTPTransport {
         return this.request(
             url,
             { ...options, method: METHODS.PUT },
-            options.timeout,
+            options.timeout
         );
     };
 
@@ -54,7 +43,7 @@ export default class HTTPTransport {
         return this.request(
             url,
             { ...options, method: METHODS.DELETE },
-            options.timeout,
+            options.timeout
         );
     };
 
@@ -72,11 +61,11 @@ export default class HTTPTransport {
 
             xhr.open(
                 method,
-                isGet && !!data ? `${url}${queryStringify(data)}` : url,
+                isGet && !!data ? `${url}${queryStringify(data)}` : url
             );
 
             Object.keys(headers).forEach((key) =>
-                xhr.setRequestHeader(key, headers[key]),
+                xhr.setRequestHeader(key, headers[key])
             );
 
             xhr.onload = function () {

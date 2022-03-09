@@ -157,10 +157,7 @@ function setAttributes(attrs?: Record<string, string | number | boolean>) {
     }
     return Object.entries(attrs).reduce((acc, [key, value]) => {
         if (typeof value === 'boolean') {
-            if (!value) {
-                return `${acc}`;
-            }
-            return `${acc} ${key}`;
+            return value ? `${acc} ${key}` : `${acc}`;
         }
         return `${acc} ${key}="${value}"`;
     }, '');

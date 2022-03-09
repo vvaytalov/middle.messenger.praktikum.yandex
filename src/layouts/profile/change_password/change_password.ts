@@ -7,7 +7,7 @@ import { compile } from '../../../utils/templator';
 import { template } from './change_password.tmpl';
 
 import '../profile.css';
-import { REGEX_PASSWORD } from '../../../utils/regEx';
+import { PASSWORD_MSG, REGEX_PASSWORD } from '../../../utils/regEx';
 import validateForm from '../../../utils/valideteForm';
 
 export default class ChangePassword extends Block {
@@ -17,7 +17,7 @@ export default class ChangePassword extends Block {
             title: '@vvaytalov',
             avatar: avatarImage,
             Link: new Link({
-                field: [
+                links: [
                     {
                         label: 'В профиль',
                         link: '/profile.html',
@@ -35,7 +35,7 @@ export default class ChangePassword extends Block {
                             pattern: REGEX_PASSWORD,
                             maxlength: 40,
                             required: true,
-                            'data-error': 'Добавьте символы: !@#$%^&*',
+                            'data-error': PASSWORD_MSG,
                         },
                         onInput: (value: string) => {
                             console.log('Password:', value);
@@ -52,7 +52,7 @@ export default class ChangePassword extends Block {
                             pattern: REGEX_PASSWORD,
                             maxlength: 40,
                             required: true,
-                            'data-error': 'Добавьте символы: !@#$%^&*',
+                            'data-error': PASSWORD_MSG,
                         },
                         onInput: (value: string) => {
                             console.log('Password:', value);
@@ -74,11 +74,11 @@ export default class ChangePassword extends Block {
                         onInput: (value: string) => {
                             const password: HTMLInputElement | null =
                                 this.getContent().querySelector(
-                                    '[name=newPassword]',
+                                    '[name=newPassword]'
                                 );
                             const SecondPassword: HTMLInputElement | null =
                                 this.getContent().querySelector(
-                                    '[name=repeateNewPassword]',
+                                    '[name=repeateNewPassword]'
                                 );
 
                             if (!password || !SecondPassword) {
@@ -90,7 +90,7 @@ export default class ChangePassword extends Block {
                                 this.props.repeatedPasswordValidate();
                             } else {
                                 SecondPassword.setCustomValidity(
-                                    'Пароли не совпадают',
+                                    'Пароли не совпадают'
                                 );
                                 this.props.repeatedPasswordValidate();
                             }
@@ -114,10 +114,10 @@ export default class ChangePassword extends Block {
         });
 
         this.props.Button = this.props.form.buttons.map(
-            (button: any) => new Button(button),
+            (button: any) => new Button(button)
         );
         this.props.Input = this.props.form.fields.map(
-            (field: any) => new Input(field),
+            (field: any) => new Input(field)
         );
 
         this.validate = this.validate.bind(this);
@@ -127,7 +127,7 @@ export default class ChangePassword extends Block {
         evt.preventDefault();
         const { elements } = evt.target as HTMLFormElement;
         const fields = Array.from(elements).filter(
-            (el) => el.nodeName === 'INPUT',
+            (el) => el.nodeName === 'INPUT'
         );
 
         const formData = fields.reduce(
@@ -135,7 +135,7 @@ export default class ChangePassword extends Block {
                 acc[field.name] = field.value;
                 return acc;
             },
-            {},
+            {}
         );
 
         console.log(formData);

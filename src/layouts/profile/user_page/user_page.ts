@@ -14,7 +14,7 @@ export default class Profile extends Block {
             title: '@vvaytalov',
             avatar: avatarImage,
             Link: new Link({
-                field: [
+                links: [
                     {
                         label: 'Изменить пароль',
                         link: '/change_password.html',

@@ -18,7 +18,7 @@ export default class Error extends Block {
             codeError: props.codeError ?? '500',
             messageError: props.messageError ?? 'Неизвестная ошибка',
             Link: new Link({
-                field: [
+                links: [
                     {
                         link: props.link || '/index.html',
                         label: props.label || 'Вернуться к чатам',

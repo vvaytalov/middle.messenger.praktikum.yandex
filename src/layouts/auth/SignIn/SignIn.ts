@@ -5,7 +5,12 @@ import { template } from './SignIn.tmpl';
 import { compile } from '../../../utils/templator';
 import Link from '../../../components/link/link';
 import validateForm from '../../../utils/valideteForm';
-import { REGEX_LOGIN, REGEX_PASSWORD } from '../../../utils/regEx';
+import {
+    LOGIN_MSG,
+    PASSWORD_MSG,
+    REGEX_LOGIN,
+    REGEX_PASSWORD,
+} from '../../../utils/regEx';
 
 import '../auth.css';
 class SignInPage extends Block {
@@ -16,7 +21,7 @@ class SignInPage extends Block {
             returnLinkText: 'Нет аккаунта?',
             returnLink: './sign-up.html',
             Link: new Link({
-                field: [
+                links: [
                     {
                         label: 'Нет аккаунта ?',
                         link: '/sign-up.html',
@@ -33,7 +38,7 @@ class SignInPage extends Block {
                             pattern: REGEX_LOGIN,
                             maxlength: 30,
                             required: true,
-                            'data-error': 'Англ. буквы, от 3 до 16 символов',
+                            'data-error': LOGIN_MSG,
                         },
                         onInput: (value: string) =>
                             console.log('Login:', value),
@@ -47,7 +52,7 @@ class SignInPage extends Block {
                             pattern: REGEX_PASSWORD,
                             maxlength: 40,
                             required: true,
-                            'data-error': 'Добавьте символы: !@#$%^&*',
+                            'data-error': PASSWORD_MSG,
                         },
                         onInput: (value: string) =>
                             console.log('Password:', value),

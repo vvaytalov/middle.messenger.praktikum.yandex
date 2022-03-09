@@ -35,7 +35,7 @@ export default class Chat extends Block {
                 onMessageSend: (formData) => console.log(formData),
             }),
             Link: new Link({
-                field: [
+                links: [
                     {
                         link: '/profile.html',
                         label: 'Профиль',

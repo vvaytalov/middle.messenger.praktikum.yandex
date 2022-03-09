@@ -5,7 +5,17 @@ import ContactCard from '../cardContact/cardContact';
 
 import './listCard.css';
 interface IContactCardList {
-    contacts: any[];
+    contacts: IContact[];
+}
+interface IContact {
+    id: string;
+    name: string;
+    lastMessage: string;
+    ownerLastMessage: string;
+    counterUnreadMessages: number;
+    avatar: string | null;
+    updatedAt: string;
+    isGroup: boolean;
 }
 
 export default class ContactCardList extends Block {
@@ -13,7 +23,7 @@ export default class ContactCardList extends Block {
         super('ul', {
             className: 'contact-card-list',
             ContactCard: props.contacts.map(
-                (contact) => new ContactCard(contact),
+                (contact) => new ContactCard(contact)
             ),
         });
     }

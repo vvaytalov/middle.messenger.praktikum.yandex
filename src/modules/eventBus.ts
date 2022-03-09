@@ -7,7 +7,6 @@ export default class EventBus {
         this.listeners = {};
     }
 
-    // Подписка на события
     on(event: string, callback: ICallback) {
         if (!this.listeners[event]) {
             this.listeners[event] = [];
@@ -16,7 +15,6 @@ export default class EventBus {
         this.listeners[event].push(callback);
     }
 
-    // Отписка от событий
     off(event: string, callback: ICallback) {
         if (!this.listeners[event]) {
             throw new Error(`Нет события: ${event}`);
@@ -27,7 +25,6 @@ export default class EventBus {
         );
     }
 
-    // Отправка событий
     emit<T>(event: string, ...args: T[]) {
         if (!this.listeners[event]) {
             throw new Error(`Нет события: ${event}`);

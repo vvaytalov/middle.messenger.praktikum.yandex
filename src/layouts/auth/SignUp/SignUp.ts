@@ -6,11 +6,16 @@ import { template } from './SignUp.tmpl';
 import { compile } from '../../../utils/templator';
 import validateForm from '../../../utils/valideteForm';
 import {
+    LOGIN_MSG,
+    MAIL_MSG,
+    NAME_MSG,
+    PASSWORD_MSG,
     REGEX_EMAIL,
     REGEX_LOGIN,
     REGEX_NAME,
     REGEX_PASSWORD,
     REGEX_TEL,
+    TEL_MSG,
 } from '../../../utils/regEx';
 
 import '../auth.css';
@@ -22,7 +27,7 @@ class SignInPage extends Block {
             returnLinkText: 'Войти',
             returnLink: './sign-in.html',
             Link: new Link({
-                field: [
+                links: [
                     {
                         label: 'Войти',
                         link: '/sign-in.html',
@@ -41,7 +46,7 @@ class SignInPage extends Block {
                             minlength: 5,
                             maxlength: 50,
                             required: true,
-                            'data-error': 'Поле в формате email',
+                            'data-error': MAIL_MSG,
                         },
                         onInput: (value: string) => console.log('Mail:', value),
                         onValidate: () => this.validate(),
@@ -55,7 +60,7 @@ class SignInPage extends Block {
                             pattern: REGEX_LOGIN,
                             maxlength: 30,
                             required: true,
-                            'data-error': 'Англ. буквы, от 3 до 16 символов',
+                            'data-error': LOGIN_MSG,
                         },
                         onInput: (value: string) =>
                             console.log('Login:', value),
@@ -70,7 +75,7 @@ class SignInPage extends Block {
                             pattern: REGEX_NAME,
                             maxlength: 30,
                             required: true,
-                            'data-error': 'Буквы, дефис или точка',
+                            'data-error': NAME_MSG,
                         },
                         onInput: (value: string) =>
                             console.log('Login:', value),
@@ -85,7 +90,7 @@ class SignInPage extends Block {
                             pattern: REGEX_NAME,
                             maxlength: 30,
                             required: true,
-                            'data-error': 'Буквы, дефис или точка',
+                            'data-error': NAME_MSG,
                         },
                         onInput: (value: string) =>
                             console.log('Login:', value),
@@ -100,7 +105,7 @@ class SignInPage extends Block {
                             pattern: REGEX_TEL,
                             maxlength: 20,
                             required: true,
-                            'data-error': 'Поле в формате: +79996431241',
+                            'data-error': TEL_MSG,
                         },
                         onInput: (value: string) =>
                             console.log('Login:', value),
@@ -115,7 +120,7 @@ class SignInPage extends Block {
                             pattern: REGEX_PASSWORD,
                             maxlength: 40,
                             required: true,
-                            'data-error': 'Добавьте символы: !@#$%^&*',
+                            'data-error': PASSWORD_MSG,
                         },
                         onInput: (value: string) => {
                             console.log('Password:', value);
