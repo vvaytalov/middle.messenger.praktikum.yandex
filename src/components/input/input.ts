@@ -20,8 +20,6 @@ interface IInput {
 
 export default class Input extends Block {
     constructor(props: IInput) {
-        console.log(props.classMix);
-
         super('label', {
             className: 'input',
             classNameRoot: props.classMix,

@@ -17,12 +17,8 @@ export default class ChangePassword extends Block {
             title: '@vvaytalov',
             avatar: avatarImage,
             Link: new Link({
-                links: [
-                    {
-                        label: 'В профиль',
-                        link: '/profile.html',
-                    },
-                ],
+                label: 'В профиль',
+                to: '/profile',
             }),
             form: {
                 fields: [
@@ -151,5 +147,3 @@ export default class ChangePassword extends Block {
         return compile(template, this.props);
     }
 }
-
-document.body.append(new ChangePassword().getContent());

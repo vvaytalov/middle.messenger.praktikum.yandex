@@ -14,7 +14,7 @@ export const template = (props: IProps): string =>
                 <Link />
             </div>
         </div>
-        <a href="./index.html" class="back">
+        <a href="/" class="back">
             <div class="arrow"></div>
         </a>
     </template>

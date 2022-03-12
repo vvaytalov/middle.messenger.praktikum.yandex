@@ -13,18 +13,17 @@ export default class Profile extends Block {
             className: 'profile',
             title: '@vvaytalov',
             avatar: avatarImage,
-            Link: new Link({
-                links: [
-                    {
-                        label: 'Изменить пароль',
-                        link: '/change_password.html',
-                    },
-                    {
-                        label: 'Выход',
-                        link: '/sign-in.html',
-                        color: true,
-                    },
-                ],
+            LinkPassword: new Link({
+                label: 'Изменить пароль',
+                to: '/change_password',
+            }),
+            LinkLogout: new Link({
+                label: 'Выход',
+                to: '/sign-in',
+                color: true,
+            }),
+            LinkBack: new Link({
+                to: '/',
             }),
             form: {
                 fields: [
@@ -74,10 +73,10 @@ export default class Profile extends Block {
         });
 
         this.props.Button = this.props.form.buttons.map(
-            (button: any) => new Button(button),
+            (button: any) => new Button(button)
         );
         this.props.Input = this.props.form.fields.map(
-            (field: any) => new Input(field),
+            (field: any) => new Input(field)
         );
     }
 
@@ -85,5 +84,3 @@ export default class Profile extends Block {
         return compile(template, this.props);
     }
 }
-
-document.body.append(new Profile().getContent());

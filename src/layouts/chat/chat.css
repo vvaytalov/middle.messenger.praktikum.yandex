@@ -19,13 +19,12 @@
 }
 
 .chat-page__profile:after {
-    content: "";
-    background: url("../../assets/img/arrow.svg") no-repeat;
+    content: '';
+    background: url('../../assets/img/arrow.svg') no-repeat;
     margin-top: 4px;
     margin-left: 6px;
     width: 6px;
     position: relative;
-    top: 16px;
 }
 
 .chat-page__side-panel {

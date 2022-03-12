@@ -1,5 +1,5 @@
-@import "../../assets/styles/back.css";
-@import "../../assets/styles/main.css";
+@import '../../assets/styles/back.css';
+@import '../../assets/styles/main.css';
 
 .profile__main {
     width: 100%;
@@ -66,5 +66,9 @@
 }
 
 .profile__group {
+    margin-top: calc(5 * var(--space));
+}
+
+.profile__logout {
     margin-top: calc(2 * var(--space));
 }

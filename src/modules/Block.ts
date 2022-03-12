@@ -90,7 +90,7 @@ export default class Block {
         Object.entries(events).forEach(
             ([eventName, event]: [string, (evt: Event) => {}]) => {
                 this._element.addEventListener(eventName, event);
-            },
+            }
         );
     }
 
@@ -125,7 +125,7 @@ export default class Block {
                 template.getAttributeNames().forEach((name) => {
                     this._element.setAttribute(
                         name,
-                        template.getAttribute(name) || '',
+                        template.getAttribute(name) || ''
                     );
                 });
 
@@ -155,7 +155,7 @@ export default class Block {
                 this.eventBus().emit(
                     Block.EVENTS.FLOW_CDU,
                     this._meta.props,
-                    target,
+                    target
                 );
                 return true;
             },
@@ -171,11 +171,18 @@ export default class Block {
         return element;
     }
 
-    show() {
+    public destroy() {
+        this._element.remove();
+        this.onDestroy;
+    }
+
+    public onDestroy() {}
+
+    public show() {
         this.getContent().style.display = 'block';
     }
 
-    hide() {
+    public hide() {
         this.getContent().style.display = 'none';
     }
 }

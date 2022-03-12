@@ -11,10 +11,15 @@ export const template = (props: IProps): string =>
             </div>
             ${generateForm(props.form, '{{className}}')}
             <div class="{{className}}__group">
-                <Link />
+                <div class="{{className}}__password">
+                    <LinkPassword />
+                </div>
+                <div class="{{className}}__logout">
+                    <LinkLogout />
+                </div>
             </div>
         </div>
-        <a href="./index.html" class="back">
+        <a href="/" class="back">
             <div class="arrow"></div>
         </a>
     </template>

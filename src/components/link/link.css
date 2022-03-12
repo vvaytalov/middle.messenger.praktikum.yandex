@@ -26,3 +26,11 @@
 .link__button-wrap:last-child {
     border-bottom: none;
 }
+
+.link_back {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 64px;
+    height: 100vh;
+}

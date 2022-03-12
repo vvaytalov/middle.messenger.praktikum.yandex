@@ -13,20 +13,16 @@ import {
 } from '../../../utils/regEx';
 
 import '../auth.css';
-class SignInPage extends Block {
+export default class SignInPage extends Block {
     constructor() {
         super('main', {
             className: 'auth',
             title: 'Вход',
             returnLinkText: 'Нет аккаунта?',
-            returnLink: './sign-up.html',
+            returnLink: './sign-up',
             Link: new Link({
-                links: [
-                    {
-                        label: 'Нет аккаунта ?',
-                        link: '/sign-up.html',
-                    },
-                ],
+                label: 'Нет аккаунта ?',
+                to: '/sign-up',
             }),
             form: {
                 fields: [
@@ -110,5 +106,3 @@ class SignInPage extends Block {
         return compile(template, this.props);
     }
 }
-
-document.body.prepend(new SignInPage().getContent());

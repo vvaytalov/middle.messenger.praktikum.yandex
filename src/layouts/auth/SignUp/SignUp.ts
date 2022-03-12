@@ -19,20 +19,16 @@ import {
 } from '../../../utils/regEx';
 
 import '../auth.css';
-class SignInPage extends Block {
+export default class SignUpPage extends Block {
     constructor() {
         super('main', {
             className: 'auth',
             title: 'Регистрация',
             returnLinkText: 'Войти',
-            returnLink: './sign-in.html',
+            returnLink: './sign-in',
             Link: new Link({
-                links: [
-                    {
-                        label: 'Войти',
-                        link: '/sign-in.html',
-                    },
-                ],
+                label: 'Войти',
+                to: '/sign-in',
             }),
             form: {
                 fields: [
@@ -219,5 +215,3 @@ class SignInPage extends Block {
         return compile(template, this.props);
     }
 }
-
-document.body.prepend(new SignInPage().getContent());

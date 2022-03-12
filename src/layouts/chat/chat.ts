@@ -35,12 +35,8 @@ export default class Chat extends Block {
                 onMessageSend: (formData) => console.log(formData),
             }),
             Link: new Link({
-                links: [
-                    {
-                        link: '/profile.html',
-                        label: 'Профиль',
-                    },
-                ],
+                to: '/profile',
+                label: 'Профиль',
             }),
         });
     }
@@ -49,5 +45,3 @@ export default class Chat extends Block {
         return compile(template, this.props);
     }
 }
-
-document.body.prepend(new Chat().getContent());

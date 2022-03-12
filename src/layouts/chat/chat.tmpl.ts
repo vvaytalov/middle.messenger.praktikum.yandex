@@ -2,7 +2,7 @@ export const template = () => `
   <template class="{{ className }}">
     <aside class="{{ className }}__side-panel">
       <div class="{{ className }}__profile">
-        <Link />    
+        <Link />
       </div>
       <div class="{{ className }}__side-panel-header">
         <SearchInput />
