@@ -26,8 +26,11 @@ class Route {
         this._props = props;
     }
 
-    get pathname() {
-        return this._pathname;
+    public navigate(pathname: string) {
+        if (this.match(pathname)) {
+            this._pathname = pathname;
+            this.render();
+        }
     }
 
     public leave() {
@@ -41,8 +44,12 @@ class Route {
     }
 
     public render() {
-        window._componentStore = {};
-        this._block = new this._blockClass();
+        if (!this._block) {
+            this._block = new this._blockClass();
+            render(this._props.rootQuery, this._block);
+            return;
+        }
+
         render(this._props.rootQuery, this._block);
     }
 }

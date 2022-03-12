@@ -10,7 +10,6 @@ import Router from './modules/Router';
 export const router = new Router('.body');
 
 router
-    .setUnprotectedPaths(['/sign-in', '/sign-up', '/500'])
     .use('/', Chat)
     .use('/profile', Profile)
     .use('/sign-in', SignInPage)

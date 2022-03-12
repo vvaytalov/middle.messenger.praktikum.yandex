@@ -9,12 +9,13 @@ interface ILink {
     target?: string;
     to: string;
     label?: string;
+    className?: string;
 }
 
 export default class Link extends Block {
     constructor(props: ILink) {
         super('a', {
-            className: 'link',
+            className: props.className ? props.className : 'link',
             target: props.target ?? '',
             to: props.to ?? '',
             label: props.label ?? '',

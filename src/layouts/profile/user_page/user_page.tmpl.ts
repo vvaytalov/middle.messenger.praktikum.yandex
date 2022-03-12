@@ -19,8 +19,6 @@ export const template = (props: IProps): string =>
                 </div>
             </div>
         </div>
-        <a href="/" class="back">
-            <div class="arrow"></div>
-        </a>
+        <LinkBack />
     </template>
 `;

@@ -6,6 +6,7 @@ import avatarImage from '../../../assets/img/noavatar.svg';
 import { compile } from '../../../utils/templator';
 import { template } from './user_page.tmpl';
 import '../profile.css';
+import backButton from '../../../components/backButton/backButton';
 
 export default class Profile extends Block {
     constructor() {
@@ -22,8 +23,8 @@ export default class Profile extends Block {
                 to: '/sign-in',
                 color: true,
             }),
-            LinkBack: new Link({
-                to: '/',
+            LinkBack: new backButton({
+                className: 'back',
             }),
             form: {
                 fields: [

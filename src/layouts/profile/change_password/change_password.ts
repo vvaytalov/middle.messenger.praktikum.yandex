@@ -9,6 +9,7 @@ import { template } from './change_password.tmpl';
 import '../profile.css';
 import { PASSWORD_MSG, REGEX_PASSWORD } from '../../../utils/regEx';
 import validateForm from '../../../utils/valideteForm';
+import backButton from '../../../components/backButton/backButton';
 
 export default class ChangePassword extends Block {
     constructor() {
@@ -19,6 +20,9 @@ export default class ChangePassword extends Block {
             Link: new Link({
                 label: 'В профиль',
                 to: '/profile',
+            }),
+            LinkBack: new backButton({
+                className: 'back'
             }),
             form: {
                 fields: [
