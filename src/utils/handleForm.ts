@@ -89,7 +89,7 @@ export function handleFormSubmit(evt: Event): Record<string, string> {
 export function registerFormElements(props: IProps) {
     if (!props.form.fields || !props.form.buttons) {
         throw new Error(
-            'Необходимо создать в props.form массивы fields[] и buttons[], описывающие элементов формы'
+            'Необходимо создать в props.form массивы fields[] и buttons[]'
         );
     }
     props.Input = props.form.fields.map(

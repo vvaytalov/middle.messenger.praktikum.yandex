@@ -11,7 +11,7 @@ interface IPopup {
     comeBackButton?: boolean;
 }
 
-class Popup extends Block {
+export default class Popup extends Block {
     constructor(props: IPopup) {
         super('div', {
             className: 'popup',
@@ -59,5 +59,3 @@ class Popup extends Block {
         return compile(template, this.props);
     }
 }
-
-export default Popup;

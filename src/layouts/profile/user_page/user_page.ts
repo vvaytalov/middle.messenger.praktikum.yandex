@@ -1,12 +1,11 @@
 import Block from '../../../modules/Block';
-import Button from '../../../components/button/button';
-import Input from '../../../components/input/input';
 import Link from '../../../components/link/link';
 import avatarImage from '../../../assets/img/noavatar.svg';
 import { compile } from '../../../utils/templator';
 import { template } from './user_page.tmpl';
 import '../profile.css';
 import backButton from '../../../components/backButton/backButton';
+import { registerFormElements } from '../../../utils/handleForm';
 
 export default class Profile extends Block {
     constructor() {
@@ -73,12 +72,7 @@ export default class Profile extends Block {
             },
         });
 
-        this.props.Button = this.props.form.buttons.map(
-            (button: any) => new Button(button)
-        );
-        this.props.Input = this.props.form.fields.map(
-            (field: any) => new Input(field)
-        );
+        registerFormElements(this.props);
     }
 
     render(): string | void {

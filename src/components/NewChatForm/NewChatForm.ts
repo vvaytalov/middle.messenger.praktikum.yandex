@@ -1,9 +1,11 @@
 import { template } from './NewChatForm.tmpl';
 import Block from '../../modules/Block';
 import { compile } from '../../utils/templator';
-import { handleFormSubmit, validateForm } from '../../utils/handleForm';
-import Button from '../button/button';
-import Input from '../input/input';
+import {
+    handleFormSubmit,
+    registerFormElements,
+    validateForm,
+} from '../../utils/handleForm';
 import './NewChatForm.css';
 
 interface INewChatForm {
@@ -12,6 +14,8 @@ interface INewChatForm {
 
 class NewChatForm extends Block {
     constructor(props: INewChatForm) {
+        console.log(props);
+
         super('div', {
             className: 'new-chat-form',
             classNameForm: 'new-chat-form__form',
@@ -49,12 +53,8 @@ class NewChatForm extends Block {
             },
         });
 
-        this.props.Button = this.props.form.buttons.map(
-            (button: any) => new Button(button)
-        );
-        this.props.Input = this.props.form.fields.map(
-            (field: any) => new Input(field)
-        );
+        registerFormElements(this.props);
+
         this.validate = this.validate.bind(this);
     }
 

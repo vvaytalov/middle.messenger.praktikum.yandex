@@ -1,14 +1,16 @@
 import Link from '../../../components/link/link';
 import Block from '../../../modules/Block';
-import Button from '../../../components/button/button';
-import Input from '../../../components/input/input';
 import avatarImage from '../../../assets/img/noavatar.svg';
 import { compile } from '../../../utils/templator';
 import { template } from './change_password.tmpl';
 
 import '../profile.css';
 import { PASSWORD_MSG, REGEX_PASSWORD } from '../../../utils/regEx';
-import validateForm, { handleFormSubmit } from '../../../utils/handleForm';
+import {
+    validateForm,
+    handleFormSubmit,
+    registerFormElements,
+} from '../../../utils/handleForm';
 import backButton from '../../../components/backButton/backButton';
 
 export default class ChangePassword extends Block {
@@ -113,12 +115,7 @@ export default class ChangePassword extends Block {
             },
         });
 
-        this.props.Button = this.props.form.buttons.map(
-            (button: any) => new Button(button)
-        );
-        this.props.Input = this.props.form.fields.map(
-            (field: any) => new Input(field)
-        );
+        registerFormElements(this.props);
 
         this.validate = this.validate.bind(this);
     }

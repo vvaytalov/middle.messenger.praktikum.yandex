@@ -1,10 +1,12 @@
-import Input from '../../../components/input/input';
 import Link from '../../../components/link/link';
-import Button from '../../../components/button/button';
 import Block from '../../../modules/Block';
 import { template } from './SignUp.tmpl';
 import { compile } from '../../../utils/templator';
-import validateForm, { handleFormSubmit } from '../../../utils/handleForm';
+import {
+    handleFormSubmit,
+    registerFormElements,
+    validateForm,
+} from '../../../utils/handleForm';
 import {
     LOGIN_MSG,
     MAIL_MSG,
@@ -180,12 +182,7 @@ export default class SignUpPage extends Block {
             },
         });
 
-        this.props.Button = this.props.form.buttons.map(
-            (button: any) => new Button(button)
-        );
-        this.props.Input = this.props.form.fields.map(
-            (field: any) => new Input(field)
-        );
+        registerFormElements(this.props);
 
         this.validate = this.validate.bind(this);
     }

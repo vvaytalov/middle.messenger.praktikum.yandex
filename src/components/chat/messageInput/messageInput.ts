@@ -5,7 +5,7 @@ import Block from '../../../modules/Block';
 import Input from '../../input/input';
 import Button from '../../button/button';
 import defaultIcon from '../../../assets/img/attach.svg';
-import validateForm, { handleFormSubmit } from '../../../utils/handleForm';
+import { handleFormSubmit, validateForm } from '../../../utils/handleForm';
 
 import './messageInput.css';
 

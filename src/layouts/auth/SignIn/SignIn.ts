@@ -1,10 +1,12 @@
 import Block from '../../../modules/Block';
-import Button from '../../../components/button/button';
-import Input from '../../../components/input/input';
 import { template } from './SignIn.tmpl';
 import { compile } from '../../../utils/templator';
 import Link from '../../../components/link/link';
-import validateForm, { handleFormSubmit } from '../../../utils/handleForm';
+import {
+    handleFormSubmit,
+    registerFormElements,
+    validateForm,
+} from '../../../utils/handleForm';
 import {
     LOGIN_MSG,
     PASSWORD_MSG,
@@ -73,12 +75,7 @@ export default class SignInPage extends Block {
             },
         });
 
-        this.props.Button = this.props.form.buttons.map(
-            (button: any) => new Button(button)
-        );
-        this.props.Input = this.props.form.fields.map(
-            (field: any) => new Input(field)
-        );
+        registerFormElements(this.props);
 
         this.validate = this.validate.bind(this);
     }
