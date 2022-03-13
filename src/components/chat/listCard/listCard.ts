@@ -15,7 +15,7 @@ interface IContact {
     counterUnreadMessages: number;
     avatar: string | null;
     updatedAt: string;
-    isGroup: boolean;
+    isGroup?: boolean;
 }
 
 export default class ContactCardList extends Block {

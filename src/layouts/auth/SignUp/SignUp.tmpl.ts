@@ -1,5 +1,5 @@
 import { IProps } from '../../../modules/Block';
-import generateForm from '../../../utils/generateForm';
+import { generateForm } from '../../../utils/handleForm';
 
 export const template = (props: IProps) => `
 <template class="{{ className }}">

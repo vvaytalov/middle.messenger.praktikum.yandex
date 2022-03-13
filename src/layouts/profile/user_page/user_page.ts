@@ -58,7 +58,7 @@ export default class Profile extends Block {
                     },
                     {
                         type: 'tel',
-                        name: 'tel',
+                        name: 'phone',
                         placeholder: 'Телефон',
                         id: 'tel',
                         value: '+7 (999) 999-99-99',

@@ -8,6 +8,9 @@ import { contacts, messages } from './mock/mock';
 import { compile } from '../../utils/templator';
 import { template } from './chat.tmpl';
 import Link from '../../components/link/link';
+import Popup from '../../components/popup/popup';
+import Button from '../../components/button/button';
+import NewChatForm from '../../components/NewChatForm/NewChatForm';
 
 import './chat.css';
 
@@ -37,6 +40,20 @@ export default class Chat extends Block {
             Link: new Link({
                 to: '/profile',
                 label: 'Профиль',
+            }),
+            NewChatPopup: new Popup({
+                classMix: 'new-chat-popup',
+                title: 'Создать чат',
+            }),
+            NewChatButton: new Button({
+                label: 'Новый чат',
+                light: true,
+                onClick: () => this.props.NewChatPopup.show(),
+            }),
+            NewChatForm: new NewChatForm({
+                onSubmit: (formData) => {
+                    console.log(formData);
+                },
             }),
         });
     }

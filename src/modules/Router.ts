@@ -1,12 +1,14 @@
 import Route from './Route';
 import Block from './Block';
 
-class Router {
+export default class Router {
     public routes: Route[];
     public history: History;
     private _currentRoute: Route | null;
     private _rootQuery: string;
     private _pathnames: string[];
+    private _onRouteCallback: () => void;
+    private _unprotectedPaths: `/${string}`[];
     static __instance: Router;
 
     constructor(rootQuery: string) {
@@ -16,11 +18,17 @@ class Router {
 
         this.routes = [];
         this._pathnames = [];
+        this._unprotectedPaths = [];
         this.history = window.history;
         this._currentRoute = null;
         this._rootQuery = rootQuery;
+        this._onRouteCallback = () => {};
 
         Router.__instance = this;
+    }
+
+    get currentRoute() {
+        return this._currentRoute;
     }
 
     public use(pathname: string, block: typeof Block) {
@@ -64,6 +72,20 @@ class Router {
         this._currentRoute = route;
 
         route.render();
+
+        if (!this._unprotectedPaths.includes(pathname as `/${string}`)) {
+            this._onRouteCallback();
+        }
+    }
+
+    public onRoute(callback: () => void) {
+        this._onRouteCallback = callback;
+        return this;
+    }
+
+    public setUnprotectedPaths(paths: `/${string}`[]) {
+        this._unprotectedPaths = paths;
+        return this;
     }
 
     public go(pathname: string) {
@@ -87,5 +109,3 @@ class Router {
         return window.location.pathname;
     }
 }
-
-export default Router;

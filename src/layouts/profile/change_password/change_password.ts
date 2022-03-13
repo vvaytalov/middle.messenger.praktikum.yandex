@@ -8,7 +8,7 @@ import { template } from './change_password.tmpl';
 
 import '../profile.css';
 import { PASSWORD_MSG, REGEX_PASSWORD } from '../../../utils/regEx';
-import validateForm from '../../../utils/valideteForm';
+import validateForm, { handleFormSubmit } from '../../../utils/handleForm';
 import backButton from '../../../components/backButton/backButton';
 
 export default class ChangePassword extends Block {
@@ -22,7 +22,7 @@ export default class ChangePassword extends Block {
                 to: '/profile',
             }),
             LinkBack: new backButton({
-                className: 'back'
+                className: 'back',
             }),
             form: {
                 fields: [
@@ -124,19 +124,7 @@ export default class ChangePassword extends Block {
     }
 
     handleSubmit(evt: Event) {
-        evt.preventDefault();
-        const { elements } = evt.target as HTMLFormElement;
-        const fields = Array.from(elements).filter(
-            (el) => el.nodeName === 'INPUT'
-        );
-
-        const formData = fields.reduce(
-            (acc: Record<string, string>, field: HTMLInputElement) => {
-                acc[field.name] = field.value;
-                return acc;
-            },
-            {}
-        );
+        const formData = handleFormSubmit(evt);
 
         console.log(formData);
     }

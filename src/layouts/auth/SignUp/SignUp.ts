@@ -4,7 +4,7 @@ import Button from '../../../components/button/button';
 import Block from '../../../modules/Block';
 import { template } from './SignUp.tmpl';
 import { compile } from '../../../utils/templator';
-import validateForm from '../../../utils/valideteForm';
+import validateForm, { handleFormSubmit } from '../../../utils/handleForm';
 import {
     LOGIN_MSG,
     MAIL_MSG,
@@ -19,6 +19,9 @@ import {
 } from '../../../utils/regEx';
 
 import '../auth.css';
+import AuthSignUpControllers from '../../../controllers/AuthSignUpControllers';
+
+const authSignUpControllers = new AuthSignUpControllers();
 export default class SignUpPage extends Block {
     constructor() {
         super('main', {
@@ -94,7 +97,7 @@ export default class SignUpPage extends Block {
                     },
                     {
                         type: 'tel',
-                        name: 'tel',
+                        name: 'phone',
                         placeholder: 'Телефон',
                         id: 'tel',
                         validation: {
@@ -188,21 +191,16 @@ export default class SignUpPage extends Block {
     }
 
     handleSubmit(evt: Event) {
-        evt.preventDefault();
-        const { elements } = evt.target as HTMLFormElement;
-        const fields = Array.from(elements).filter(
-            (el) => el.nodeName === 'INPUT'
-        );
+        const formData = handleFormSubmit(evt);
 
-        const formData = fields.reduce(
-            (acc: Record<string, string>, field: HTMLInputElement) => {
-                acc[field.name] = field.value;
-                return acc;
-            },
-            {}
-        );
-
-        console.log(formData);
+        authSignUpControllers.SignIn({
+            login: formData.login,
+            email: formData.email,
+            first_name: formData.first_name,
+            second_name: formData.second_name,
+            password: formData.password,
+            phone: formData.phone,
+        });
     }
 
     validate() {

@@ -1,0 +1,17 @@
+.new-chat-form__form {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+}
+
+.new-chat-form__form-fields {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: 16px;
+}
+
+.new-chat-form__form-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}

@@ -5,7 +5,7 @@ import Block from '../../../modules/Block';
 import Input from '../../input/input';
 import Button from '../../button/button';
 import defaultIcon from '../../../assets/img/attach.svg';
-import validateForm from '../../../utils/valideteForm';
+import validateForm, { handleFormSubmit } from '../../../utils/handleForm';
 
 import './messageInput.css';
 
@@ -46,18 +46,7 @@ export default class MessageInput extends Block {
     }
 
     handleSubmit(evt: Event) {
-        evt.preventDefault();
-        const { elements } = evt.target as HTMLFormElement;
-        const fields = Array.from(elements).filter(
-            (el) => el.nodeName === 'INPUT',
-        );
-        const formData = fields.reduce(
-            (acc: Record<string, string>, field: HTMLInputElement) => {
-                acc[field.name] = field.value;
-                return acc;
-            },
-            {},
-        );
+        const formData = handleFormSubmit(evt);
         this.props.onMessageSend(formData);
     }
 

@@ -61,6 +61,14 @@
     min-height: 72px;
     padding: 12px 24px;
     gap: 16px;
+    border-top: 1px solid var(--colorGray100);
+}
+
+/* PopUp */
+
+.chat-page__new-chat-popup {
+    width: 100%;
+    max-width: 480px;
 }
 
 /* Message window */

@@ -4,7 +4,7 @@ import Input from '../../../components/input/input';
 import { template } from './SignIn.tmpl';
 import { compile } from '../../../utils/templator';
 import Link from '../../../components/link/link';
-import validateForm from '../../../utils/valideteForm';
+import validateForm, { handleFormSubmit } from '../../../utils/handleForm';
 import {
     LOGIN_MSG,
     PASSWORD_MSG,
@@ -13,6 +13,9 @@ import {
 } from '../../../utils/regEx';
 
 import '../auth.css';
+import AuthSignInControllers from '../../../controllers/AuthSignInControllers';
+
+const authSignInController = new AuthSignInControllers();
 export default class SignInPage extends Block {
     constructor() {
         super('main', {
@@ -81,19 +84,12 @@ export default class SignInPage extends Block {
     }
 
     handleSubmit(evt: Event) {
-        evt.preventDefault();
-        const { elements } = evt.target as HTMLFormElement;
-        const fields = Array.from(elements).filter(
-            (el) => el.nodeName === 'INPUT'
-        );
-        const formData = fields.reduce(
-            (acc: Record<string, string>, field: HTMLInputElement) => {
-                acc[field.name] = field.value;
-                return acc;
-            },
-            {}
-        );
-        console.log(formData);
+        const formData = handleFormSubmit(evt);
+
+        authSignInController.SignIn({
+            login: formData.login,
+            password: formData.password,
+        });
     }
 
     validate() {

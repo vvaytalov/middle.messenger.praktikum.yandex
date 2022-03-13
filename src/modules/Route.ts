@@ -13,7 +13,7 @@ function render(query: string, block: Block) {
     return false;
 }
 
-class Route {
+export default class Route {
     private _pathname: string;
     private _blockClass: typeof Block;
     private _block: Block | null;
@@ -26,11 +26,8 @@ class Route {
         this._props = props;
     }
 
-    public navigate(pathname: string) {
-        if (this.match(pathname)) {
-            this._pathname = pathname;
-            this.render();
-        }
+    get pathname() {
+        return this._pathname;
     }
 
     public leave() {
@@ -44,14 +41,9 @@ class Route {
     }
 
     public render() {
-        if (!this._block) {
-            this._block = new this._blockClass();
-            render(this._props.rootQuery, this._block);
-            return;
-        }
-
+        // проверить
+        window._componentStore = {};
+        this._block = new this._blockClass();
         render(this._props.rootQuery, this._block);
     }
 }
-
-export default Route;
