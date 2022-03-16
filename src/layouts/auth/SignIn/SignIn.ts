@@ -15,7 +15,7 @@ import {
 } from '../../../utils/regEx';
 
 import '../auth.css';
-import { authControllers } from '../../../controllers/index';
+import AuthControllers from '../../../controllers/AuthControllers';
 export default class SignInPage extends Block {
     constructor() {
         super('main', {
@@ -81,7 +81,7 @@ export default class SignInPage extends Block {
     handleSubmit(evt: Event) {
         const formData = handleFormSubmit(evt);
 
-        authControllers.SignIn({
+        AuthControllers.SignIn({
             login: formData.login,
             password: formData.password,
         });

@@ -2,14 +2,10 @@ import ChatApi, { IChatApiCreate } from '../api/ChatApi';
 import { router } from '../index';
 import { chatStore } from '../stores/chatStore';
 import { hideSpinner, showSpinner } from '../utils/spinner';
-
-const chatApi = new ChatApi();
-
-export default class ChatController {
+class ChatController {
     public create(data: IChatApiCreate) {
         showSpinner();
-        return chatApi
-            .create(data)
+        return ChatApi.create(data)
             .then((xhr) => {
                 return JSON.parse(xhr.response);
             })
@@ -26,8 +22,7 @@ export default class ChatController {
 
     public request() {
         showSpinner();
-        return chatApi
-            .request()
+        return ChatApi.request()
             .then((xhr) => {
                 const response = JSON.parse(xhr.response);
                 chatStore.setState({
@@ -46,3 +41,5 @@ export default class ChatController {
             });
     }
 }
+
+export default new ChatController();

@@ -14,7 +14,7 @@ export interface IAuthSignUpApi {
     password: string;
 }
 
-export default class AuthAPI extends BaseAPI {
+class AuthAPI extends BaseAPI {
     constructor() {
         super({ path: '/auth' });
     }
@@ -37,4 +37,24 @@ export default class AuthAPI extends BaseAPI {
             data,
         });
     }
+
+    /**
+     * Проверка авторизации
+     */
+    public CheckAuth() {
+        return this.get('/user', {
+            withCredentials: true,
+        });
+    }
+
+    /**
+     * Логаут
+     */
+    public LogOut() {
+        return this.post('/logout', {
+            withCredentials: true,
+        });
+    }
 }
+
+export default new AuthAPI();

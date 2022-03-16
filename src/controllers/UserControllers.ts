@@ -1,18 +1,14 @@
 import UserAPI from '../api/UserSearh';
 import { router } from '../index';
 import { hideSpinner, showSpinner } from '../utils/spinner';
-
-const userApi = new UserAPI();
-
 export interface IUserApiSearch {
     login: string;
 }
 
-export default class UserController {
+class UserController {
     public search(data: IUserApiSearch) {
         showSpinner();
-        return userApi
-            .search(data)
+        return UserAPI.search(data)
             .then((xhr) => {
                 return JSON.parse(xhr.response);
             })
@@ -27,3 +23,5 @@ export default class UserController {
             });
     }
 }
+
+export default new UserController();

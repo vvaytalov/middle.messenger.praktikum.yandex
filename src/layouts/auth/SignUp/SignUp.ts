@@ -21,7 +21,7 @@ import {
 } from '../../../utils/regEx';
 
 import '../auth.css';
-import { authControllers } from '../../../controllers/index';
+import AuthControllers from '../../../controllers/AuthControllers';
 export default class SignUpPage extends Block {
     constructor() {
         super('main', {
@@ -188,7 +188,7 @@ export default class SignUpPage extends Block {
     handleSubmit(evt: Event) {
         const formData = handleFormSubmit(evt);
 
-        authControllers.SignUp({
+        AuthControllers.SignUp({
             login: formData.login,
             email: formData.email,
             first_name: formData.first_name,

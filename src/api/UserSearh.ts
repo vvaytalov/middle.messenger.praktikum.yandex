@@ -4,7 +4,7 @@ export interface IUserAPI {
     login: string;
 }
 
-export default class UserAPI extends BaseApi {
+class UserAPI extends BaseApi {
     constructor() {
         super({ path: '/user' });
     }
@@ -19,3 +19,5 @@ export default class UserAPI extends BaseApi {
         });
     }
 }
+
+export default new UserAPI();

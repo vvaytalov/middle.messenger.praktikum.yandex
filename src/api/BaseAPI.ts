@@ -27,7 +27,8 @@ export default abstract class BaseAPI {
     getPath() {
         return `${this._baseUrl}${this._path}`;
     }
-    handleOptions(options: Record<any, any>) {
+    handleOptions(newOptions?: Record<any, any>) {
+        const options = newOptions || {};
         options.headers = options.headers || this._headers;
         return options;
     }
@@ -42,6 +43,12 @@ export default abstract class BaseAPI {
     }
     post(endpoint: `/${string}`, options: {}) {
         return this._http.post(
+            this.getPath() + endpoint,
+            this.handleOptions(options)
+        );
+    }
+    put(endpoint: `/${string}`, options?: {}) {
+        return this._http.put(
             this.getPath() + endpoint,
             this.handleOptions(options)
         );

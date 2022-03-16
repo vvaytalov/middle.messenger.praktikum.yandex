@@ -11,10 +11,11 @@ import Popup from '../../components/popup/popup';
 import Button from '../../components/button/button';
 import NewChatForm from '../../components/newChatForm/newChatForm';
 import { chatStore } from '../../stores/chatStore';
-import { chatController, userController } from '../../controllers/index';
 import ChatCardList from '../../components/chat/chatListCard/chatListCard';
 import UserList from '../../components/userList/userList';
 import AddChatUserForm from '../../components/addChatUserForm/addChatUserForm';
+import ChatController from '../../controllers/ChatControllers';
+import UserController from '../../controllers/UserControllers';
 
 import './chat.css';
 
@@ -61,11 +62,9 @@ export default class Chat extends Block {
             }),
             NewChatForm: new NewChatForm({
                 onSubmit: (formData) => {
-                    chatController
-                        .create({
-                            title: formData.title,
-                        })
-                        .then(() => this.props.NewChatPopup.hide());
+                    ChatController.create({
+                        title: formData.title,
+                    }).then(() => this.props.NewChatPopup.hide());
 
                     console.log(formData);
                 },
@@ -75,16 +74,14 @@ export default class Chat extends Block {
             }),
             AddChatUserForm: new AddChatUserForm({
                 onSubmit: (formData) => {
-                    userController
-                        .search({
-                            login: formData.login,
-                        })
-                        .then((res) => {
-                            console.log(res);
-                            this.props.UserList.setProps({
-                                users: res,
-                            });
+                    UserController.search({
+                        login: formData.login,
+                    }).then((res) => {
+                        console.log(res);
+                        this.props.UserList.setProps({
+                            users: res,
                         });
+                    });
                     console.log(formData);
                 },
             }),
@@ -101,7 +98,7 @@ export default class Chat extends Block {
     }
 
     public componentDidMount(): void {
-        chatController.request();
+        ChatController.request();
         chatStore.subscribe((state) => {
             this.props.ChatCardList.setProps({
                 chats: state.chats,

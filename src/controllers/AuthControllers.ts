@@ -2,13 +2,10 @@ import AuthAPI, { IAuthSignInApi, IAuthSignUpApi } from '../api/AuthApi';
 import { router } from '../index';
 import { hideSpinner, showSpinner } from '../utils/spinner';
 
-const authApi = new AuthAPI();
-
-export default class AuthControllers {
+class AuthControllers {
     public SignIn(user?: IAuthSignInApi) {
         showSpinner();
-        return authApi
-            .SignIn(user)
+        return AuthAPI.SignIn(user)
             .then((xhr) => {
                 console.log(xhr);
                 router.go('/');
@@ -26,8 +23,7 @@ export default class AuthControllers {
 
     public SignUp(user?: IAuthSignUpApi) {
         showSpinner();
-        return authApi
-            .SignUp(user)
+        return AuthAPI.SignUp(user)
             .then((xhr) => {
                 console.log(xhr);
                 router.go('/sign-in');
@@ -43,3 +39,5 @@ export default class AuthControllers {
             });
     }
 }
+
+export default new AuthControllers();
