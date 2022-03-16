@@ -117,7 +117,9 @@ class Templator {
 
                 const Component = value;
                 let template = '';
-                const items = this.context[props.of];
+                const items = this.context[props.of].map((el: any) => {
+                    return { ...el, ...props };
+                });
                 items.forEach((item: unknown, index: number) => {
                     this.context = {
                         ...this.context,
