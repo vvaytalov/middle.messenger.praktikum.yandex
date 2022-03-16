@@ -2,7 +2,7 @@ import { IProps } from '../../modules/Block';
 
 export const template = (props: IProps) => `
   <template
-    class="{{ className }}"
+    class="{{ classMix }}"
     type="{{ type }}"
     ${props.title ? 'title="{{ title }}"' : ''}
     ${props.menuIndex ? 'data-menu-index="{{ menuIndex }}"' : ''}

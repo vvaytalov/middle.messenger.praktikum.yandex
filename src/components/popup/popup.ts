@@ -9,6 +9,8 @@ interface IPopup {
     children?: string;
     closeButton?: boolean;
     comeBackButton?: boolean;
+    onOpen?: () => void;
+    onClose?: () => void;
 }
 
 export default class Popup extends Block {
@@ -21,6 +23,8 @@ export default class Popup extends Block {
             title: props.title ?? '',
             children: props.children ?? '',
             comeBackButton: props.comeBackButton ?? false,
+            onOpen: props.onOpen ?? (() => {}),
+            onClose: props.onClose ?? (() => {}),
         });
         this.handleOverlay = this.handleOverlay.bind(this);
         this.togglePopup = this.togglePopup.bind(this);
@@ -41,9 +45,11 @@ export default class Popup extends Block {
         if (isOpen) {
             popupElement.className = this.props.classNameRootOpen;
             document.addEventListener('mousedown', this.handleOverlay);
+            this.props.onOpen();
         } else {
             popupElement.className = this.props.classNameRoot;
             document.removeEventListener('mousedown', this.handleOverlay);
+            this.props.onClose();
         }
     }
 

@@ -7,7 +7,7 @@ export const template = () => `
       <div class="{{ className }}__side-panel-header">
         <SearchInput />
       </div>
-      <ContactCardList />
+      <ChatCardList />
       <div class="{{ className }}__side-panel-footer">
         <NewChatButton />
       </div>
@@ -17,6 +17,10 @@ export const template = () => `
       <MessageList />
       <MessageInput />
     </div>
+    <AddChatUserPopup>
+      <AddChatUserForm />
+      <UserList />
+    </AddChatUserPopup>
     <NewChatPopup>
       <NewChatForm />
     </NewChatPopup>

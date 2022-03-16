@@ -9,12 +9,14 @@ import Router from './modules/Router';
 
 export const router = new Router('.body');
 
-router
-    .use('/', Chat)
-    .use('/profile', Profile)
-    .use('/sign-in', SignInPage)
-    .use('/sign-up', SignUpPage)
-    .use('/change_password', ChangePassword)
-    .use('/500', Error500Page)
-    .use('*', Error404Page)
-    .start();
+document.addEventListener('DOMContentLoaded', () => {
+    router
+        .use('/', Chat)
+        .use('/profile', Profile)
+        .use('/sign-in', SignInPage)
+        .use('/sign-up', SignUpPage)
+        .use('/change_password', ChangePassword)
+        .use('/500', Error500Page)
+        .use('*', Error404Page)
+        .start();
+});

@@ -94,9 +94,44 @@ class Templator {
                     () => children,
                     this.context
                 );
-                value.setProps({
-                    children: compiledChildren,
+                setTimeout(() => {
+                    value.setProps({
+                        children: compiledChildren,
+                    });
+                }, 0);
+            }
+
+            // Итерация через атрибут of
+            if ('of' in props) {
+                if (this.context[props.of] === undefined) {
+                    throw new Error(
+                        `Не обнаружен контекст ${props.of}[] для компонента ${key}`
+                    );
+                }
+
+                if (!value?.prototype?.constructor) {
+                    throw new Error(
+                        `Контекст ${key} должен быть функцией-конструктором`
+                    );
+                }
+
+                const Component = value;
+                let template = '';
+                const items = this.context[props.of];
+                items.forEach((item: unknown, index: number) => {
+                    this.context = {
+                        ...this.context,
+                        [`_${key}${index}`]: new Component(item),
+                    };
+
+                    const component = this.context[`_${key}${index}`];
+
+                    window._componentStore[component._uuid] =
+                        component.getContent();
+                    // Вернуть элемент-маркер который будет заменен на элемент компонента
+                    template += `<node data-uuid="${component._uuid}"></node>`;
                 });
+                return template;
             }
 
             if (Array.isArray(value) && typeof props.key === 'string') {
@@ -150,6 +185,13 @@ function join(templates: string[]) {
     return templates.join('');
 }
 
+// Конструктор свойства style из объекта
+function stylize(props: Record<string, string>) {
+    return Object.entries(props).reduce((acc, [key, value], index, arr) => {
+        return `${acc}${key}:${value};${index === arr.length - 1 ? '"' : ''}`;
+    }, 'style="');
+}
+
 // Установщик атрибутов из объекта
 function setAttributes(attrs?: Record<string, string | number | boolean>) {
     if (!attrs) {
@@ -164,4 +206,4 @@ function setAttributes(attrs?: Record<string, string | number | boolean>) {
 }
 
 export const { compile } = new Templator();
-export { join, setAttributes };
+export { join, setAttributes, stylize };

@@ -71,7 +71,7 @@ export default class Store {
         subscriber(this.state);
     }
 
-    public seIState(nexIState: IState) {
+    public setState(nexIState: IState) {
         if (!nexIState) {
             return;
         }

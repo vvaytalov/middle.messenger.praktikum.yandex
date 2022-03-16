@@ -4,6 +4,10 @@
     gap: 8px;
 }
 
+.message:first-of-type {
+    margin: auto 0 0;
+}
+
 .message_outgoing-message {
     flex-direction: row-reverse;
 }

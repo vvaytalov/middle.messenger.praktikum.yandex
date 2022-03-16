@@ -17,7 +17,7 @@ interface IMessage {
 
 export default class Message extends Block {
     constructor(props: IMessage) {
-        super('div', {
+        super('li', {
             className: 'message',
             id: props.id,
             ownerId: props.ownerId,

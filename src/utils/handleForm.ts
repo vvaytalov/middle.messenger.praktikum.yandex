@@ -37,11 +37,21 @@ export function generateForm(props: IForm, formClassName: string) {
                     )
                 )}
             </div>
-            <div class='${formClassName}__input-button'>
-                ${props.buttons.map(
-                    (_: unknown, i: number) => `<Button key="${i}" />`
-                )}
-            </div>
+            ${
+                props.buttons.length > 0
+                    ? `
+                  <div class="${formClassName}__input-button">
+                    ${join(
+                        props.buttons.map(
+                            (_: unknown, index: number) => `
+                      <Button key="${index}" />
+                    `
+                        )
+                    )}
+                  </div>
+                `
+                    : ''
+            }
         </form>
     `;
 }

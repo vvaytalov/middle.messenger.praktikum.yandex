@@ -1,4 +1,4 @@
-import { template } from './NewChatForm.tmpl';
+import { template } from './newChatForm.tmpl';
 import Block from '../../modules/Block';
 import { compile } from '../../utils/templator';
 import {
@@ -14,8 +14,6 @@ interface INewChatForm {
 
 class NewChatForm extends Block {
     constructor(props: INewChatForm) {
-        console.log(props);
-
         super('div', {
             className: 'new-chat-form',
             classNameForm: 'new-chat-form__form',

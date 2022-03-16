@@ -68,7 +68,7 @@
 
 .chat-page__new-chat-popup {
     width: 100%;
-    max-width: 480px;
+    max-width: 550px;
 }
 
 /* Message window */
@@ -85,4 +85,7 @@
     padding: 24px;
     border-bottom: 1px solid #3a3a3a;
     min-width: calc(86 * var(--space));
+}
+.chat-page__user-list {
+    margin: 24px 0;
 }

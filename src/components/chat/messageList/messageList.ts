@@ -12,7 +12,8 @@ export default class MessageList extends Block {
     constructor(props: IMessageList) {
         super('ul', {
             className: 'message-list',
-            Message: props.messages.map((message) => new Message(message)),
+            Message,
+            messages: props.messages,
         });
     }
 

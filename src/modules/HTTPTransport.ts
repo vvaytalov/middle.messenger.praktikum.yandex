@@ -1,5 +1,3 @@
-import { queryStringify } from '../utils/queryStringify';
-
 enum METHODS {
     GET = 'GET',
     POST = 'POST',
@@ -8,43 +6,51 @@ enum METHODS {
     DELETE = 'DELETE',
 }
 
-type IRequestData = Record<string, string | number>;
-interface IOptions {
+type TRequestData = Record<string, string | number>;
+
+export type TRequestOptions = {
     method?: METHODS;
     headers?: Record<string, string>;
     timeout?: number;
     data?: unknown;
     withCredentials?: boolean;
+};
+
+function queryStringify(data: TRequestData) {
+    if (!data) return '';
+    return Object.entries(data).reduce((acc, [key, value], index, arr) => {
+        return `${acc}${key}=${value}${index < arr.length - 1 ? '&' : ''}`;
+    }, '?');
 }
 
 class HTTPTransport {
-    private _path: string;
+    private _parentPath: string;
 
-    constructor(_path: string = '') {
-        this._path = _path;
+    constructor(_parentPath: string = '') {
+        this._parentPath = _parentPath;
     }
 
-    public get = <T>(url: string, options = {}): Promise<T> => {
+    public get = (url: string, options = {}): Promise<XMLHttpRequest> => {
         return this.request(url, { ...options, method: METHODS.GET });
     };
 
-    public post = <T>(url: string, options = {}): Promise<T> => {
+    public post = (url: string, options = {}): Promise<XMLHttpRequest> => {
         return this.request(url, { ...options, method: METHODS.POST });
     };
 
-    public put = <T>(url: string, options = {}): Promise<T> => {
+    public put = (url: string, options = {}): Promise<XMLHttpRequest> => {
         return this.request(url, { ...options, method: METHODS.PUT });
     };
 
-    public patch = <T>(url: string, options = {}): Promise<T> => {
+    public patch = (url: string, options = {}): Promise<XMLHttpRequest> => {
         return this.request(url, { ...options, method: METHODS.PATCH });
     };
 
-    public delete = <T>(url: string, options = {}): Promise<T> => {
+    public delete = (url: string, options = {}): Promise<XMLHttpRequest> => {
         return this.request(url, { ...options, method: METHODS.DELETE });
     };
 
-    request = (url: string, options: IOptions): any => {
+    request = (url: string, options: TRequestOptions): any => {
         const {
             method = METHODS.GET,
             headers = {},
@@ -55,12 +61,12 @@ class HTTPTransport {
 
         // Если метод GET и передана data, трансформировать data в query запрос
         const query =
-            method === METHODS.GET ? queryStringify(data as IRequestData) : '';
+            method === METHODS.GET ? queryStringify(data as TRequestData) : '';
 
         return new Promise((resolve, reject) => {
-            const xhr = new window.XMLHttpRequest();
+            const xhr = new XMLHttpRequest();
 
-            xhr.open(method, this._path + url + query);
+            xhr.open(method, this._parentPath + url + query);
 
             if (withCredentials) {
                 xhr.withCredentials = true;
@@ -86,7 +92,7 @@ class HTTPTransport {
             if (method === METHODS.GET || !data) {
                 xhr.send();
             } else {
-                xhr.send(data as any);
+                xhr.send(JSON.stringify(data));
             }
         });
     };

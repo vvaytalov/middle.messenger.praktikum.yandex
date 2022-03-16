@@ -29,7 +29,7 @@ export default class MessageInput extends Block {
             SendButton: new Button({
                 type: 'submit',
                 icon: sendIcon,
-                light: true,
+                light: false,
             }),
             onMessageSend: props.onMessageSend,
             events: {
