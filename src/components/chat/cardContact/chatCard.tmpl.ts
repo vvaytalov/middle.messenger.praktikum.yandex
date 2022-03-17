@@ -1,7 +1,7 @@
 import { IProps } from '../../../modules/Block';
 
 export const template = (props: IProps) => `
-  <template class="{{ className }}">
+  <template class="{{ classNameRoot }}">
     <img
       class="{{ className }}__avatar"
       alt="Аватар пользователя"

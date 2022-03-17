@@ -11,6 +11,7 @@ interface IButton {
     color?: string;
     label?: string;
     title?: string;
+    disabled?: boolean;
     onClick?: () => void;
 }
 
@@ -25,6 +26,7 @@ export default class Button extends Block {
             color: props.color ?? '',
             label: props.label ?? '',
             title: props.title ?? '',
+            disabled: props.disabled,
             events: {
                 click: props.onClick,
             },

@@ -1,5 +1,5 @@
 export const template = () => `
-  <template class="{{ className }}">
+  <template class="{{ classNameRoot }}">
     <img
       class="{{ className }}__avatar"
       src="{{ avatar }}"

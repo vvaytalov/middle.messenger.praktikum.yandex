@@ -1,6 +1,4 @@
-import Spinner from '../components/spinner/spinner';
-
-const spinner = new Spinner();
+import spinner from '../components/spinner/spinner';
 
 export const showSpinner = () => {
     document.body.append(spinner.getContent());

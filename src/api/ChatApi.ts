@@ -50,8 +50,8 @@ class ChatAPI extends BaseAPI {
     /**
      * Получение токена пользователя
      */
-    public addTokenUser(chatID: number) {
-        return this.post(`/users/${chatID}`, {
+    public addTokenUser(chatId: number) {
+        return this.post(`/token/${chatId}`, {
             withCredentials: true,
         });
     }

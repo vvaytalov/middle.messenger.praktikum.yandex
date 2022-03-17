@@ -3,19 +3,19 @@ import Input from '../../components/input/input';
 import ChatHeader from '../../components/chat/chatHeader/chatHeader';
 import MessageList from '../../components/chat/messageList/messageList';
 import MessageInput from '../../components/chat/messageInput/messageInput';
-import { messages } from './mock/mock';
 import { compile } from '../../utils/templator';
 import { template } from './chat.tmpl';
 import Link from '../../components/link/link';
 import Popup from '../../components/popup/popup';
 import Button from '../../components/button/button';
 import NewChatForm from '../../components/newChatForm/newChatForm';
-import { chatStore } from '../../stores/chatStore';
 import ChatCardList from '../../components/chat/chatListCard/chatListCard';
 import UserList from '../../components/userList/userList';
 import AddChatUserForm from '../../components/addChatUserForm/addChatUserForm';
 import ChatController from '../../controllers/ChatControllers';
 import UserController from '../../controllers/UserControllers';
+import MessageController from '../../controllers/MessageWsController';
+import { store } from '../../store';
 
 import './chat.css';
 
@@ -23,14 +23,18 @@ export default class Chat extends Block {
     constructor() {
         super('div', {
             className: 'chat-page',
-            chats: chatStore.state.chats,
+            chats: store.state.chats,
             SearchInput: new Input({
                 placeholder: 'Поиск',
                 type: 'search',
-                onInput: (value) => console.log('Поле поиска:', value),
             }),
             ChatCardList: new ChatCardList({
-                chats: chatStore.state.chats,
+                chats: store.state.chats,
+                onSelect: (chatId) => {
+                    MessageController.leave();
+                    store.setState({ chatId });
+                    this.reqChat(chatId);
+                },
             }),
             ChatHeader: new ChatHeader({
                 name: 'vvaytalov',
@@ -40,12 +44,13 @@ export default class Chat extends Block {
                 onRemoveContact: () => console.log('Удалить чат'),
             }),
             MessageList: new MessageList({
-                messages,
+                messages: [],
             }),
             MessageInput: new MessageInput({
-                onMessageInput: (value) =>
-                    console.log('Ввод нового сообщения', value),
-                onMessageSend: (formData) => console.log(formData),
+                onMessageSend: ({ message }) =>
+                    !message.length
+                        ? null
+                        : MessageController.sendMessage(message),
             }),
             Link: new Link({
                 to: '/profile',
@@ -65,24 +70,27 @@ export default class Chat extends Block {
                     ChatController.create({
                         title: formData.title,
                     }).then(() => this.props.NewChatPopup.hide());
-
-                    console.log(formData);
                 },
             }),
+            selectedUsers: [],
             UserList: new UserList({
                 users: [],
+                onAdd: (userId) => {
+                    ChatController.addUserChat({
+                        users: userId,
+                        chatId: store.state.chatId,
+                    });
+                },
             }),
             AddChatUserForm: new AddChatUserForm({
                 onSubmit: (formData) => {
                     UserController.search({
                         login: formData.login,
                     }).then((res) => {
-                        console.log(res);
                         this.props.UserList.setProps({
                             users: res,
                         });
                     });
-                    console.log(formData);
                 },
             }),
             AddChatUserPopup: new Popup({
@@ -97,11 +105,35 @@ export default class Chat extends Block {
         });
     }
 
-    public componentDidMount(): void {
-        ChatController.request();
-        chatStore.subscribe((state) => {
+    public reqMessage(token: any = store.state.token): void {
+        MessageController.connect({
+            userId: store.state.currentUser.id,
+            chatId: store.state.chatId,
+            token,
+        });
+    }
+
+    public reqChat(chatId: number): void {
+        ChatController.requestMessageToken(chatId).then(({ token }) => {
+            store.setState({ chatId });
+            this.reqMessage(token);
+        });
+    }
+
+    componentDidMount() {
+        ChatController.request().then(() => {
+            this.reqChat(store.state.chatId);
+        });
+
+        store.subscribe((state) => {
             this.props.ChatCardList.setProps({
                 chats: state.chats,
+            });
+        });
+
+        store.subscribe((state) => {
+            this.props.MessageList.setProps({
+                messages: state.messages,
             });
         });
     }

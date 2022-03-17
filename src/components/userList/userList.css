@@ -1,4 +1,9 @@
 .user-list {
+    padding: 0;
+    margin: 0;
+}
+
+.user-list__user-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(3, 1fr);
@@ -6,4 +11,9 @@
     list-style: none;
     background: transparent;
     gap: 16px;
+    margin-bottom: 16px;
+}
+
+.user-list__add-button {
+    margin: 0 0 0 auto;
 }

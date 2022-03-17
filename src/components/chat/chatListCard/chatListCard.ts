@@ -7,6 +7,7 @@ import './chatListCard.css';
 
 interface IChatCardList {
     chats: unknown[];
+    onSelect: (chatId: number) => void;
 }
 
 export default class ChatCardList extends Block {
@@ -14,12 +15,12 @@ export default class ChatCardList extends Block {
         super('ul', {
             className: 'chat-card-list',
             chats: props.chats,
+            onSelect: props.onSelect ?? (() => {}),
             ChatCard,
         });
     }
 
     render() {
-        console.log('render ChatCardList', this.props.chats);
         return compile(template, this.props);
     }
 }

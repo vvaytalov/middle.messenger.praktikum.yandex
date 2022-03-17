@@ -10,7 +10,6 @@ import { handleFormSubmit, validateForm } from '../../../utils/handleForm';
 import './messageInput.css';
 
 interface IMessageInput {
-    onMessageInput: (value: string) => void;
     onMessageSend: (formData: Record<string, string>) => void;
 }
 
@@ -24,7 +23,6 @@ export default class MessageInput extends Block {
                 placeholder: 'Cообщение',
                 classMix: 'message-input__input',
                 name: 'message',
-                onInput: props.onMessageInput,
             }),
             SendButton: new Button({
                 type: 'submit',

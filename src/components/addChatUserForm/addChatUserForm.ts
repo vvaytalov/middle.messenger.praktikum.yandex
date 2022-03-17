@@ -25,7 +25,7 @@ class AddChatUserForm extends Block {
                     {
                         type: 'search',
                         name: 'login',
-                        label: 'Поиск по логину',
+                        placeholder: 'Поиск по логину',
                         validation: {
                             pattern: '[\\w.]*',
                             maxlength: 60,

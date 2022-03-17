@@ -7,9 +7,10 @@ interface ILink {
     type?: string;
     color?: boolean;
     target?: string;
-    to: string;
+    to?: string;
     label?: string;
     className?: string;
+    onClick?: () => void;
 }
 
 export default class Link extends Block {

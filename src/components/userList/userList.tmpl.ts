@@ -1,5 +1,8 @@
 export const template = () => `
-  <template class="{{ className }}">
-    <User of="users" />
+  <template class="{{ classNameRoot }}">
+    <ul class="{{ className }}__user-grid">
+      <User of="users" onClick="{{ onSelect }}" selectedUsers="{{ selectedUsers }}" />
+    </ul>
+    <ButtonAdd />
   </template>
 `;

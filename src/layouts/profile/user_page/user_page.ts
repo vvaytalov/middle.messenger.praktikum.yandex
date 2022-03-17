@@ -3,9 +3,9 @@ import Link from '../../../components/link/link';
 import avatarImage from '../../../assets/img/noavatar.svg';
 import { compile } from '../../../utils/templator';
 import { template } from './user_page.tmpl';
-import '../profile.css';
 import backButton from '../../../components/backButton/backButton';
 import { registerFormElements } from '../../../utils/handleForm';
+import '../profile.css';
 
 export default class Profile extends Block {
     constructor() {

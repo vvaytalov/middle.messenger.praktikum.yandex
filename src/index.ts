@@ -1,3 +1,4 @@
+import AuthControllers from './controllers/AuthControllers';
 import SignInPage from './layouts/auth/SignIn/SignIn';
 import SignUpPage from './layouts/auth/SignUp/SignUp';
 import Chat from './layouts/chat/chat';
@@ -11,6 +12,7 @@ export const router = new Router('.body');
 
 document.addEventListener('DOMContentLoaded', () => {
     router
+        .onRoute(AuthControllers.CheckAuth)
         .use('/', Chat)
         .use('/profile', Profile)
         .use('/sign-in', SignInPage)

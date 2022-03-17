@@ -1,6 +1,7 @@
 .chat-card {
     display: grid;
     padding: 8px;
+    margin-bottom: 8px;
     transition: box-shadow 0.25s;
     border-radius: 8px;
     grid-template-columns: min-content auto min-content;
@@ -13,6 +14,10 @@
 
 .chat-card-list__item {
     height: calc(10 * var(--space));
+}
+
+.chat-card__active {
+    background: var(--color-background-message);
 }
 
 .chat-card__avatar {
@@ -34,7 +39,7 @@
     width: 16px;
     height: 16px;
     margin: 0 4px 0 0;
-    background-image: url("../../../assets/img/noavatar.svg");
+    background-image: url('../../../assets/img/noavatar.svg');
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;

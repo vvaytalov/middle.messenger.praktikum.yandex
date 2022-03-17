@@ -1,7 +1,14 @@
 import ChatApi, { IChatApiCreate } from '../api/ChatApi';
 import { router } from '../index';
-import { chatStore } from '../stores/chatStore';
+import { store } from '../store';
+import { handleError } from '../utils/handleError';
 import { hideSpinner, showSpinner } from '../utils/spinner';
+
+export interface IChatApiAddUser {
+    users: number[];
+    chatId: number;
+}
+
 class ChatController {
     public create(data: IChatApiCreate) {
         showSpinner();
@@ -9,12 +16,7 @@ class ChatController {
             .then((xhr) => {
                 return JSON.parse(xhr.response);
             })
-            .catch((e) => {
-                if (!e.response) {
-                    Promise.reject(e);
-                    return router.go('/500');
-                }
-            })
+            .catch(handleError)
             .finally(() => {
                 hideSpinner();
             });
@@ -25,20 +27,40 @@ class ChatController {
         return ChatApi.request()
             .then((xhr) => {
                 const response = JSON.parse(xhr.response);
-                chatStore.setState({
+                store.setState({
                     chats: response,
                 });
-                return JSON.parse(xhr.response);
-            })
-            .catch((e) => {
-                if (!e.response) {
-                    Promise.reject(e);
-                    return router.go('/500');
+                if (!store.state.chatId) {
+                    store.setState({
+                        chatId: response[0]?.id || null,
+                    });
                 }
+                return response;
+            })
+            .catch((error) => {
+                router.go('/sign-in');
+                handleError(error);
             })
             .finally(() => {
                 hideSpinner();
             });
+    }
+
+    public addUserChat(data: IChatApiAddUser) {
+        return ChatApi.addChatUser(data)
+            .then((xhr) => {
+                const response = JSON.parse(xhr.response);
+                return response;
+            })
+            .catch(handleError);
+    }
+
+    public requestMessageToken(chatId: number) {
+        return ChatApi.addTokenUser(chatId)
+            .then((xhr) => {
+                return JSON.parse(xhr.response);
+            })
+            .catch(handleError);
     }
 }
 

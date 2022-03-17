@@ -7,6 +7,7 @@ export const template = (props: IProps) => `
     ${props.title ? 'title="{{ title }}"' : ''}
     ${props.menuIndex ? 'data-menu-index="{{ menuIndex }}"' : ''}
     ${props.menuName ? 'data-menu-name="{{ menuName }}"' : ''}
+    ${props.disabled ? 'disabled' : ''}
   >
     ${
         props.icon

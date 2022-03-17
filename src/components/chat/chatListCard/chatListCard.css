@@ -6,4 +6,5 @@
     list-style: none;
     gap: 16px;
     flex-grow: 1;
+    user-select: none;
 }
