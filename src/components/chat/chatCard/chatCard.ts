@@ -29,7 +29,7 @@ class ChatCard extends Block {
             created_by: props.created_by,
             title: props.title,
             avatar: props.avatar ?? defaultIcon,
-            last_message: props.last_message,
+            last_message: props.last_message ? props.last_message : null,
             onClick: props.onClick,
             events: {
                 click: () => this.props.onClick(this.props.id),
@@ -41,7 +41,7 @@ class ChatCard extends Block {
         return compile(template, {
             ...this.props,
             time: this.props.last_message?.time || null,
-            formattedTime: formatDate(this.props.last_message?.time || null),
+            formatted_time: formatDate(this.props.last_message?.time || null),
         });
     }
 }

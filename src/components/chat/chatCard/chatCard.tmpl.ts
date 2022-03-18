@@ -10,7 +10,7 @@ export const template = (props: IProps) => `
     <div class="{{ className }}__name-wrapper">
       <p class="{{ className }}__name">{{ title }}</p>
     </div>
-    <p class="{{ className }}__last-message">{{ lastMessage }}</p>
+    <p class="{{ className }}__last-message">{{ last_message.content }}</p>
     ${
         props.unread_count
             ? `<span class="{{ className }}__counter-unread-messages">
@@ -18,6 +18,6 @@ export const template = (props: IProps) => `
         </span>`
             : ''
     }
-    <date class="{{ className }}__updated-at" datetime="{{ updatedAt }}">{{ date }}</date>
+    <date class="{{ className }}__updated-at" datetime="{{ time }}">{{ formatted_time }}</date>
   </template>
 `;

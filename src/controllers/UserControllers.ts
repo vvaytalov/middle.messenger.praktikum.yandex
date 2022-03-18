@@ -7,8 +7,8 @@ export interface IUserApiSearch {
 class UserController {
     public search(data: IUserApiSearch) {
         return UserAPI.search(data)
-            .then((xhr) => {
-                return JSON.parse(xhr.response);
+            .then((users) => {
+                return users;
             })
             .catch(handleError);
     }

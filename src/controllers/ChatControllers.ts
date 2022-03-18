@@ -13,8 +13,8 @@ class ChatController {
     public create(data: IChatApiCreate) {
         showSpinner();
         return ChatApi.create(data)
-            .then((xhr) => {
-                return JSON.parse(xhr.response);
+            .then((chat) => {
+                return chat;
             })
             .catch(handleError)
             .finally(() => {
@@ -25,17 +25,17 @@ class ChatController {
     public request() {
         showSpinner();
         return ChatApi.request()
-            .then((xhr) => {
-                const response = JSON.parse(xhr.response);
+            .then((chats) => {
+                console.log(chats, '=========');
                 store.setState({
-                    chats: response,
+                    chats,
                 });
                 if (!store.state.chatId) {
                     store.setState({
-                        chatId: response[0]?.id || null,
+                        chatId: chats[0]?.id || null,
                     });
                 }
-                return response;
+                return chats;
             })
             .catch((error) => {
                 router.go('/sign-in');
@@ -48,9 +48,8 @@ class ChatController {
 
     public addUserChat(data: IChatApiAddUser) {
         return ChatApi.addChatUser(data)
-            .then((xhr) => {
-                const response = JSON.parse(xhr.response);
-                return response;
+            .then(() => {
+                throw new Error('Пользователь добавлен');
             })
             .catch(handleError);
     }
@@ -65,17 +64,16 @@ class ChatController {
 
     public requestUserChat(chatId: number) {
         return ChatApi.requestUserChat(chatId)
-            .then((xhr) => {
-                const response = JSON.parse(xhr.response);
-                return response;
+            .then((users) => {
+                return users;
             })
             .catch(handleError);
     }
 
     public requestMessageToken(chatId: number) {
         return ChatApi.addTokenUser(chatId)
-            .then((xhr) => {
-                return JSON.parse(xhr.response);
+            .then((auth) => {
+                return auth;
             })
             .catch(handleError);
     }

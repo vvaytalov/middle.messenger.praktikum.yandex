@@ -31,10 +31,9 @@ class AuthControllers {
 
     public CheckAuth() {
         return AuthAPI.CheckAuth()
-            .then((xhr) => {
-                const response = JSON.parse(xhr.response);
+            .then((user) => {                
                 store.setState({
-                    currentUser: response,
+                    currentUser: user,
                 });
             })
             .catch(handleError);

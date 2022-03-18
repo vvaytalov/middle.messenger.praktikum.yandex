@@ -53,10 +53,12 @@ class MessageController {
         const data = JSON.parse(evt.data);
 
         if (Array.isArray(data)) {
-            store.setState({ messages: data });
+            store.setState({
+                messages: data.map((item) => item),
+            });
         } else if (typeof data === 'object' && data.type === 'message') {
-            const message = [data, ...store.state.messages];
-            store.setState({ message });
+            const messages = [data, ...store.state.messages];
+            store.setState({ messages });
         }
     }
 

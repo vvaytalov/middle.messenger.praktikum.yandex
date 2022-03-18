@@ -46,6 +46,9 @@ export default class Chat extends Block {
             }),
             MessageList: new MessageList({
                 messages: [],
+                onEndList: (length) => {
+                    console.log(length);
+                },
             }),
             MessageInput: new MessageInput({
                 onMessageSend: ({ message }) =>
@@ -85,9 +88,9 @@ export default class Chat extends Block {
                 onSubmit: (formData) => {
                     UserController.search({
                         login: formData.login,
-                    }).then((res) => {
+                    }).then((users) => {
                         this.props.AddUserList.setProps({
-                            users: res,
+                            users,
                         });
                     });
                 },
