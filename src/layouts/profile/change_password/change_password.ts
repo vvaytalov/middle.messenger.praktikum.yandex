@@ -39,8 +39,7 @@ export default class ChangePassword extends Block {
                             required: true,
                             'data-error': PASSWORD_MSG,
                         },
-                        onInput: (value: string) => {
-                            console.log('Password:', value);
+                        onInput: () => {
                             this.props.repeatedPasswordValidate();
                         },
                         onValidate: () => this.validate(),
@@ -56,8 +55,7 @@ export default class ChangePassword extends Block {
                             required: true,
                             'data-error': PASSWORD_MSG,
                         },
-                        onInput: (value: string) => {
-                            console.log('Password:', value);
+                        onInput: () => {
                             this.props.repeatedPasswordValidate();
                         },
                         onValidate: () => this.validate(),

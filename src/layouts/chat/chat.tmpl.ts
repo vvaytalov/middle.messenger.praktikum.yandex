@@ -19,8 +19,11 @@ export const template = () => `
     </div>
     <AddChatUserPopup>
       <AddChatUserForm />
-      <UserList />
+      <AddUserList />
     </AddChatUserPopup>
+    <DeleteChatUserPopup>
+      <DeleteUserList />
+    </DeleteChatUserPopup>
     <NewChatPopup>
       <NewChatForm />
     </NewChatPopup>

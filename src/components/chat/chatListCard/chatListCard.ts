@@ -1,7 +1,7 @@
 import Block from '../../../modules/Block';
 import { compile } from '../../../utils/templator';
 import { template } from './chatListCard.tmpl';
-import ChatCard from '../cardContact/chatCard';
+import ChatCard from '../chatCard/chatCard';
 
 import './chatListCard.css';
 

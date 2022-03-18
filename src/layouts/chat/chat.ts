@@ -33,7 +33,8 @@ export default class Chat extends Block {
                 onSelect: (chatId) => {
                     MessageController.leave();
                     store.setState({ chatId });
-                    this.reqChat(chatId);
+                    localStorage.setItem('last_select-chat_id', `${chatId}`),
+                        this.reqChat(chatId);
                 },
             }),
             ChatHeader: new ChatHeader({
@@ -41,16 +42,14 @@ export default class Chat extends Block {
                 onAddContact: () => {
                     this.props.AddChatUserPopup.show();
                 },
-                onRemoveContact: () => console.log('Удалить чат'),
+                onRemoveContact: () => this.props.DeleteChatUserPopup.show(),
             }),
             MessageList: new MessageList({
                 messages: [],
             }),
             MessageInput: new MessageInput({
                 onMessageSend: ({ message }) =>
-                    !message.length
-                        ? null
-                        : MessageController.sendMessage(message),
+                    MessageController.sendMessage(message),
             }),
             Link: new Link({
                 to: '/profile',
@@ -73,9 +72,9 @@ export default class Chat extends Block {
                 },
             }),
             selectedUsers: [],
-            UserList: new UserList({
+            AddUserList: new UserList({
                 users: [],
-                onAdd: (userId) => {
+                onApply: (userId) => {
                     ChatController.addUserChat({
                         users: userId,
                         chatId: store.state.chatId,
@@ -87,7 +86,7 @@ export default class Chat extends Block {
                     UserController.search({
                         login: formData.login,
                     }).then((res) => {
-                        this.props.UserList.setProps({
+                        this.props.AddUserList.setProps({
                             users: res,
                         });
                     });
@@ -97,9 +96,47 @@ export default class Chat extends Block {
                 classMix: 'add-contact-popup',
                 title: 'Добавить пользователя',
                 onOpen: () => {
-                    this.props.UserList.setProps({
+                    this.props.AddUserList.setProps({
                         users: [],
+                        selectedUsers: [],
                     });
+                },
+            }),
+
+            DeleteChatUserPopup: new Popup({
+                classMix: 'delete-contact-popup',
+                title: 'Удалить пользователя',
+                onOpen: () => {
+                    this.props.DeleteUserList.setProps({
+                        users: [],
+                        selectedUsers: [],
+                    });
+                    ChatController.requestUserChat(store.state.chatId).then(
+                        (users) => {
+                            const usersRemove = users.filter((user: any) => {
+                                return user.id !== store.state.currentUser.id;
+                            });
+                            this.props.DeleteUserList.setProps({
+                                users: usersRemove,
+                            });
+                        }
+                    );
+                },
+            }),
+
+            DeleteUserList: new UserList({
+                className: 'user-list',
+                users: [],
+                buttonLabel: 'Удлаить',
+                onApply: (userId) => {
+                    if (!this.props.DeleteUserList.props.users.length) {
+                        return;
+                    }
+                    ChatController.deleteUserChat({
+                        users: userId,
+                        chatId: store.state.chatId,
+                    });
+                    this.props.DeleteChatUserPopup.hide();
                 },
             }),
         });
@@ -121,6 +158,14 @@ export default class Chat extends Block {
     }
 
     componentDidMount() {
+        const getChat = localStorage.getItem('last_select-chat_id');
+
+        if (getChat) {
+            store.setState({
+                chatId: +getChat,
+            });
+        }
+
         ChatController.request().then(() => {
             this.reqChat(store.state.chatId);
         });

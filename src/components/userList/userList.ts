@@ -8,7 +8,8 @@ import './userList.css';
 interface IUserList {
     className?: string;
     users: unknown[];
-    onAdd: (usersId: number[]) => void;
+    buttonLabel?: string;
+    onApply: (usersId: number[]) => void;
 }
 
 class UserList extends Block {
@@ -18,7 +19,7 @@ class UserList extends Block {
             classNameRoot: 'user-list chat-page__user-list',
             users: props.users,
             selectedUsers: [],
-            onAdd: props.onAdd,
+            onApply: props.onApply,
             onSelect: (userId: number) => {
                 if (this.props.selectedUsers.includes(userId)) {
                     const updatedSelectedUsers = [...this.props.selectedUsers];
@@ -35,11 +36,11 @@ class UserList extends Block {
                 ];
             },
             ButtonAdd: new Button({
-                label: 'Добавить',
+                label: props.buttonLabel ?? 'Добавить',
                 color: 'primary',
                 classMix: 'add-button',
                 onClick: () => {
-                    this.props.onAdd(this.props.selectedUsers);
+                    this.props.onApply(this.props.selectedUsers);
                 },
             }),
             User,

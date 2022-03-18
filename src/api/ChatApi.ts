@@ -55,6 +55,25 @@ class ChatAPI extends BaseAPI {
             withCredentials: true,
         });
     }
+
+    /**
+     * Удаление пользователя из чата
+     */
+    public deleteUserChat(data: IChatApiAddUser) {
+        return this.delete('/users', {
+            withCredentials: true,
+            data,
+        });
+    }
+
+    /**
+     * Запрос пользователей в чате
+     */
+    public requestUserChat(chatId: number) {
+        return this.get(`/${chatId}/users`, {
+            withCredentials: true,
+        });
+    }
 }
 
 export default new ChatAPI();

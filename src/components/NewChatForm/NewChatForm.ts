@@ -25,11 +25,10 @@ class NewChatForm extends Block {
                         name: 'title',
                         placeholder: 'Название',
                         validation: {
-                            pattern: '[\\w.]*',
+                            pattern: '[-A-Z0-9a-zА-Яа-я.\\s]*',
                             maxlength: 60,
                             required: true,
-                            'data-error':
-                                'Обязательно поле. Только англ. буквы, символ _ и точка',
+                            'data-error': 'Обязательно поле',
                         },
                         onInput: () => {},
                         onValidate: () => this.validate(),

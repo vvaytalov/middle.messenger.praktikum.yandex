@@ -47,7 +47,7 @@ export default class SignUpPage extends Block {
                             required: true,
                             'data-error': MAIL_MSG,
                         },
-                        onInput: (value: string) => console.log('Mail:', value),
+                        onInput: () => {},
                         onValidate: () => this.validate(),
                     },
                     {
@@ -61,8 +61,7 @@ export default class SignUpPage extends Block {
                             required: true,
                             'data-error': LOGIN_MSG,
                         },
-                        onInput: (value: string) =>
-                            console.log('Login:', value),
+                        onInput: () => {},
                         onValidate: () => this.validate(),
                     },
                     {
@@ -76,8 +75,7 @@ export default class SignUpPage extends Block {
                             required: true,
                             'data-error': NAME_MSG,
                         },
-                        onInput: (value: string) =>
-                            console.log('Login:', value),
+                        onInput: () => {},
                         onValidate: () => this.validate(),
                     },
                     {
@@ -91,8 +89,7 @@ export default class SignUpPage extends Block {
                             required: true,
                             'data-error': NAME_MSG,
                         },
-                        onInput: (value: string) =>
-                            console.log('Login:', value),
+                        onInput: () => {},
                         onValidate: () => this.validate(),
                     },
                     {
@@ -106,8 +103,7 @@ export default class SignUpPage extends Block {
                             required: true,
                             'data-error': TEL_MSG,
                         },
-                        onInput: (value: string) =>
-                            console.log('Login:', value),
+                        onInput: () => {},
                         onValidate: () => this.validate(),
                     },
                     {
@@ -121,8 +117,7 @@ export default class SignUpPage extends Block {
                             required: true,
                             'data-error': PASSWORD_MSG,
                         },
-                        onInput: (value: string) => {
-                            console.log('Password:', value);
+                        onInput: () => {
                             this.props.repeatedPasswordValidate();
                         },
                         onValidate: () => this.validate(),

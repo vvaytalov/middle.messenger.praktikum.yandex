@@ -4,7 +4,10 @@ import avatarImage from '../../../assets/img/noavatar.svg';
 import { compile } from '../../../utils/templator';
 import { template } from './user_page.tmpl';
 import backButton from '../../../components/backButton/backButton';
-import { registerFormElements } from '../../../utils/handleForm';
+import {
+    handleFormSubmit,
+    registerFormElements,
+} from '../../../utils/handleForm';
 import '../profile.css';
 
 export default class Profile extends Block {
@@ -70,9 +73,16 @@ export default class Profile extends Block {
                     },
                 ],
             },
+            events: {
+                click: (evt: Event) => this.handleSubmit(evt),
+            },
         });
 
         registerFormElements(this.props);
+    }
+
+    handleSubmit(evt: Event) {
+        handleFormSubmit(evt);
     }
 
     render(): string | void {

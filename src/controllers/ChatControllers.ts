@@ -55,6 +55,23 @@ class ChatController {
             .catch(handleError);
     }
 
+    public deleteUserChat(data: IChatApiAddUser) {
+        return ChatApi.deleteUserChat(data)
+            .then(() => {
+                console.log('Пользователь удален');
+            })
+            .catch(handleError);
+    }
+
+    public requestUserChat(chatId: number) {
+        return ChatApi.requestUserChat(chatId)
+            .then((xhr) => {
+                const response = JSON.parse(xhr.response);
+                return response;
+            })
+            .catch(handleError);
+    }
+
     public requestMessageToken(chatId: number) {
         return ChatApi.addTokenUser(chatId)
             .then((xhr) => {

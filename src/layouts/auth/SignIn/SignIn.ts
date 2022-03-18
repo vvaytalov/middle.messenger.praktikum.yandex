@@ -39,8 +39,7 @@ export default class SignInPage extends Block {
                             required: true,
                             'data-error': LOGIN_MSG,
                         },
-                        onInput: (value: string) =>
-                            console.log('Login:', value),
+                        onInput: () => {},
                         onValidate: () => this.validate(),
                     },
                     {
@@ -53,8 +52,7 @@ export default class SignInPage extends Block {
                             required: true,
                             'data-error': PASSWORD_MSG,
                         },
-                        onInput: (value: string) =>
-                            console.log('Password:', value),
+                        onInput: () => {},
                         onValidate: () => this.validate(),
                     },
                 ],

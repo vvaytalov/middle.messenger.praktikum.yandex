@@ -12,7 +12,7 @@ class Templator {
 
     constructor() {
         this.parserRegex =
-            /{{\s*([\w]+)\s*}}|<([A-Z]+\w+)\s*([^<>]+)\s*\/>|<(?<tag>[A-Z]+\w+)\s*(.*?)\s*>(.*?)<\/\k<tag>>/gs;
+            /{{\s*([\w.]+)\s*}}|<([A-Z]+\w+)\s*([^<>]+)\s*\/>|<(?<tag>[A-Z]+\w+)\s*(.*?)\s*>(.*?)<\/\k<tag>>/gs;
         this.context = null;
         this._handleFound = this._handleFound.bind(this);
         this.compile = this.compile.bind(this);
@@ -31,7 +31,9 @@ class Templator {
         // Иначе, поделить ключ по точке и ...
         const path = key.split('.');
         // Использовать как путь для извлечения из контекста
-        return path.reduce((acc, k) => acc[k], this.context);
+        return path.reduce((acc, k) => {
+            return !acc ? acc : acc[k];
+        }, this.context);
     }
 
     // Трансформация атрибутов в объект пропсов

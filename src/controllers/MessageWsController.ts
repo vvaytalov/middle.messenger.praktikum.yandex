@@ -14,6 +14,10 @@ export interface IMessageWebSocketGet {
 class MessageController {
     private _ws: WebSocket;
     public isConnected: boolean;
+    private _userId: number;
+    private _chatId: number;
+    private _token: string;
+    private _ping: any;
 
     constructor() {
         this.isConnected = false;
@@ -38,16 +42,21 @@ class MessageController {
     }
 
     private _handleOpen() {
-        console.log('💬 _handleOpen');
-        this.isConnected = true;
         this.getMessages({ offset: 0 });
+        this._ping = setInterval(() => {
+            // this._ws.send('');
+        });
     }
 
     private _handleMassage(evt: MessageEvent) {
         console.log('💬 _handleMassage', evt.data);
-        const messages = JSON.parse(evt.data);
-        if (Array.isArray(messages)) {
-            store.setState({ messages });
+        const data = JSON.parse(evt.data);
+
+        if (Array.isArray(data)) {
+            store.setState({ messages: data });
+        } else if (typeof data === 'object' && data.type === 'message') {
+            const message = [data, ...store.state.messages];
+            store.setState({ message });
         }
     }
 
@@ -56,18 +65,21 @@ class MessageController {
     }
 
     private _handleClose(evt: CloseEventInit) {
-        this.isConnected = false;
+        this._removeEvents();
         if (evt.wasClean) {
             console.log('💬 Соединение закрыто чисто');
         } else {
             console.log('💬 Обрыв соединения');
         }
-        console.log(`💬 Код: ${evt.code} | Причина: ${evt.reason}`);
+        if (evt.code === 1006) {
+            this._reconaction();
+        }
     }
 
     public connect(options: IMessageWebSocketConnect) {
-        console.log(this._ws);
-
+        this._userId = options.userId;
+        this._chatId = options.chatId;
+        this._token = options.token;
         this._ws = new WebSocket(
             `${env.HOST_WS}/${options.userId}/${options.chatId}/${options.token}`
         );
@@ -83,7 +95,16 @@ class MessageController {
         );
     }
 
+    private _reconaction() {
+        this.connect({
+            userId: this._userId,
+            chatId: this._chatId,
+            token: this._token,
+        });
+    }
+
     public leave() {
+        clearInterval(this._ping);
         this._ws.close();
         this._removeEvents();
     }
