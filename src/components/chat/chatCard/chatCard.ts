@@ -29,7 +29,7 @@ class ChatCard extends Block {
             created_by: props.created_by,
             title: props.title,
             avatar: props.avatar ?? defaultIcon,
-            last_message: props.last_message ? props.last_message : null,
+            last_message: props.last_message ? props.last_message : '',
             onClick: props.onClick,
             events: {
                 click: () => this.props.onClick(this.props.id),

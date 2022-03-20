@@ -21,6 +21,8 @@ interface IMessage {
 
 export default class Message extends Block {
     constructor(props: IMessage) {
+        console.log(props, '!!!!!!!!!');
+
         super('li', {
             className: 'message',
             classNameRoot:

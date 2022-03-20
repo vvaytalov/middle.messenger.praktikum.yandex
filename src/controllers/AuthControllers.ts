@@ -31,10 +31,18 @@ class AuthControllers {
 
     public CheckAuth() {
         return AuthAPI.CheckAuth()
-            .then((user) => {                
+            .then((user) => {
                 store.setState({
                     currentUser: user,
                 });
+            })
+            .catch(handleError);
+    }
+
+    public LogOut() {
+        return AuthAPI.LogOut()
+            .then(() => {
+                router.go('/sign-in');
             })
             .catch(handleError);
     }

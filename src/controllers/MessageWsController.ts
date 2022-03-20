@@ -53,6 +53,17 @@ class MessageController {
         const data = JSON.parse(evt.data);
 
         if (Array.isArray(data)) {
+            if (!data.length) {
+                store.setState({ messages: [] });
+            } else if (data[0].id === 0) {
+                store.setState({ message: data.map((item) => item) });
+            } else {
+                const messages = [
+                    ...store.state.messages,
+                    ...data.map((item) => item),
+                ];
+                store.setState({ messages });
+            }
             store.setState({
                 messages: data.map((item) => item),
             });

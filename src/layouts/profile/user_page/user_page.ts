@@ -9,6 +9,8 @@ import {
     registerFormElements,
 } from '../../../utils/handleForm';
 import '../profile.css';
+import AuthControllers from '../../../controllers/AuthControllers';
+import Button from '../../../components/button/button';
 
 export default class Profile extends Block {
     constructor() {
@@ -20,10 +22,12 @@ export default class Profile extends Block {
                 label: 'Изменить пароль',
                 to: '/change_password',
             }),
-            LinkLogout: new Link({
+            LinkLogout: new Button({
                 label: 'Выход',
-                to: '/sign-in',
-                color: true,
+                light: true,
+                onClick: () => {
+                    AuthControllers.LogOut();
+                },
             }),
             LinkBack: new backButton({
                 className: 'back',

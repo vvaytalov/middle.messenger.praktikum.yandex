@@ -27,7 +27,7 @@ export default class MessageList extends Block {
         this.handleScrollWithDebounce = debounce.call(
             this,
             this.handleScroll,
-            200
+            400
         );
         this.handleScroll = this.handleScroll.bind(this);
     }

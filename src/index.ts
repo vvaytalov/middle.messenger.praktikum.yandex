@@ -12,6 +12,7 @@ export const router = new Router('.body');
 
 document.addEventListener('DOMContentLoaded', () => {
     router
+        .setUnprotectedPaths(['/sign-in', '/sign-up', '/500'])
         .onRoute(AuthControllers.CheckAuth)
         .use('/', Chat)
         .use('/profile', Profile)

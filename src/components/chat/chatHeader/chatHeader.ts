@@ -3,7 +3,8 @@ import { template } from './chatHeader.tmpl';
 import defaultAvatar from '../../../assets/img/noavatar.svg';
 import Block from '../../../modules/Block';
 import moreIcon from '../../../assets/img/more.svg';
-import addContactIcon from '../../../assets/img/add-contact.svg';
+import addContactIcon from '../../../assets/img/addUser.png';
+import removeContactIcon from '../../../assets/img/delUser.png';
 import trashIcon from '../../../assets/img/trash.svg';
 import DropDownMenu from '../../dropDown/DropDownMenu';
 
@@ -14,6 +15,7 @@ interface IChatHeader {
     avatar?: string | null;
     onAddContact: () => void;
     onRemoveContact: () => void;
+    onRemoveChat: () => void;
 }
 
 class ChatHeader extends Block {
@@ -38,9 +40,14 @@ class ChatHeader extends Block {
                         onClick: props.onAddContact,
                     },
                     {
-                        icon: trashIcon,
+                        icon: removeContactIcon,
                         label: 'Удалить пользователя',
                         onClick: props.onRemoveContact,
+                    },
+                    {
+                        icon: trashIcon,
+                        label: 'Удалить чат',
+                        onClick: props.onRemoveChat,
                     },
                 ],
             }),

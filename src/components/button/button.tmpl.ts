@@ -14,6 +14,6 @@ export const template = (props: IProps) => `
             ? '<img class="{{ className }}__icon" src="{{ icon }}" alt="" />'
             : ''
     }
-    {{ label }}
+    <span class="{{ className }}__label">{{ label }}</span>
   </template>
 `;

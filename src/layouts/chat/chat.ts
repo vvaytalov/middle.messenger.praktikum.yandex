@@ -43,6 +43,7 @@ export default class Chat extends Block {
                     this.props.AddChatUserPopup.show();
                 },
                 onRemoveContact: () => this.props.DeleteChatUserPopup.show(),
+                onRemoveChat: () => ChatController.removeChat(),
             }),
             MessageList: new MessageList({
                 messages: [],
@@ -188,5 +189,9 @@ export default class Chat extends Block {
 
     render() {
         return compile(template, this.props);
+    }
+
+    onDestroy() {
+        MessageController.leave();
     }
 }

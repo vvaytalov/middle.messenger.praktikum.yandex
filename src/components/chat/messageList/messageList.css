@@ -6,4 +6,5 @@
     list-style: none;
     background: var(--color-background);
     gap: 16px;
+    overflow-anchor: none;
 }

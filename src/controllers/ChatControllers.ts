@@ -14,7 +14,10 @@ class ChatController {
         showSpinner();
         return ChatApi.create(data)
             .then((chat) => {
-                return chat;
+                return chat.id;
+            })
+            .then(() => {
+                return this.request();
             })
             .catch(handleError)
             .finally(() => {
@@ -26,7 +29,6 @@ class ChatController {
         showSpinner();
         return ChatApi.request()
             .then((chats) => {
-                console.log(chats, '=========');
                 store.setState({
                     chats,
                 });
@@ -76,6 +78,12 @@ class ChatController {
                 return auth;
             })
             .catch(handleError);
+    }
+
+    public removeChat() {
+        return ChatApi.removeChat(store.state.chatId).then(() => {
+            this.request();
+        });
     }
 }
 

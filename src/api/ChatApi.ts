@@ -74,6 +74,16 @@ class ChatAPI extends BaseAPI {
             withCredentials: true,
         });
     }
+
+    /**
+     * Удалить чат
+     */
+    public removeChat(chatId: number) {
+        return this.delete('/', {
+            withCredentials: true,
+            data: { chatId },
+        });
+    }
 }
 
 export default new ChatAPI();
