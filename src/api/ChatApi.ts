@@ -1,4 +1,4 @@
-import BaseAPI from './BaseApi';
+import BaseAPI from './BaseAPI';
 
 export interface IChatApiCreate {
     title: string;

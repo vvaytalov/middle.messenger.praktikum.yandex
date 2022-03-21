@@ -1,4 +1,3 @@
-import { template } from './newChatForm.tmpl';
 import Block from '../../modules/Block';
 import { compile } from '../../modules/templator';
 import {
@@ -6,14 +5,16 @@ import {
     registerFormElements,
     validateForm,
 } from '../../utils/handleForm';
-import './NewChatForm.css';
 import { REGEX_TEXT, VALUE } from '../../utils/regEx';
+import { template } from './newChat.tmpl';
+
+import './newChat.css';
 
 interface INewChatForm {
     onSubmit: (formData: Record<string, string>) => void;
 }
 
-class NewChatForm extends Block {
+export default class newChat extends Block {
     constructor(props: INewChatForm) {
         super('div', {
             className: 'new-chat-form',
@@ -72,5 +73,3 @@ class NewChatForm extends Block {
         return compile(template, this.props);
     }
 }
-
-export default NewChatForm;

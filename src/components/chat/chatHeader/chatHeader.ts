@@ -6,7 +6,7 @@ import moreIcon from '../../../assets/img/more.svg';
 import addContactIcon from '../../../assets/img/addUser.png';
 import removeContactIcon from '../../../assets/img/delUser.png';
 import trashIcon from '../../../assets/img/trash.svg';
-import DropDownMenu from '../../dropDown/DropDownMenu';
+import DropDownMenu from '../../dropDown/dropDownMenu';
 
 import './chatHeader.css';
 import { store } from '../../../store';

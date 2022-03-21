@@ -1,7 +1,7 @@
 import defaultImage from '../../assets/img/noavatar.svg';
 import Block from '../../modules/Block';
 import { compile } from '../../modules/templator';
-import { template } from './ImageFile.tmpl';
+import { template } from './imageFile.tmpl';
 import './imageFile.css';
 
 interface IImageFile {

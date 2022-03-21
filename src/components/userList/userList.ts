@@ -1,4 +1,4 @@
-import { template } from './UserList.tmpl';
+import { template } from './userList.tmpl';
 import Block from '../../modules/Block';
 import { compile } from '../../modules/templator';
 import User from '../user/user';

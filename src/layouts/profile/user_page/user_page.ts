@@ -25,10 +25,10 @@ import {
     VALUE,
 } from '../../../utils/regEx';
 
-import ImageFile from '../../../components/imageFile/ImageFile';
 import env from '../../../utils/env';
 import '../profile.css';
 import { store } from '../../../store';
+import ImageFile from '../../../components/imageFile/imageFile';
 export default class Profile extends Block {
     constructor() {
         super('main', {

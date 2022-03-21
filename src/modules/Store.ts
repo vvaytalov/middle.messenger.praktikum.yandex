@@ -1,4 +1,4 @@
-import EventBus from './EventBus';
+import EventBus from './eventBus';
 
 export type IState = Record<string, any>;
 

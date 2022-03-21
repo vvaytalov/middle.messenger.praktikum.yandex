@@ -1,24 +1,25 @@
-import Block from '../../modules/Block';
-import Input from '../../components/input/input';
+import AddChatUserForm from '../../components/addChatUserForm/addChatUserForm';
+import Button from '../../components/button/button';
 import ChatHeader from '../../components/chat/chatHeader/chatHeader';
-import MessageList from '../../components/chat/messageList/messageList';
+import ChatCardList from '../../components/chat/chatListCard/chatListCard';
 import MessageInput from '../../components/chat/messageInput/messageInput';
-import { compile } from '../../modules/templator';
-import { template } from './chat.tmpl';
+import MessageList from '../../components/chat/messageList/messageList';
+import Input from '../../components/input/input';
 import Link from '../../components/link/link';
 import Popup from '../../components/popup/popup';
-import Button from '../../components/button/button';
-import NewChatForm from '../../components/newChatForm/newChatForm';
-import ChatCardList from '../../components/chat/chatListCard/chatListCard';
 import UserList from '../../components/userList/userList';
-import AddChatUserForm from '../../components/addChatUserForm/addChatUserForm';
-import ChatController from '../../controllers/ChatControllers';
-import UserController from '../../controllers/UserControllers';
-import MessageController from '../../controllers/MessageWsController';
+import {
+    ChatController,
+    MessageController,
+    UserController,
+} from '../../controllers/index';
+import Block from '../../modules/Block';
+import { compile } from '../../modules/templator';
 import { store } from '../../store';
+import { template } from './chat.tmpl';
+import newChat from '../../components/newChat/newChat';
 
 import './chat.css';
-
 export default class Chat extends Block {
     constructor() {
         super('div', {
@@ -68,7 +69,7 @@ export default class Chat extends Block {
                 light: false,
                 onClick: () => this.props.NewChatPopup.show(),
             }),
-            NewChatForm: new NewChatForm({
+            NewChatForm: new newChat({
                 onSubmit: (formData) => {
                     ChatController.create({
                         title: formData.title,

@@ -1,4 +1,4 @@
-import Button from '../Button/Button';
+import Button from '../button/button';
 import { template } from './dropDownMenu.tmpl';
 import Block from '../../modules/Block';
 import { compile } from '../../modules/templator';
