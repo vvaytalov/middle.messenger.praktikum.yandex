@@ -32,4 +32,4 @@
 
 ## Pull requests
 
-https://github.com/vvaytalov/middle.messenger.praktikum.yandex/pull/2
+https://github.com/vvaytalov/middle.messenger.praktikum.yandex/pull/3
