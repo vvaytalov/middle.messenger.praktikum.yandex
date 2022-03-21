@@ -1,4 +1,4 @@
-import { compile } from '../../../utils/templator';
+import { compile } from '../../../modules/templator';
 import { template } from './messageInput.tmpl';
 import sendIcon from '../../../assets/img/message-arrow.svg';
 import Block from '../../../modules/Block';

@@ -1,6 +1,6 @@
 import Block from '../../modules/Block';
 import Link from '../link/link';
-import { compile } from '../../utils/templator';
+import { compile } from '../../modules/templator';
 import { template } from './error.tmpl';
 import './error.css';
 

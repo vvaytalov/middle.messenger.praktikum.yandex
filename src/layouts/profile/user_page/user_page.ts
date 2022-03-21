@@ -1,7 +1,7 @@
 import Block from '../../../modules/Block';
 import Link from '../../../components/link/link';
 import avatarImage from '../../../assets/img/noavatar.svg';
-import { compile } from '../../../utils/templator';
+import { compile } from '../../../modules/templator';
 import { template } from './user_page.tmpl';
 import backButton from '../../../components/backButton/backButton';
 import {

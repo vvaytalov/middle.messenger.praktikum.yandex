@@ -1,4 +1,4 @@
-import { compile } from '../../../utils/templator';
+import { compile } from '../../../modules/templator';
 import { template } from './messageList.tmpl';
 import Block from '../../../modules/Block';
 import Message from '../message/message';

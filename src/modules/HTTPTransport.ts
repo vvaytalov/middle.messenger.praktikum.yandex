@@ -64,7 +64,7 @@ class HTTPTransport {
             method === METHODS.GET ? queryStringify(data as TRequestData) : '';
 
         return new Promise((resolve, reject) => {
-            const xhr = new XMLHttpRequest();
+            const xhr = new window.XMLHttpRequest();
 
             xhr.open(method, this._parentPath + url + query);
 

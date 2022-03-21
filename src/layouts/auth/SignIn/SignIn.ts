@@ -1,6 +1,6 @@
 import Block from '../../../modules/Block';
 import { template } from './SignIn.tmpl';
-import { compile } from '../../../utils/templator';
+import { compile } from '../../../modules/templator';
 import Link from '../../../components/link/link';
 import {
     handleFormSubmit,

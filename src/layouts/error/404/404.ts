@@ -1,5 +1,5 @@
 import Block from '../../../modules/Block';
-import { compile } from '../../../utils/templator';
+import { compile } from '../../../modules/templator';
 import { template } from './404.tmpl';
 import Error from '../../../components/error/error';
 

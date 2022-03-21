@@ -1,4 +1,4 @@
-import { compile } from '../../../utils/templator';
+import { compile } from '../../../modules/templator';
 import { template } from './message.tmpl';
 import defaultAvatar from '../../../assets/img/noavatar.svg';
 import Block from '../../../modules/Block';

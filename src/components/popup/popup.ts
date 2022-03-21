@@ -1,4 +1,4 @@
-import { compile } from '../../utils/templator';
+import { compile } from '../../modules/templator';
 import { template } from './popup.tmpl';
 import Block from '../../modules/Block';
 import './popup.css';

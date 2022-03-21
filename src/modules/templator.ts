@@ -1,4 +1,4 @@
-import { IProps } from '../modules/Block';
+import { IProps } from './Block';
 
 declare global {
     interface Window {

@@ -1,5 +1,5 @@
 import { IProps } from '../../modules/Block';
-import { join, stylize } from '../../utils/templator';
+import { join, stylize } from '../../modules/templator';
 
 export const template = (props: IProps) => `
 <template class="{{ className }}">

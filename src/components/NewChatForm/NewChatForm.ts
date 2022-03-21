@@ -1,6 +1,6 @@
 import { template } from './newChatForm.tmpl';
 import Block from '../../modules/Block';
-import { compile } from '../../utils/templator';
+import { compile } from '../../modules/templator';
 import {
     handleFormSubmit,
     registerFormElements,

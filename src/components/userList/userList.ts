@@ -1,6 +1,6 @@
 import { template } from './UserList.tmpl';
 import Block from '../../modules/Block';
-import { compile } from '../../utils/templator';
+import { compile } from '../../modules/templator';
 import User from '../user/user';
 import Button from '../button/button';
 import './userList.css';

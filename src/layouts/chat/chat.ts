@@ -3,7 +3,7 @@ import Input from '../../components/input/input';
 import ChatHeader from '../../components/chat/chatHeader/chatHeader';
 import MessageList from '../../components/chat/messageList/messageList';
 import MessageInput from '../../components/chat/messageInput/messageInput';
-import { compile } from '../../utils/templator';
+import { compile } from '../../modules/templator';
 import { template } from './chat.tmpl';
 import Link from '../../components/link/link';
 import Popup from '../../components/popup/popup';

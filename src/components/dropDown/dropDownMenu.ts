@@ -1,7 +1,7 @@
 import Button from '../Button/Button';
 import { template } from './dropDownMenu.tmpl';
 import Block from '../../modules/Block';
-import { compile } from '../../utils/templator';
+import { compile } from '../../modules/templator';
 import './dropDownMenu.css';
 
 interface IDropDownMenu {

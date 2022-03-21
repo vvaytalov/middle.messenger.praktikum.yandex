@@ -1,7 +1,7 @@
 import Link from '../../../components/link/link';
 import Block from '../../../modules/Block';
 import { template } from './SignUp.tmpl';
-import { compile } from '../../../utils/templator';
+import { compile } from '../../../modules/templator';
 import {
     handleFormSubmit,
     registerFormElements,

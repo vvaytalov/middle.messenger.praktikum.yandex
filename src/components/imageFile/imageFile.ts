@@ -1,6 +1,6 @@
 import defaultImage from '../../assets/img/noavatar.svg';
 import Block from '../../modules/Block';
-import { compile } from '../../utils/templator';
+import { compile } from '../../modules/templator';
 import { template } from './ImageFile.tmpl';
 import './imageFile.css';
 

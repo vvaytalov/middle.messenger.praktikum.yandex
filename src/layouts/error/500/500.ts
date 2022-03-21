@@ -1,6 +1,6 @@
 import Error from '../../../components/error/error';
 import Block from '../../../modules/Block';
-import { compile } from '../../../utils/templator';
+import { compile } from '../../../modules/templator';
 import { template } from './500.tmpl';
 
 export default class Error500Page extends Block {

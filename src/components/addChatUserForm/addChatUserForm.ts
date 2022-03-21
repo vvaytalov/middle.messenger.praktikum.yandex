@@ -6,7 +6,7 @@ import {
     registerFormElements,
     validateForm,
 } from '../../utils/handleForm';
-import { compile } from '../../utils/templator';
+import { compile } from '../../modules/templator';
 
 import './addChatUserForm.css';
 

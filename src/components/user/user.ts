@@ -1,7 +1,7 @@
 import { template } from './user.tmpl';
 import defaultAvatar from '../../assets/img/noavatar.svg';
 import Block from '../../modules/Block';
-import { compile } from '../../utils/templator';
+import { compile } from '../../modules/templator';
 import env from '../../utils/env';
 import './user.css';
 

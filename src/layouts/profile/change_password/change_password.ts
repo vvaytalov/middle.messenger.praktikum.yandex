@@ -1,7 +1,7 @@
 import Link from '../../../components/link/link';
 import Block from '../../../modules/Block';
 import avatarImage from '../../../assets/img/noavatar.svg';
-import { compile } from '../../../utils/templator';
+import { compile } from '../../../modules/templator';
 import { template } from './change_password.tmpl';
 
 import '../profile.css';

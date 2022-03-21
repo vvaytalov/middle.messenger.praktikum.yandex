@@ -2,7 +2,7 @@ import Button from '../components/button/button';
 import Input from '../components/input/input';
 import { IProps } from '../modules/Block';
 
-import { join } from './templator';
+import { join } from '../modules/templator';
 
 export type IFormField = {
     type?: string;
