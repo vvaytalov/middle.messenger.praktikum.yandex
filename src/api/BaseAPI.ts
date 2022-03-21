@@ -36,7 +36,12 @@ export default abstract class BaseAPI {
     }
 
     private handleResponse(res: XMLHttpRequest) {
+        if (res.response === 'OK') {
+            return { ok: true };
+        }
+
         const response = JSON.parse(res.response);
+
         if (response && Array.isArray(response)) {
             return response.map((item) => item);
         }

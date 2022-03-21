@@ -6,8 +6,7 @@ export const template = (props: IProps): string =>
     <template class="{{className}}">
         <div class="{{className}}__main">
             <div class="{{className}}__avatar">
-                <img src={{ avatar }} alt="avatar"/>
-                <h2>{{ title }}</h2>
+                <AvatarChoose />
             </div>
             ${generateForm(props.form, '{{className}}')}
             <div class="{{className}}__group">

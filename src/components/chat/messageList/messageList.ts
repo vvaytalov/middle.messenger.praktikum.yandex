@@ -41,6 +41,10 @@ export default class MessageList extends Block {
                 this.props.onEndList(this.props.messages.length);
             }
         }
+    }
+
+    public scrollToLastMessage() {
+        const list = this.getContent();
         list.scrollTo({
             top: list.scrollHeight,
         });

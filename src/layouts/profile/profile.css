@@ -71,3 +71,9 @@
 .profile__logout {
     margin-top: calc(2 * var(--space));
 }
+
+.profile__choose-avatar {
+    width: 128px;
+    height: 128px;
+    border-radius: 65px;
+}

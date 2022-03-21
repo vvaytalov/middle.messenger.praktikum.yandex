@@ -4,7 +4,11 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    background: var(--color-background);
+    background-image: url('../../../assets/img/chat-bg.png');
+    background-position: top left;
+    background-size: 650px;
+    background-repeat: repeat;
+    background-color: var(--color-chat-bg);
     gap: 16px;
     overflow-anchor: none;
 }

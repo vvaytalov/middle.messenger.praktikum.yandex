@@ -13,14 +13,12 @@ export interface IMessageWebSocketGet {
 
 class MessageController {
     private _ws: WebSocket;
-    public isConnected: boolean;
     private _userId: number;
     private _chatId: number;
     private _token: string;
     private _ping: any;
 
     constructor() {
-        this.isConnected = false;
         this._handleOpen = this._handleOpen.bind(this);
         this._handleMassage = this._handleMassage.bind(this);
         this._handleError = this._handleError.bind(this);
@@ -44,8 +42,8 @@ class MessageController {
     private _handleOpen() {
         this.getMessages({ offset: 0 });
         this._ping = setInterval(() => {
-            // this._ws.send('');
-        });
+            this._ws.send('');
+        }, 10000);
     }
 
     private _handleMassage(evt: MessageEvent) {

@@ -9,6 +9,7 @@ import trashIcon from '../../../assets/img/trash.svg';
 import DropDownMenu from '../../dropDown/DropDownMenu';
 
 import './chatHeader.css';
+import { store } from '../../../store';
 
 interface IChatHeader {
     name: string;
@@ -23,7 +24,7 @@ class ChatHeader extends Block {
         super('div', {
             className: 'chat-header',
             avatar: props.avatar ?? defaultAvatar,
-            name: props.name ?? '',
+            name: '',
             ContactMenu: new DropDownMenu({
                 classMix: 'more-menu',
                 icon: moreIcon,
@@ -51,6 +52,14 @@ class ChatHeader extends Block {
                     },
                 ],
             }),
+        });
+    }
+
+    public componentDidMount(): void {
+        store.subscribe((state) => {
+            this.props.name =
+                state.chats.find((chat: any) => chat.id === state?.chatId)
+                    ?.title || 'Выберете или создайте чат';
         });
     }
 

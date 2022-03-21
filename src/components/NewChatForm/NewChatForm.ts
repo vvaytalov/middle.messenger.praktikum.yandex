@@ -7,6 +7,7 @@ import {
     validateForm,
 } from '../../utils/handleForm';
 import './NewChatForm.css';
+import { REGEX_TEXT, VALUE } from '../../utils/regEx';
 
 interface INewChatForm {
     onSubmit: (formData: Record<string, string>) => void;
@@ -25,10 +26,10 @@ class NewChatForm extends Block {
                         name: 'title',
                         placeholder: 'Название',
                         validation: {
-                            pattern: '[-A-Z0-9a-zА-Яа-я.\\s]*',
+                            pattern: REGEX_TEXT,
                             maxlength: 60,
                             required: true,
-                            'data-error': 'Обязательно поле',
+                            'data-error': VALUE,
                         },
                         onInput: () => {},
                         onValidate: () => this.validate(),

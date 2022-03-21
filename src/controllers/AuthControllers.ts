@@ -36,15 +36,17 @@ class AuthControllers {
                     currentUser: user,
                 });
             })
-            .catch(handleError);
+            .catch((e) => {
+                handleError(e);
+                router.go('/sign-in');
+            });
     }
 
     public LogOut() {
-        return AuthAPI.LogOut()
-            .then(() => {
-                router.go('/sign-in');
-            })
-            .catch(handleError);
+        return AuthAPI.LogOut().then(() => {
+            localStorage.removeItem('last_select-chat_id');
+            router.go('/sign-in');
+        });
     }
 }
 

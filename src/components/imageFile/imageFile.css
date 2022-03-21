@@ -1,0 +1,49 @@
+.image-file {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    cursor: pointer;
+    margin: auto;
+}
+.image-file:active {
+    transform: scale(0.95);
+}
+
+/* .image-file:focus {
+    box-shadow: 0 0 0 4px var(--color-selected);
+} */
+
+.image-file:hover:after {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    content: '';
+    background-color: rgba(0, 0, 0, 0.5);
+    background-image: url('../../assets/img/edit.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 24px;
+    border-radius: 65px;
+}
+
+.image-file__input {
+    overflow: hidden;
+    width: 128px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.image-file__image {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}

@@ -15,6 +15,27 @@ class UserAPI extends BaseApi {
     public search(data?: IUserAPI) {
         return this.post('/search', {
             withCredentials: true,
+            data: JSON.stringify(data),
+        });
+    }
+
+    /**
+     * Обновить данные в профиле
+     */
+    public updateProfile(data?: IUserAPI) {
+        return this.put('/profile', {
+            withCredentials: true,
+            data: JSON.stringify(data),
+        });
+    }
+
+    /**
+     * Обновить аватар
+     */
+    public updateAvatar(data?: FormData) {
+        return this.put('/profile/avatar', {
+            headers: {},
+            withCredentials: true,
             data,
         });
     }

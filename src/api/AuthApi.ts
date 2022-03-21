@@ -25,7 +25,7 @@ class AuthAPI extends BaseAPI {
     public SignIn(data?: IAuthSignInApi) {
         return this.post('/signin', {
             withCredentials: true,
-            data,
+            data: JSON.stringify(data),
         });
     }
 
@@ -34,7 +34,7 @@ class AuthAPI extends BaseAPI {
      */
     public SignUp(data?: IAuthSignUpApi) {
         return this.post('/signup', {
-            data,
+            data: JSON.stringify(data),
         });
     }
 

@@ -31,6 +31,7 @@ export default class Chat extends Block {
             ChatCardList: new ChatCardList({
                 chats: store.state.chats,
                 onSelect: (chatId) => {
+                    store.setState({ messages: [] });
                     MessageController.leave();
                     store.setState({ chatId });
                     localStorage.setItem('last_select-chat_id', `${chatId}`),
@@ -47,13 +48,12 @@ export default class Chat extends Block {
             }),
             MessageList: new MessageList({
                 messages: [],
-                onEndList: (length) => {
-                    console.log(length);
-                },
             }),
             MessageInput: new MessageInput({
-                onMessageSend: ({ message }) =>
+                onMessageSend: ({ message }) => {
                     MessageController.sendMessage(message),
+                        this.props.MessageList.scrollToLastMessage();
+                },
             }),
             Link: new Link({
                 to: '/profile',
@@ -155,6 +155,10 @@ export default class Chat extends Block {
     }
 
     public reqChat(chatId: number): void {
+        if (!chatId) {
+            return;
+        }
+
         ChatController.requestMessageToken(chatId).then(({ token }) => {
             store.setState({ chatId });
             this.reqMessage(token);
@@ -192,6 +196,12 @@ export default class Chat extends Block {
     }
 
     onDestroy() {
-        MessageController.leave();
+        if (store.state.chats.length) {
+            MessageController.leave();
+        }
+        store.setState({
+            chats: [],
+            messages: [],
+        });
     }
 }
