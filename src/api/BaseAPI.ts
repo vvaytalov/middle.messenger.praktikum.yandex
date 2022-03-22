@@ -42,11 +42,11 @@ export default abstract class BaseAPI {
 
         const response = JSON.parse(res.response);
 
-        if (response && Array.isArray(response)) {
-            return response.map((item) => item);
-        }
-
-        if (response && typeof response === 'object') {
+        if (
+            response &&
+            typeof response === 'object' &&
+            response.toString() === '[object Object]'
+        ) {
             return response;
         }
 

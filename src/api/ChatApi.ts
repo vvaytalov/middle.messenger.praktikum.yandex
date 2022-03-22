@@ -24,7 +24,7 @@ class ChatAPI extends BaseAPI {
     public create(data?: IChatApiCreate) {
         return this.post('/', {
             withCredentials: true,
-            data: JSON.stringify(data),
+            data,
         });
     }
 
@@ -43,7 +43,7 @@ class ChatAPI extends BaseAPI {
     public addChatUser(data: IChatApiAddUser) {
         return this.put('/users', {
             withCredentials: true,
-            data: JSON.stringify(data),
+            data,
         });
     }
 
@@ -62,7 +62,7 @@ class ChatAPI extends BaseAPI {
     public deleteUserChat(data: IChatApiAddUser) {
         return this.delete('/users', {
             withCredentials: true,
-            data: JSON.stringify(data),
+            data,
         });
     }
 

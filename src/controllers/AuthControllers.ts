@@ -25,7 +25,7 @@ class AuthControllers {
             })
             .catch(handleError)
             .finally(() => {
-                showSpinner();
+                hideSpinner();
             });
     }
 

@@ -64,7 +64,7 @@ class HTTPTransport {
             method === METHODS.GET ? queryStringify(data as TRequestData) : '';
 
         return new Promise((resolve, reject) => {
-            const xhr = new window.XMLHttpRequest();
+            const xhr = new XMLHttpRequest();
 
             xhr.open(method, this._parentPath + url + query);
 
@@ -92,7 +92,7 @@ class HTTPTransport {
             if (method === METHODS.GET || !data) {
                 xhr.send();
             } else {
-                xhr.send(data as any);
+                xhr.send(JSON.stringify(data));
             }
         });
     };

@@ -15,7 +15,7 @@ class UserAPI extends BaseApi {
     public search(data?: IUserAPI) {
         return this.post('/search', {
             withCredentials: true,
-            data: JSON.stringify(data),
+            data,
         });
     }
 
@@ -25,7 +25,7 @@ class UserAPI extends BaseApi {
     public updateProfile(data?: IUserAPI) {
         return this.put('/profile', {
             withCredentials: true,
-            data: JSON.stringify(data),
+            data,
         });
     }
 
