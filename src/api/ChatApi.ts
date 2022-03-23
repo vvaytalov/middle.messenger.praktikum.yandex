@@ -81,7 +81,7 @@ class ChatAPI extends BaseAPI {
     public removeChat(chatId: number) {
         return this.delete('/', {
             withCredentials: true,
-            data: JSON.stringify({ chatId }),
+            data: { chatId },
         });
     }
 }
