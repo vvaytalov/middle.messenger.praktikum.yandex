@@ -1,5 +1,5 @@
 import { IProps } from '../../../modules/Block';
-import generateForm from '../../../utils/generateForm';
+import { generateForm } from '../../../utils/handleForm';
 
 export const template = (props: IProps): string =>
     `
@@ -14,8 +14,6 @@ export const template = (props: IProps): string =>
                 <Link />
             </div>
         </div>
-        <a href="./index.html" class="back">
-            <div class="arrow"></div>
-        </a>
+        <LinkBack />
     </template>
 `;

@@ -33,8 +33,9 @@
     --color-background: #212121;
     --color-background-aside: #2b2b2b;
 
+    --color-chat-bg: #111;
     --color-white: #ffffff;
-    --color-text: #ffffff;
+    --color-black: #222;
     --color-primary: #3369f3;
     --color-primaryHover: #267bff;
     --color-secondary: #808080;
@@ -43,6 +44,6 @@
     --colorGray: #999999;
     --colorGray100: #424242;
     --colorGray200: #e0e0e0;
-    --colorGray300: #d9d9d9;
+    --colorGray300: #232323;
     --colorDanger: #5d0000;
 }

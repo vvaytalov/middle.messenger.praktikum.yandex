@@ -1,4 +1,4 @@
-const parser = new DOMParser();
+const parser = new window.DOMParser();
 
 function getTemplateFromHTML(html: string): HTMLTemplateElement | null {
     const document = parser.parseFromString(html, 'text/html');

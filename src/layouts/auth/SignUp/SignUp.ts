@@ -1,10 +1,12 @@
-import Input from '../../../components/input/input';
 import Link from '../../../components/link/link';
-import Button from '../../../components/button/button';
 import Block from '../../../modules/Block';
 import { template } from './SignUp.tmpl';
-import { compile } from '../../../utils/templator';
-import validateForm from '../../../utils/valideteForm';
+import { compile } from '../../../modules/templator';
+import {
+    handleFormSubmit,
+    registerFormElements,
+    validateForm,
+} from '../../../utils/handleForm';
 import {
     LOGIN_MSG,
     MAIL_MSG,
@@ -19,20 +21,17 @@ import {
 } from '../../../utils/regEx';
 
 import '../auth.css';
-class SignInPage extends Block {
+import AuthControllers from '../../../controllers/AuthControllers';
+export default class SignUpPage extends Block {
     constructor() {
         super('main', {
             className: 'auth',
             title: 'Регистрация',
             returnLinkText: 'Войти',
-            returnLink: './sign-in.html',
+            returnLink: './sign-in',
             Link: new Link({
-                links: [
-                    {
-                        label: 'Войти',
-                        link: '/sign-in.html',
-                    },
-                ],
+                label: 'Войти',
+                to: '/sign-in',
             }),
             form: {
                 fields: [
@@ -48,7 +47,7 @@ class SignInPage extends Block {
                             required: true,
                             'data-error': MAIL_MSG,
                         },
-                        onInput: (value: string) => console.log('Mail:', value),
+                        onInput: () => {},
                         onValidate: () => this.validate(),
                     },
                     {
@@ -62,8 +61,7 @@ class SignInPage extends Block {
                             required: true,
                             'data-error': LOGIN_MSG,
                         },
-                        onInput: (value: string) =>
-                            console.log('Login:', value),
+                        onInput: () => {},
                         onValidate: () => this.validate(),
                     },
                     {
@@ -77,8 +75,7 @@ class SignInPage extends Block {
                             required: true,
                             'data-error': NAME_MSG,
                         },
-                        onInput: (value: string) =>
-                            console.log('Login:', value),
+                        onInput: () => {},
                         onValidate: () => this.validate(),
                     },
                     {
@@ -92,13 +89,12 @@ class SignInPage extends Block {
                             required: true,
                             'data-error': NAME_MSG,
                         },
-                        onInput: (value: string) =>
-                            console.log('Login:', value),
+                        onInput: () => {},
                         onValidate: () => this.validate(),
                     },
                     {
                         type: 'tel',
-                        name: 'tel',
+                        name: 'phone',
                         placeholder: 'Телефон',
                         id: 'tel',
                         validation: {
@@ -107,8 +103,7 @@ class SignInPage extends Block {
                             required: true,
                             'data-error': TEL_MSG,
                         },
-                        onInput: (value: string) =>
-                            console.log('Login:', value),
+                        onInput: () => {},
                         onValidate: () => this.validate(),
                     },
                     {
@@ -122,8 +117,7 @@ class SignInPage extends Block {
                             required: true,
                             'data-error': PASSWORD_MSG,
                         },
-                        onInput: (value: string) => {
-                            console.log('Password:', value);
+                        onInput: () => {
                             this.props.repeatedPasswordValidate();
                         },
                         onValidate: () => this.validate(),
@@ -181,32 +175,22 @@ class SignInPage extends Block {
             },
         });
 
-        this.props.Button = this.props.form.buttons.map(
-            (button: any) => new Button(button)
-        );
-        this.props.Input = this.props.form.fields.map(
-            (field: any) => new Input(field)
-        );
+        registerFormElements(this.props);
 
         this.validate = this.validate.bind(this);
     }
 
     handleSubmit(evt: Event) {
-        evt.preventDefault();
-        const { elements } = evt.target as HTMLFormElement;
-        const fields = Array.from(elements).filter(
-            (el) => el.nodeName === 'INPUT'
-        );
-
-        const formData = fields.reduce(
-            (acc: Record<string, string>, field: HTMLInputElement) => {
-                acc[field.name] = field.value;
-                return acc;
-            },
-            {}
-        );
-
-        console.log(formData);
+        const formData = handleFormSubmit(evt);
+        
+        AuthControllers.SignUp({
+            login: formData.login,
+            email: formData.email,
+            first_name: formData.first_name,
+            second_name: formData.second_name,
+            password: formData.password,
+            phone: formData.phone,
+        });
     }
 
     validate() {
@@ -219,5 +203,3 @@ class SignInPage extends Block {
         return compile(template, this.props);
     }
 }
-
-document.body.prepend(new SignInPage().getContent());

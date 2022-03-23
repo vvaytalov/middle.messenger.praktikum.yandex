@@ -19,13 +19,12 @@
 }
 
 .chat-page__profile:after {
-    content: "";
-    background: url("../../assets/img/arrow.svg") no-repeat;
+    content: '';
+    background: url('../../assets/img/arrow.svg') no-repeat;
     margin-top: 4px;
     margin-left: 6px;
     width: 6px;
     position: relative;
-    top: 16px;
 }
 
 .chat-page__side-panel {
@@ -62,6 +61,14 @@
     min-height: 72px;
     padding: 12px 24px;
     gap: 16px;
+    border-top: 1px solid var(--colorGray100);
+}
+
+/* PopUp */
+
+.chat-page__new-chat-popup {
+    width: 100%;
+    max-width: 550px;
 }
 
 /* Message window */
@@ -78,4 +85,7 @@
     padding: 24px;
     border-bottom: 1px solid #3a3a3a;
     min-width: calc(86 * var(--space));
+}
+.chat-page__user-list {
+    margin: 24px 0;
 }

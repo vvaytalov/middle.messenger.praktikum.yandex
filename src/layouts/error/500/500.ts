@@ -1,9 +1,9 @@
 import Error from '../../../components/error/error';
 import Block from '../../../modules/Block';
-import { compile } from '../../../utils/templator';
+import { compile } from '../../../modules/templator';
 import { template } from './500.tmpl';
 
-class Error500Page extends Block {
+export default class Error500Page extends Block {
     constructor() {
         super('div', {
             className: 'error',
@@ -18,5 +18,3 @@ class Error500Page extends Block {
         return compile(template, this.props);
     }
 }
-
-document.body.prepend(new Error500Page().getContent());

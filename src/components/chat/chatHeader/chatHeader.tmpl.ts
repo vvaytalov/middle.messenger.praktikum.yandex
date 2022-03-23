@@ -6,5 +6,6 @@ export const template = () => `
       alt="Аватар пользователя {{ avatar }}"
     />
     <p class="{{ className }}__name">{{ name }}</p>
+    <ContactMenu />
   </template>
 `;

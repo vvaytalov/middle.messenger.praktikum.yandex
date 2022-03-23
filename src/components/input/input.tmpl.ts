@@ -1,5 +1,5 @@
 import { IProps } from '../../modules/Block';
-import { setAttributes } from '../../utils/templator';
+import { setAttributes } from '../../modules/templator';
 
 export const template = (props: IProps): string => `
 <template class="${

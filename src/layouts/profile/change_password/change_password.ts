@@ -1,14 +1,17 @@
 import Link from '../../../components/link/link';
 import Block from '../../../modules/Block';
-import Button from '../../../components/button/button';
-import Input from '../../../components/input/input';
 import avatarImage from '../../../assets/img/noavatar.svg';
-import { compile } from '../../../utils/templator';
+import { compile } from '../../../modules/templator';
 import { template } from './change_password.tmpl';
 
 import '../profile.css';
 import { PASSWORD_MSG, REGEX_PASSWORD } from '../../../utils/regEx';
-import validateForm from '../../../utils/valideteForm';
+import {
+    validateForm,
+    handleFormSubmit,
+    registerFormElements,
+} from '../../../utils/handleForm';
+import backButton from '../../../components/backButton/backButton';
 
 export default class ChangePassword extends Block {
     constructor() {
@@ -17,12 +20,11 @@ export default class ChangePassword extends Block {
             title: '@vvaytalov',
             avatar: avatarImage,
             Link: new Link({
-                links: [
-                    {
-                        label: 'В профиль',
-                        link: '/profile.html',
-                    },
-                ],
+                label: 'В профиль',
+                to: '/profile',
+            }),
+            LinkBack: new backButton({
+                className: 'back',
             }),
             form: {
                 fields: [
@@ -37,8 +39,7 @@ export default class ChangePassword extends Block {
                             required: true,
                             'data-error': PASSWORD_MSG,
                         },
-                        onInput: (value: string) => {
-                            console.log('Password:', value);
+                        onInput: () => {
                             this.props.repeatedPasswordValidate();
                         },
                         onValidate: () => this.validate(),
@@ -54,8 +55,7 @@ export default class ChangePassword extends Block {
                             required: true,
                             'data-error': PASSWORD_MSG,
                         },
-                        onInput: (value: string) => {
-                            console.log('Password:', value);
+                        onInput: () => {
                             this.props.repeatedPasswordValidate();
                         },
                         onValidate: () => this.validate(),
@@ -113,30 +113,13 @@ export default class ChangePassword extends Block {
             },
         });
 
-        this.props.Button = this.props.form.buttons.map(
-            (button: any) => new Button(button)
-        );
-        this.props.Input = this.props.form.fields.map(
-            (field: any) => new Input(field)
-        );
+        registerFormElements(this.props);
 
         this.validate = this.validate.bind(this);
     }
 
     handleSubmit(evt: Event) {
-        evt.preventDefault();
-        const { elements } = evt.target as HTMLFormElement;
-        const fields = Array.from(elements).filter(
-            (el) => el.nodeName === 'INPUT'
-        );
-
-        const formData = fields.reduce(
-            (acc: Record<string, string>, field: HTMLInputElement) => {
-                acc[field.name] = field.value;
-                return acc;
-            },
-            {}
-        );
+        const formData = handleFormSubmit(evt);
 
         console.log(formData);
     }
@@ -151,5 +134,3 @@ export default class ChangePassword extends Block {
         return compile(template, this.props);
     }
 }
-
-document.body.append(new ChangePassword().getContent());

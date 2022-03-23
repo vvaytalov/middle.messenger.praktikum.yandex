@@ -6,7 +6,7 @@ body {
     font-weight: normal;
     font-style: normal;
     margin: 0;
-    color: var(--color-text);
+    color: var(--color-white);
     background-color: var(--color-background);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

@@ -16,5 +16,8 @@
 }
 
 .chat-header__name {
+    font-size: 13px;
     font-weight: 600;
+    flex-grow: 1;
+    margin: 0;
 }

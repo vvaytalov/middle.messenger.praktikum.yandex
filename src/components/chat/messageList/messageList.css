@@ -1,20 +1,14 @@
 .message-list {
     display: flex;
-    flex-direction: column;
+    flex-direction: column-reverse;
     margin: 0;
     padding: 0;
     list-style: none;
-    background: var(--color-background);
-}
-
-.message-list__item {
-    margin: 0 0 16px;
-}
-
-.message-list__item:first-of-type {
-    margin: auto 0 16px;
-}
-
-.message-list__item:last-of-type {
-    margin: 0;
+    background-image: url('../../../assets/img/chat-bg.png');
+    background-position: top left;
+    background-size: 650px;
+    background-repeat: repeat;
+    background-color: var(--color-chat-bg);
+    gap: 16px;
+    overflow-anchor: none;
 }

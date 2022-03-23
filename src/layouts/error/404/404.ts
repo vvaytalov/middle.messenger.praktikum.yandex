@@ -1,9 +1,9 @@
 import Block from '../../../modules/Block';
-import { compile } from '../../../utils/templator';
+import { compile } from '../../../modules/templator';
 import { template } from './404.tmpl';
 import Error from '../../../components/error/error';
 
-class Error404Page extends Block {
+export default class Error404Page extends Block {
     constructor() {
         super('div', {
             className: 'error',
@@ -18,5 +18,3 @@ class Error404Page extends Block {
         return compile(template, this.props);
     }
 }
-
-document.body.prepend(new Error404Page().getContent());

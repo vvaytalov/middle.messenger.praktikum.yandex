@@ -1,0 +1,40 @@
+@import '../../assets/styles/main.css';
+
+.back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-backBackground);
+    width: calc(8 * var(--space));
+    height: 100vh;
+    position: absolute;
+    left: 0;
+    border-right: 2px solid var(--colorGray100);
+}
+
+.back:hover {
+    border-right: 2px solid var(--colorGray100);
+    cursor: pointer;
+    box-shadow: 3px 1px 12px #313131;
+}
+
+.arrow {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--color-primary);
+    border-radius: 50%;
+    cursor: pointer;
+}
+.arrow:after {
+    position: absolute;
+    top: 8px;
+    left: 9px;
+    content: '';
+    display: block;
+    width: 7px;
+    height: 7px;
+    border-left: 3px solid var(--color-primary);
+    border-bottom: 3px solid var(--color-primary);
+    transform: rotate(45deg);
+}

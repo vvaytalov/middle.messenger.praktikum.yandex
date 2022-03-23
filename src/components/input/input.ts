@@ -1,5 +1,5 @@
 import Block from '../../modules/Block';
-import { compile } from '../../utils/templator';
+import { compile } from '../../modules/templator';
 import { template } from './input.tmpl';
 import './input.css';
 
@@ -20,8 +20,6 @@ interface IInput {
 
 export default class Input extends Block {
     constructor(props: IInput) {
-        console.log(props.classMix);
-
         super('label', {
             className: 'input',
             classNameRoot: props.classMix,

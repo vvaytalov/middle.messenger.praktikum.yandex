@@ -1,10 +1,12 @@
 import Block from '../../../modules/Block';
-import Button from '../../../components/button/button';
-import Input from '../../../components/input/input';
 import { template } from './SignIn.tmpl';
-import { compile } from '../../../utils/templator';
+import { compile } from '../../../modules/templator';
 import Link from '../../../components/link/link';
-import validateForm from '../../../utils/valideteForm';
+import {
+    handleFormSubmit,
+    registerFormElements,
+    validateForm,
+} from '../../../utils/handleForm';
 import {
     LOGIN_MSG,
     PASSWORD_MSG,
@@ -13,20 +15,17 @@ import {
 } from '../../../utils/regEx';
 
 import '../auth.css';
-class SignInPage extends Block {
+import AuthControllers from '../../../controllers/AuthControllers';
+export default class SignInPage extends Block {
     constructor() {
         super('main', {
             className: 'auth',
             title: 'Вход',
             returnLinkText: 'Нет аккаунта?',
-            returnLink: './sign-up.html',
+            returnLink: './sign-up',
             Link: new Link({
-                links: [
-                    {
-                        label: 'Нет аккаунта ?',
-                        link: '/sign-up.html',
-                    },
-                ],
+                label: 'Нет аккаунта ?',
+                to: '/sign-up',
             }),
             form: {
                 fields: [
@@ -40,8 +39,7 @@ class SignInPage extends Block {
                             required: true,
                             'data-error': LOGIN_MSG,
                         },
-                        onInput: (value: string) =>
-                            console.log('Login:', value),
+                        onInput: () => {},
                         onValidate: () => this.validate(),
                     },
                     {
@@ -54,8 +52,7 @@ class SignInPage extends Block {
                             required: true,
                             'data-error': PASSWORD_MSG,
                         },
-                        onInput: (value: string) =>
-                            console.log('Password:', value),
+                        onInput: () => {},
                         onValidate: () => this.validate(),
                     },
                 ],
@@ -74,30 +71,18 @@ class SignInPage extends Block {
             },
         });
 
-        this.props.Button = this.props.form.buttons.map(
-            (button: any) => new Button(button)
-        );
-        this.props.Input = this.props.form.fields.map(
-            (field: any) => new Input(field)
-        );
+        registerFormElements(this.props);
 
         this.validate = this.validate.bind(this);
     }
 
     handleSubmit(evt: Event) {
-        evt.preventDefault();
-        const { elements } = evt.target as HTMLFormElement;
-        const fields = Array.from(elements).filter(
-            (el) => el.nodeName === 'INPUT'
-        );
-        const formData = fields.reduce(
-            (acc: Record<string, string>, field: HTMLInputElement) => {
-                acc[field.name] = field.value;
-                return acc;
-            },
-            {}
-        );
-        console.log(formData);
+        const formData = handleFormSubmit(evt);
+
+        AuthControllers.SignIn({
+            login: formData.login,
+            password: formData.password,
+        });
     }
 
     validate() {
@@ -110,5 +95,3 @@ class SignInPage extends Block {
         return compile(template, this.props);
     }
 }
-
-document.body.prepend(new SignInPage().getContent());

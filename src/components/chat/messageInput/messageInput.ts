@@ -1,16 +1,15 @@
-import { compile } from '../../../utils/templator';
+import { compile } from '../../../modules/templator';
 import { template } from './messageInput.tmpl';
 import sendIcon from '../../../assets/img/message-arrow.svg';
 import Block from '../../../modules/Block';
 import Input from '../../input/input';
 import Button from '../../button/button';
 import defaultIcon from '../../../assets/img/attach.svg';
-import validateForm from '../../../utils/valideteForm';
+import { handleFormSubmit, validateForm } from '../../../utils/handleForm';
 
 import './messageInput.css';
 
 interface IMessageInput {
-    onMessageInput: (value: string) => void;
     onMessageSend: (formData: Record<string, string>) => void;
 }
 
@@ -24,12 +23,11 @@ export default class MessageInput extends Block {
                 placeholder: 'Cообщение',
                 classMix: 'message-input__input',
                 name: 'message',
-                onInput: props.onMessageInput,
             }),
             SendButton: new Button({
                 type: 'submit',
                 icon: sendIcon,
-                light: true,
+                light: false,
             }),
             onMessageSend: props.onMessageSend,
             events: {
@@ -46,18 +44,12 @@ export default class MessageInput extends Block {
     }
 
     handleSubmit(evt: Event) {
-        evt.preventDefault();
-        const { elements } = evt.target as HTMLFormElement;
-        const fields = Array.from(elements).filter(
-            (el) => el.nodeName === 'INPUT',
-        );
-        const formData = fields.reduce(
-            (acc: Record<string, string>, field: HTMLInputElement) => {
-                acc[field.name] = field.value;
-                return acc;
-            },
-            {},
-        );
+        const formData = handleFormSubmit(evt);
+        if (!formData.message) {
+            return;
+        }
+
+        (evt.target as HTMLFormElement).reset();
         this.props.onMessageSend(formData);
     }
 

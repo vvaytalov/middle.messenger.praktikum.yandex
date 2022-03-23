@@ -1,24 +1,39 @@
 import Block from '../../modules/Block';
-import { compile } from '../../utils/templator';
+import { compile } from '../../modules/templator';
 import { template } from './link.tmpl';
+import { router } from '../../index';
 import './link.css';
-
-interface IField {
-    label?: string;
-    link?: string;
-    color?: boolean;
-}
 interface ILink {
     type?: string;
     color?: boolean;
-    links: IField[];
+    target?: string;
+    to?: string;
+    label?: string;
+    className?: string;
+    onClick?: () => void;
 }
 
 export default class Link extends Block {
     constructor(props: ILink) {
-        super('div', {
-            className: 'link',
-            links: props.links ?? [],
+        super('a', {
+            className: props.className ? props.className : 'link',
+            target: props.target ?? '',
+            to: props.to ?? '',
+            label: props.label ?? '',
+            color: props.color ?? '',
+            events: {
+                click: (evt: MouseEvent) => {
+                    if (this.props.target === '_blank') {
+                        return;
+                    }
+                    if (!props.to) {
+                        return props.onClick;
+                    }
+
+                    evt.preventDefault();
+                    router.go(this.props.to);
+                },
+            },
         });
     }
 
