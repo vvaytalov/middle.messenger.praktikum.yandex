@@ -1,4 +1,10 @@
 export default function formatDate(val: string): string {
+    const isDateGuard = (date: any): date is Date =>
+        Object.prototype.toString.call(date) === '[object Date]';
+
+    const isValidDate = (date: any): date is Date =>
+        isDateGuard(date) && !Number.isNaN(date.getTime());
+
     const date = new Date(val);
     const now = new Date();
     const months = [
@@ -22,6 +28,10 @@ export default function formatDate(val: string): string {
     const diff = now.getDate() - date.getDate();
 
     let dateString = `${day} ${month}`;
+
+    if (!isValidDate(date)) {
+        return '';
+    }
 
     if (diff < 1) {
         return (dateString = `${hour < 9 ? '0' + hour : hour}:${
