@@ -2,15 +2,17 @@
     "name": "vvaytalov",
     "version": "1.0.0",
     "description": "vvaytalov chat for yandex",
+    "main": "index.ts",
     "scripts": {
         "build": "webpack",
+        "build:docker": "docker build -t chat .",
         "dev": "webpack serve",
-        "start": "webpack && node src/server.js",
+        "start": "npm run build && node ./src/server.js",
         "test": "mocha",
         "stylelint": "stylelint '**/*.css'",
         "lint": "eslint src --ext .js,.ts && npx stylelint \"**/*.css\"",
         "fix": "eslint src --ext .js,.ts --fix && npx stylelint \"**/*.css\" --fix",
-        "pre-commit": "npm-run-all test lint fix stylelint"
+        "postinstall": "npm-run-all lint fix stylelint"
     },
     "directories": {
         "src": "./src",
