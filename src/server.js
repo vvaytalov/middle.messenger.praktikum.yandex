@@ -1,7 +1,7 @@
 const express = require('express');
 const history = require('connect-history-api-fallback')
 const path = require('path');
-const helmet = require("helmet");
+const helmet = require('helmet');
 const app = express();
 const PORT = 3000;
 const port = process.env.PORT || PORT;
@@ -20,12 +20,9 @@ const limiter = rateLimit({
     legacyHeaders: false,
 })
 
-
-
 const distPath = path.join(__dirname, '../', 'dist');
 
 app.use(limiter)
-
 app.use(helmet.dnsPrefetchControl());
 app.use(helmet.expectCt());
 app.use(helmet.frameguard());
@@ -50,6 +47,7 @@ app.use(helmet.contentSecurityPolicy({
         ],
         'script-src': [
             "'self'",
+            "'unsafe-eval'",
             "'sha256-76e59211187dd5d7e249ceafe9c45ee205997'",
         ],
     },

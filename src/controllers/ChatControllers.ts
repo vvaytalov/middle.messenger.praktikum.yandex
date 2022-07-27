@@ -51,7 +51,7 @@ class ChatController {
     public addUserChat(data: IChatApiAddUser) {
         return ChatApi.addChatUser(data)
             .then(() => {
-                throw new Error('Пользователь добавлен');
+                console.log('Пользователь добавлен');
             })
             .catch(handleError);
     }

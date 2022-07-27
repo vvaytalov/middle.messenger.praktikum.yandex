@@ -49,6 +49,11 @@ export default class Chat extends Block {
             }),
             MessageList: new MessageList({
                 messages: [],
+                onEndList: (length) => {
+                    if (length && (length % 20 === 0)) {
+                        MessageController.getMessages({ offset: length });
+                    }
+                  },
             }),
             MessageInput: new MessageInput({
                 onMessageSend: ({ message }) => {
@@ -84,6 +89,7 @@ export default class Chat extends Block {
                         users: userId,
                         chatId: store.state.chatId,
                     });
+                    this.props.AddChatUserPopup.hide();
                 },
             }),
             AddChatUserForm: new AddChatUserForm({
