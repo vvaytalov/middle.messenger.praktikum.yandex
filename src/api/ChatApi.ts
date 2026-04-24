@@ -8,11 +8,6 @@ export interface IChatApiAddUser {
     chatId: number;
 }
 
-export interface IChatApiAddUser {
-    users: number[];
-    chatId: number;
-}
-
 class ChatAPI extends BaseAPI {
     constructor() {
         super({ path: '/chats' });

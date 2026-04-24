@@ -1,32 +1,36 @@
 .user {
-    padding: 8px;
-    transition: box-shadow 0.25s;
-    border-radius: 4px;
+    padding: 10px 12px;
+    transition: box-shadow var(--transition-normal), background-color var(--transition-normal);
+    border-radius: var(--borderRadius);
     background: var(--color-background-aside);
     display: flex;
     align-items: center;
     min-width: 0;
+    border: 1px solid transparent;
 }
 
 .user:hover {
     cursor: pointer;
-    box-shadow: inset 0 0 0 2px var(--color-primary);
+    background: rgba(51, 105, 243, 0.08);
+    border-color: var(--color-primary);
 }
 
 .user__active {
-    box-shadow: inset 0 0 0 2px var(--color-primary);
+    border-color: var(--color-primary);
+    background: rgba(51, 105, 243, 0.1);
 }
 
 .user__avatar {
     width: 36px;
     height: 36px;
-    margin: 0 8px 0 0;
-    border-radius: 4px;
+    margin: 0 10px 0 0;
+    border-radius: var(--borderRadiusSmall);
+    object-fit: cover;
 }
 
 .user__login {
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 500;
     margin: 0;
     text-overflow: ellipsis;
     white-space: nowrap;

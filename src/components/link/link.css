@@ -1,6 +1,8 @@
 .link {
     text-decoration: none;
     color: var(--color-primary);
+    transition: color var(--transition-fast);
+    font-weight: 500;
 }
 
 .link:hover {
@@ -10,6 +12,8 @@
 .link__red {
     text-decoration: none;
     color: var(--color-error);
+    transition: color var(--transition-fast);
+    font-weight: 500;
 }
 
 .link__red:hover {
@@ -19,8 +23,13 @@
 .link__button-wrap {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid var(--color-white);
+    border-bottom: 1px solid var(--color-border);
     padding: calc(2 * var(--space)) 0 calc(2 * var(--space));
+    transition: background-color var(--transition-fast);
+}
+
+.link__button-wrap:hover {
+    background-color: rgba(255, 255, 255, 0.02);
 }
 
 .link__button-wrap:last-child {

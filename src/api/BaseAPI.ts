@@ -40,9 +40,11 @@ export default abstract class BaseAPI {
             return { ok: true };
         }
 
-        const response = JSON.parse(res.response);
-
-        return response;
+        try {
+            return JSON.parse(res.response);
+        } catch {
+            return res.response;
+        }
     }
 
     get headers() {

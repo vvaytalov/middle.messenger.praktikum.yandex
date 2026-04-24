@@ -3,12 +3,19 @@
 .auth__title {
     text-align: center;
     font-size: var(--fontSizeHeader);
-    font-weight: var(--fontWeight);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: calc(2 * var(--space));
 }
 
 .auth__main {
     width: 100%;
-    max-width: calc(35 * var(--space));
+    max-width: 400px;
+    padding: 40px 32px;
+    background: var(--color-background-aside);
+    border-radius: 16px;
+    box-shadow: var(--shadow-panel);
+    border: 1px solid var(--color-border);
 }
 
 .auth__input:focus {
@@ -17,16 +24,20 @@
 
 .auth__input-field {
     display: grid;
-    margin: calc(6 * var(--space)) 0 0;
+    margin: calc(4 * var(--space)) 0 0;
     grid-template-columns: repeat(1, 1fr);
-    gap: calc(4 * var(--space));
+    gap: calc(3 * var(--space));
 }
 
 .auth__input-button {
     display: flex;
     justify-content: center;
-    margin-top: calc(16 * var(--space));
+    margin-top: calc(10 * var(--space));
     margin-bottom: calc(2 * var(--space));
+}
+
+.auth__input-button .button {
+    width: 100%;
 }
 
 .auth__to-sign-up {

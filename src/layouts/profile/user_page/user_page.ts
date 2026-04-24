@@ -209,7 +209,7 @@ export default class Profile extends Block {
     }
 
     public componentDidMount(): void {
-        store.subscribe((state) => {
+        (this as any)._unsubscribe = store.subscribe((state) => {
             this.setField(state.currentUser);
 
             this.props.AvatarChoose.props.src = state.currentUser?.avatar
@@ -220,6 +220,13 @@ export default class Profile extends Block {
                 title: '@' + state.currentUser?.display_name,
             });
         });
+    }
+
+    public onDestroy(): void {
+        if ((this as any)._unsubscribe) {
+            (this as any)._unsubscribe();
+            (this as any)._unsubscribe = null;
+        }
     }
 
     render(): string | void {

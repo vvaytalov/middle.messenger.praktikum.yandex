@@ -1,15 +1,17 @@
 .chat-card {
     display: grid;
-    padding: 8px;
-    margin-bottom: 8px;
-    transition: box-shadow 0.25s;
-    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 2px;
+    transition: background-color var(--transition-normal), box-shadow var(--transition-normal);
+    border-radius: var(--borderRadius);
     grid-template-columns: min-content auto min-content;
+    grid-template-rows: auto auto;
+    align-items: center;
 }
 
 .chat-card:hover {
     cursor: pointer;
-    background: var(--color-background-message);
+    background: rgba(135, 116, 225, 0.15);
 }
 
 .chat-card-list__item {
@@ -17,14 +19,18 @@
 }
 
 .chat-card__active {
-    background: var(--color-background-message);
+    background: rgba(135, 116, 225, 0.22);
+}
+
+.chat-card__active:hover {
+    background: rgba(135, 116, 225, 0.28);
 }
 
 .chat-card__avatar {
     width: 48px;
     height: 48px;
-    margin: 0 8px 0 0;
-    border-radius: 4px;
+    margin: 0 12px 0 0;
+    border-radius: var(--borderRadiusSmall);
     object-fit: cover;
     grid-column: 1;
     grid-row: 1 / 3;
@@ -33,6 +39,7 @@
 .chat-card__name-wrapper {
     display: flex;
     align-items: center;
+    min-width: 0;
 }
 
 .chat-card__group-marker {
@@ -47,37 +54,46 @@
 
 .chat-card__name {
     font-weight: 600;
+    font-size: 14px;
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .chat-card__counter-unread-messages {
-    font-size: 11px;
+    font-size: 10px;
+    font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
+    min-width: 20px;
     height: 20px;
-    color: var(--color-white);
-    border-radius: 4px;
-    background: var(--color-primary);
+    padding: 0 5px;
+    color: var(--color-white-pure);
+    border-radius: 10px;
+    background: var(--color-background-message);
     justify-self: flex-end;
     grid-column: 3;
     grid-row: 1;
 }
 
 .chat-card__last-message {
-    font-size: 13x;
-    margin: 0;
+    font-size: 13px;
+    margin: 2px 0 0;
     color: var(--colorGray);
     grid-column: 2;
     grid-row: 2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .chat-card__updated-at {
     font-size: 11px;
     align-self: flex-end;
     white-space: nowrap;
-    color: var(--color-white);
+    color: var(--colorGray);
     justify-self: flex-end;
     grid-column: 3;
     grid-row: 2;

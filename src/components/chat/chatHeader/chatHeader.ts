@@ -56,11 +56,18 @@ class ChatHeader extends Block {
     }
 
     public componentDidMount(): void {
-        store.subscribe((state) => {
+        (this as any)._unsubscribe = store.subscribe((state) => {
             this.props.name =
                 state.chats.find((chat: any) => chat.id === state?.chatId)
                     ?.title || 'Выберете или создайте чат';
         });
+    }
+
+    public onDestroy(): void {
+        if ((this as any)._unsubscribe) {
+            (this as any)._unsubscribe();
+            (this as any)._unsubscribe = null;
+        }
     }
 
     render() {

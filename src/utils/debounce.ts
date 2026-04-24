@@ -1,10 +1,10 @@
 function debounce(func: Function, time: number) {
     let timeout: ReturnType<typeof setTimeout>;
-    return (...args: unknown[]) => {
+    return function (this: any, ...args: unknown[]) {
         if (timeout) {
             clearTimeout(timeout);
         }
-        timeout = setTimeout(() => func.call(this, ...args), time);
+        timeout = setTimeout(() => func.apply(this, args), time);
     };
 }
 

@@ -138,7 +138,7 @@ export default class Chat extends Block {
             DeleteUserList: new UserList({
                 className: 'user-list',
                 users: [],
-                buttonLabel: 'Удлаить',
+                buttonLabel: 'Удалить',
                 onApply: (userId) => {
                     if (!this.props.DeleteUserList.props.users.length) {
                         return;
@@ -154,6 +154,9 @@ export default class Chat extends Block {
     }
 
     public reqMessage(token: any = store.state.token): void {
+        if (!store.state.currentUser) {
+            return;
+        }
         MessageController.connect({
             userId: store.state.currentUser.id,
             chatId: store.state.chatId,
@@ -173,6 +176,7 @@ export default class Chat extends Block {
     }
 
     componentDidMount() {
+        (this as any)._unsubscribers = [];
         const getChat = localStorage.getItem('last_select-chat_id');
 
         if (getChat) {
@@ -185,17 +189,21 @@ export default class Chat extends Block {
             this.reqChat(store.state.chatId);
         });
 
-        store.subscribe((state) => {
-            this.props.ChatCardList.setProps({
-                chats: state.chats,
-            });
-        });
+        (this as any)._unsubscribers.push(
+            store.subscribe((state) => {
+                this.props.ChatCardList.setProps({
+                    chats: state.chats,
+                });
+            })
+        );
 
-        store.subscribe((state) => {
-            this.props.MessageList.setProps({
-                messages: state.messages,
-            });
-        });
+        (this as any)._unsubscribers.push(
+            store.subscribe((state) => {
+                this.props.MessageList.setProps({
+                    messages: state.messages,
+                });
+            })
+        );
     }
 
     render() {
@@ -203,6 +211,10 @@ export default class Chat extends Block {
     }
 
     onDestroy() {
+        if ((this as any)._unsubscribers) {
+            (this as any)._unsubscribers.forEach((unsub: () => void) => unsub());
+        }
+        (this as any)._unsubscribers = [];
         if (store.state.chats.length) {
             MessageController.leave();
         }

@@ -9,32 +9,43 @@
     height: 100vh;
     position: absolute;
     left: 0;
-    border-right: 2px solid var(--colorGray100);
+    border-right: 1px solid var(--color-border);
+    transition: background-color var(--transition-normal), box-shadow var(--transition-normal);
 }
 
 .back:hover {
-    border-right: 2px solid var(--colorGray100);
     cursor: pointer;
-    box-shadow: 3px 1px 12px #313131;
+    background-color: var(--colorGray100);
+    box-shadow: 2px 0 16px rgba(0, 0, 0, 0.3);
 }
 
 .arrow {
     position: relative;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     border: 2px solid var(--color-primary);
     border-radius: 50%;
     cursor: pointer;
+    transition: background-color var(--transition-fast), transform var(--transition-fast);
 }
+
+.arrow:hover {
+    background-color: rgba(51, 105, 243, 0.15);
+}
+
+.arrow:active {
+    transform: scale(0.9);
+}
+
 .arrow:after {
     position: absolute;
-    top: 8px;
-    left: 9px;
+    top: 9px;
+    left: 10px;
     content: '';
     display: block;
     width: 7px;
     height: 7px;
-    border-left: 3px solid var(--color-primary);
-    border-bottom: 3px solid var(--color-primary);
+    border-left: 2.5px solid var(--color-primary);
+    border-bottom: 2.5px solid var(--color-primary);
     transform: rotate(45deg);
 }

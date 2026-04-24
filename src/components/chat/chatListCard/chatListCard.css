@@ -4,7 +4,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    gap: 16px;
+    gap: 4px;
     flex-grow: 1;
     user-select: none;
 }

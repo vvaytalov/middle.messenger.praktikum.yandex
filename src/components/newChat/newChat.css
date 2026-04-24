@@ -1,7 +1,7 @@
 .new-chat-form__form {
     display: flex;
     flex-direction: column;
-    gap: 80px;
+    gap: 40px;
 }
 
 .new-chat-form__form-fields {
@@ -13,5 +13,9 @@
 .new-chat-form__form-buttons {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
+}
+
+.new-chat-form__form-buttons .button {
+    width: 100%;
 }

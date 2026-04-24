@@ -2,13 +2,16 @@
 
 .profile__main {
     width: 100%;
-    max-width: calc(35 * var(--space));
+    max-width: 420px;
+    padding: 32px;
 }
 
 .profile__avatar {
-    display: block;
-    height: calc(16 * var(--space));
-    margin-bottom: calc(15 * var(--space));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    margin-bottom: calc(8 * var(--space));
     text-align: center;
 }
 
@@ -19,13 +22,17 @@
 .profile__input-button {
     display: flex;
     justify-content: center;
-    margin-top: calc(8 * var(--space));
+    margin-top: calc(6 * var(--space));
     margin-bottom: calc(2 * var(--space));
+}
+
+.profile__input-button .button {
+    width: 100%;
 }
 
 .profile__input-field {
     display: grid;
-    margin: calc(6 * var(--space)) 0 0;
+    margin: calc(4 * var(--space)) 0 0;
     grid-template-columns: repeat(1, 1fr);
     gap: calc(3 * var(--space));
 }
@@ -33,7 +40,9 @@
 .profile__display-name {
     text-align: center;
     font-size: var(--fontSizeHeader);
-    font-weight: var(--fontWeight);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-top: calc(2 * var(--space));
 }
 
 .profile__wrap:last-child {
@@ -43,6 +52,8 @@
 .profile__button-exit {
     color: var(--color-error);
     text-decoration: none;
+    transition: color var(--transition-fast);
+    font-weight: 500;
 }
 
 .profile__button-exit:hover {
@@ -51,12 +62,14 @@
 }
 
 .profile__buttons-comb {
-    margin-top: calc(8 * var(--space));
+    margin-top: calc(6 * var(--space));
 }
 
 .profile__button-change {
     color: var(--color-primary);
     text-decoration: none;
+    transition: color var(--transition-fast);
+    font-weight: 500;
 }
 
 .profile__button-change:hover {
@@ -65,7 +78,7 @@
 }
 
 .profile__group {
-    margin-top: calc(5 * var(--space));
+    margin-top: calc(4 * var(--space));
 }
 
 .profile__logout {
@@ -75,5 +88,6 @@
 .profile__choose-avatar {
     width: 128px;
     height: 128px;
-    border-radius: 65px;
+    border-radius: 50%;
+    object-fit: cover;
 }

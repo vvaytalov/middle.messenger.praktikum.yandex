@@ -9,6 +9,8 @@ export default class Store {
         state: IState;
     };
 
+    private _isBatching: boolean;
+
     private eventBus: () => EventBus;
 
     static EVENTS = {
@@ -25,6 +27,7 @@ export default class Store {
             state: initialState,
         };
 
+        this._isBatching = false;
         this.state = this._makeStateProxy(initialState);
         this.subscribers = [];
         this.eventBus = () => eventBus;
@@ -69,25 +72,43 @@ export default class Store {
     public subscribe(subscriber: (state: IState) => void) {
         this.subscribers.push(subscriber);
         subscriber(this.state);
+        // Return unsubscribe function
+        return () => {
+            this.subscribers = this.subscribers.filter((s) => s !== subscriber);
+        };
     }
 
     public setState(nexIState: IState) {
         if (!nexIState) {
             return;
         }
-        Object.assign(this.state, nexIState);
+        // Batch updates: set flag to skip proxy notifications during assign
+        this._isBatching = true;
+        const keys = Object.keys(nexIState);
+        // Apply all properties except the last one silently
+        for (let i = 0; i < keys.length - 1; i++) {
+            this.state[keys[i]] = nexIState[keys[i]];
+        }
+        // Release batch before last property so Proxy triggers once
+        this._isBatching = false;
+        if (keys.length > 0) {
+            const lastKey = keys[keys.length - 1];
+            this.state[lastKey] = nexIState[lastKey];
+        }
     }
 
     private _makeStateProxy(state: IState) {
         return new Proxy(state, {
             set: (target: IState, item: string, value: unknown) => {
                 target[item] = value;
-                this._meta.state = this.state;
-                this.eventBus().emit(
-                    Store.EVENTS.FLOW_SDU,
-                    this._meta.state,
-                    target
-                );
+                if (!this._isBatching) {
+                    this._meta.state = this.state;
+                    this.eventBus().emit(
+                        Store.EVENTS.FLOW_SDU,
+                        this._meta.state,
+                        target
+                    );
+                }
                 return true;
             },
             deleteProperty: () => {
@@ -96,3 +117,4 @@ export default class Store {
         });
     }
 }
+

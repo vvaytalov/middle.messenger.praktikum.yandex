@@ -26,12 +26,14 @@ export default class Link extends Block {
                     if (this.props.target === '_blank') {
                         return;
                     }
-                    if (!props.to) {
-                        return props.onClick;
-                    }
-
                     evt.preventDefault();
-                    router.go(this.props.to);
+                    if (!props.to && props.onClick) {
+                        props.onClick();
+                        return;
+                    }
+                    if (props.to) {
+                        router.go(this.props.to);
+                    }
                 },
             },
         });

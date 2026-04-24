@@ -2,8 +2,10 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding: 16px 24px;
-    gap: 16px;
+    padding: 12px 24px;
+    gap: 12px;
+    background: var(--color-background-aside);
+    border-top: 1px solid var(--color-border);
 }
 
 .message-input__attachment-menu {
@@ -16,7 +18,7 @@
     flex-grow: 1;
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
 }
 
 .message-input__input {

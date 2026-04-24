@@ -9,6 +9,6 @@
     background-size: 650px;
     background-repeat: repeat;
     background-color: var(--color-chat-bg);
-    gap: 16px;
+    gap: 12px;
     overflow-anchor: none;
 }

@@ -34,8 +34,8 @@ export default function formatDate(val: string): string {
     }
 
     if (diff < 1) {
-        return (dateString = `${hour < 9 ? '0' + hour : hour}:${
-            minutes < 9 ? '0' + minutes : minutes
+        return (dateString = `${hour < 10 ? '0' + hour : hour}:${
+            minutes < 10 ? '0' + minutes : minutes
         }`);
     }
 

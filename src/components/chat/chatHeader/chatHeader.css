@@ -2,22 +2,29 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding: 20px 24px;
-    gap: 8px;
+    padding: 16px 24px;
+    gap: 12px;
     width: 100%;
     background: var(--color-background-aside);
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.15);
+    z-index: 1;
 }
+
 .chat-header__avatar {
     flex-shrink: 0;
-    width: 56px;
-    height: 56px;
-    border-radius: 4px;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--borderRadiusSmall);
     object-fit: cover;
 }
 
 .chat-header__name {
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 600;
     flex-grow: 1;
     margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

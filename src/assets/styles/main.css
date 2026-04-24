@@ -1,15 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 @import "./variables.css";
 
 body {
-    font-family: "Inter", Arial, Helvetica, sans-serif;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     font-size: var(--fontSize);
-    font-weight: normal;
+    font-weight: 400;
     font-style: normal;
+    line-height: var(--lineHeight);
+    letter-spacing: var(--letterSpacing);
     margin: 0;
     color: var(--color-white);
     background-color: var(--color-background);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 main {
@@ -27,4 +31,29 @@ button,
 input,
 textarea {
     font: inherit;
+    letter-spacing: inherit;
+}
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Selection styling */
+::selection {
+    background: rgba(135, 116, 225, 0.35);
+    color: var(--color-white-pure);
 }

@@ -1,7 +1,7 @@
 .button {
     height: var(--buttonHeight);
     background-color: var(--color-primary);
-    color: var(--color-white);
+    color: var(--color-white-pure);
     border-radius: var(--borderRadius);
     border: none;
 
@@ -11,44 +11,65 @@
     justify-content: center;
     min-width: 48px;
     margin: 0;
-    padding: 0 16px;
-    transition: transform 0.15s, opacity 0.15s, box-shadow 0.15s;
+    padding: 0 20px;
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    transition: transform var(--transition-fast),
+                opacity var(--transition-fast),
+                box-shadow var(--transition-normal),
+                background-color var(--transition-normal);
     outline: none;
-    gap: 4px;
+    gap: 6px;
+    cursor: pointer;
 }
 
 .button:hover {
-    cursor: pointer;
     background-color: var(--color-primaryHover);
+    box-shadow: 0 4px 16px rgba(51, 105, 243, 0.3);
 }
 
 .button:active {
-    transform: scale(0.95);
+    transform: scale(0.97);
+}
+
+.button:focus-visible {
+    box-shadow: 0 0 0 3px var(--color-selected);
 }
 
 .button:disabled {
     cursor: not-allowed;
-    opacity: 0.25;
+    opacity: 0.3;
+    transform: none;
+    box-shadow: none;
+}
+
+.button__icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
 }
 
 .button__label {
-    margin-left: 8px;
+    margin-left: 4px;
 }
 
 .button_trans {
     background: transparent;
+    color: var(--color-white);
 }
 
 .button_trans:hover {
-    background: transparent;
-    color: var(--colorGray);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--colorGray200);
+    box-shadow: none;
 }
 
 .button_color_primary {
-    color: var(--color-white);
+    color: var(--color-white-pure);
     background-color: var(--color-primary);
 }
 
 .button_color_primary:focus {
-    box-shadow: 0 0 0 4px var(--color-selected);
+    box-shadow: 0 0 0 3px var(--color-selected);
 }

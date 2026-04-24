@@ -2,7 +2,7 @@
     --space: 8px;
     --heightElement: 35px;
 
-    --buttonHeight: 40px;
+    --buttonHeight: 44px;
     --buttonWidth: 280px;
     --buttonSize: 45px;
 
@@ -12,38 +12,57 @@
     --widthCard: 600px;
     --minMessageWidth: 250px;
     --avatarSize: 60px;
-    --borderRadius: var(--space);
+    --borderRadius: 10px;
+    --borderRadiusSmall: 6px;
 
-    --fontSizeSmall: 9px;
     --fontSize: 14px;
     --fontSizeTitle: 18px;
-    --fontSizeHeader: 20px;
-    --fontSizeLarge: 40px;
+    --fontSizeHeader: 22px;
+    --fontSizeLarge: 48px;
     --fontWeight: 600;
-    --fontSizeSmall: 10px;
+    --fontSizeSmall: 11px;
+
+    --lineHeight: 1.5;
+    --letterSpacing: 0.01em;
+
     --color-success: #7ab671;
-    --color-border: #e0e0e0;
-    --color-selected: #d7f0ff;
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-border-subtle: rgba(255, 255, 255, 0.05);
+    --color-selected: rgba(51, 105, 243, 0.3);
     --color-selected-success: #50bc40;
     --color-selected-error: #fcd4da;
-    --color-visited-link: #854d7d;
+    --color-visited-link: #a77db8;
 
     --color-background-message: #8774e1;
-    --color-backBackground: #323232;
-    --color-background: #212121;
-    --color-background-aside: #2b2b2b;
+    --color-background-message-hover: #9985e8;
+    --color-backBackground: #1a1a1a;
+    --color-background: #181818;
+    --color-background-aside: #212121;
 
-    --color-chat-bg: #111;
-    --color-white: #ffffff;
+    --color-chat-bg: #0e0e0e;
+    --color-white: #f0f0f0;
+    --color-white-pure: #ffffff;
     --color-black: #222;
     --color-primary: #3369f3;
-    --color-primaryHover: #267bff;
-    --color-secondary: #808080;
-    --color-error: #ff0000;
-    --color-errorHover: #ff4040;
-    --colorGray: #999999;
-    --colorGray100: #424242;
-    --colorGray200: #e0e0e0;
-    --colorGray300: #232323;
+    --color-primaryHover: #4d80ff;
+    --color-secondary: #8a8a8a;
+    --color-error: #e74c3c;
+    --color-errorHover: #ff6b5a;
+    --colorGray: #9e9e9e;
+    --colorGray100: #2e2e2e;
+    --colorGray200: #c8c8c8;
+    --colorGray300: #1e1e1e;
     --colorDanger: #5d0000;
+
+    /* Shadows */
+    --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.3);
+    --shadow-card-hover: 0 4px 20px rgba(0, 0, 0, 0.4);
+    --shadow-panel: 0 4px 32px rgba(0, 0, 0, 0.35);
+    --shadow-popup: 0 12px 48px rgba(0, 0, 0, 0.5);
+    --shadow-inset-focus: inset 0 0 0 1.5px var(--color-primary);
+
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.25s ease;
+    --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }

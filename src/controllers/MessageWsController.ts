@@ -42,7 +42,7 @@ class MessageController {
     private _handleOpen() {
         this.getMessages({ offset: 0 });
         this._ping = setInterval(() => {
-            this._ws.send('');
+            this._ws.send(JSON.stringify({ type: 'ping' }));
         }, 10000);
     }
 
@@ -54,7 +54,7 @@ class MessageController {
             if (!data.length) {
                 store.setState({ messages: [] });
             } else if (data[0].id === 0) {
-                store.setState({ message: data.map((item) => item) });
+                store.setState({ messages: data.map((item) => item) });
             } else {
                 const messages = [
                     ...store.state.messages,

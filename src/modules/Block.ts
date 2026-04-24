@@ -172,14 +172,15 @@ export default class Block {
     }
 
     public destroy() {
+        this._removeEvents();
         this._element.remove();
-        this.onDestroy;
+        this.onDestroy();
     }
 
     public onDestroy() {}
 
     public show() {
-        this.getContent().style.display = 'block';
+        this.getContent().style.display = '';
     }
 
     public hide() {

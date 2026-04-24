@@ -3,18 +3,24 @@
 .error__title {
     text-align: center;
     font-size: var(--fontSizeLarge);
-    font-weight: var(--fontWeight);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-white);
+    margin-bottom: 8px;
 }
 
 .error__to-chat {
     display: flex;
     justify-content: center;
+    margin-top: calc(3 * var(--space));
 }
 
 .error__to-chat-link {
     text-decoration: none;
     color: var(--color-primary);
     margin-top: calc(2 * var(--space));
+    font-weight: 500;
+    transition: color var(--transition-fast);
 }
 
 .error__to-chat-link:hover {
