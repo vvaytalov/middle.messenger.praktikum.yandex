@@ -2,8 +2,8 @@
     position: relative;
     display: flex;
     align-items: center;
-    padding: 12px 24px;
-    gap: 12px;
+    padding: 16px 24px;
+    gap: 16px;
     background: var(--color-background-aside);
     border-top: 1px solid var(--color-border);
 }
@@ -23,4 +23,9 @@
 
 .message-input__input {
     flex-grow: 1;
+}
+
+.message-input__input .input__field {
+    border-radius: 24px;
+    padding-left: 20px;
 }

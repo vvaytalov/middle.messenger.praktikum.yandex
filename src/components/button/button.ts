@@ -19,7 +19,7 @@ export default class Button extends Block {
     constructor(props: IButton) {
         super('button', {
             className: 'button',
-            classMix: !props.light ? 'button' : 'button button_trans',
+            classMix: `button ${props.light ? 'button_trans' : ''} ${props.color ? `button_color_${props.color}` : ''} ${props.classMix || ''}`.trim(),
             type: props.type ?? 'button',
             icon: props.icon ?? '',
             light: props.light ?? false,

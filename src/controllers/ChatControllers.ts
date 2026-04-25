@@ -3,6 +3,7 @@ import { router } from '../index';
 import { store } from '../store';
 import { handleError } from '../utils/handleError';
 import { hideSpinner, showSpinner } from '../utils/spinner';
+import MessageController from './MessageWsController';
 
 export interface IChatApiAddUser {
     users: number[];
@@ -52,6 +53,7 @@ class ChatController {
         return ChatApi.addChatUser(data)
             .then(() => {
                 console.log('Пользователь добавлен');
+                MessageController.sendMessage('Пользователь добавлен в чат');
             })
             .catch(handleError);
     }

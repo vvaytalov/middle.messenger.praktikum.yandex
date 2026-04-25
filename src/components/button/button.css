@@ -73,3 +73,16 @@
 .button_color_primary:focus {
     box-shadow: 0 0 0 3px var(--color-selected);
 }
+
+.button_round {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    padding: 0;
+    border-radius: 50%;
+    justify-content: center;
+}
+
+.button_round .button__label {
+    display: none;
+}

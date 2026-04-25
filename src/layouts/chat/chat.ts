@@ -85,11 +85,28 @@ export default class Chat extends Block {
             AddUserList: new UserList({
                 users: [],
                 onApply: (userId) => {
-                    ChatController.addUserChat({
-                        users: userId,
-                        chatId: store.state.chatId,
-                    });
-                    this.props.AddChatUserPopup.hide();
+                    if (userId && userId.length > 0) {
+                        ChatController.addUserChat({
+                            users: userId,
+                            chatId: store.state.chatId,
+                        });
+                        this.props.AddChatUserPopup.hide();
+                    } else {
+                        const searchInput = document.querySelector('.add-chat-user-form__form input[name="login"]') as HTMLInputElement;
+                        if (searchInput && searchInput.value) {
+                            UserController.search({ login: searchInput.value }).then((users: any) => {
+                                if (users && users.length > 0) {
+                                    ChatController.addUserChat({
+                                        users: [users[0].id],
+                                        chatId: store.state.chatId,
+                                    });
+                                    this.props.AddChatUserPopup.hide();
+                                } else {
+                                    console.error('Пользователь не найден');
+                                }
+                            });
+                        }
+                    }
                 },
             }),
             AddChatUserForm: new AddChatUserForm({
