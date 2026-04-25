@@ -1,5 +1,5 @@
 const express = require('express');
-const history = require('connect-history-api-fallback')
+const history = require('connect-history-api-fallback');
 const path = require('path');
 const helmet = require('helmet');
 const app = express();
@@ -18,11 +18,11 @@ const limiter = rateLimit({
     max: 200,
     standardHeaders: true,
     legacyHeaders: false,
-})
+});
 
 const distPath = path.join(__dirname, '../', 'dist');
 
-app.use(limiter)
+app.use(limiter);
 app.use(helmet.dnsPrefetchControl());
 app.use(helmet.expectCt());
 app.use(helmet.frameguard());

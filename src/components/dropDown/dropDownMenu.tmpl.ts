@@ -14,8 +14,8 @@ export const template = (props: IProps) => `
       <li class="{{ className }}__item">
         <MenuItem key="${index}" />
       </li>
-    `
-        )
+    `,
+        ),
     )}
   </ul>
 </template>

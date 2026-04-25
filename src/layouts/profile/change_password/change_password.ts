@@ -11,7 +11,7 @@ import {
     handleFormSubmit,
     registerFormElements,
 } from '../../../utils/handleForm';
-import backButton from '../../../components/backButton/backButton';
+import BackButton from '../../../components/backButton/backButton';
 
 export default class ChangePassword extends Block {
     constructor() {
@@ -23,7 +23,7 @@ export default class ChangePassword extends Block {
                 label: 'В профиль',
                 to: '/profile',
             }),
-            LinkBack: new backButton({
+            LinkBack: new BackButton({
                 className: 'back',
             }),
             form: {
@@ -74,11 +74,11 @@ export default class ChangePassword extends Block {
                         onInput: (value: string) => {
                             const password: HTMLInputElement | null =
                                 this.getContent().querySelector(
-                                    '[name=newPassword]'
+                                    '[name=newPassword]',
                                 );
                             const SecondPassword: HTMLInputElement | null =
                                 this.getContent().querySelector(
-                                    '[name=repeateNewPassword]'
+                                    '[name=repeateNewPassword]',
                                 );
 
                             if (!password || !SecondPassword) {
@@ -90,7 +90,7 @@ export default class ChangePassword extends Block {
                                 this.props.repeatedPasswordValidate();
                             } else {
                                 SecondPassword.setCustomValidity(
-                                    'Пароли не совпадают'
+                                    'Пароли не совпадают',
                                 );
                                 this.props.repeatedPasswordValidate();
                             }
@@ -120,8 +120,7 @@ export default class ChangePassword extends Block {
 
     handleSubmit(evt: Event) {
         const formData = handleFormSubmit(evt);
-
-        console.log(formData);
+        void formData;
     }
 
     validate() {

@@ -2,11 +2,11 @@ import EventBus from './eventBus';
 
 export type IState = Record<string, any>;
 
-export default class Store {
-    public state: IState;
+export default class Store<TState extends IState = IState> {
+    public state: TState;
     private subscribers: Function[];
     private _meta: {
-        state: IState;
+        state: TState;
     };
 
     private _isBatching: boolean;
@@ -20,7 +20,7 @@ export default class Store {
         FLOW_USE: 'flow:use',
     };
 
-    constructor(initialState: IState = {}) {
+    constructor(initialState: TState) {
         const eventBus = new EventBus();
 
         this._meta = {
@@ -52,14 +52,14 @@ export default class Store {
 
     public storeDidMount() {}
 
-    private _storeDidUpdate(oldState: IState, newState: IState) {
+    private _storeDidUpdate(oldState: TState, newState: TState) {
         const response = this.storeDidUpdate(oldState, newState);
         if (response) {
             this.eventBus().emit(Store.EVENTS.FLOW_USE);
         }
     }
 
-    public storeDidUpdate(oldState?: IState, newState?: IState) {
+    public storeDidUpdate(oldState?: TState, newState?: TState) {
         return oldState !== newState;
     }
 
@@ -69,7 +69,7 @@ export default class Store {
         });
     }
 
-    public subscribe(subscriber: (state: IState) => void) {
+    public subscribe(subscriber: (state: TState) => void) {
         this.subscribers.push(subscriber);
         subscriber(this.state);
         // Return unsubscribe function
@@ -78,35 +78,36 @@ export default class Store {
         };
     }
 
-    public setState(nexIState: IState) {
+    public setState(nexIState: Partial<TState>) {
         if (!nexIState) {
             return;
         }
         // Batch updates: set flag to skip proxy notifications during assign
         this._isBatching = true;
-        const keys = Object.keys(nexIState);
+        const keys = Object.keys(nexIState) as Array<keyof TState>;
         // Apply all properties except the last one silently
         for (let i = 0; i < keys.length - 1; i++) {
-            this.state[keys[i]] = nexIState[keys[i]];
+            const key = keys[i];
+            this.state[key] = nexIState[key] as TState[typeof key];
         }
         // Release batch before last property so Proxy triggers once
         this._isBatching = false;
         if (keys.length > 0) {
             const lastKey = keys[keys.length - 1];
-            this.state[lastKey] = nexIState[lastKey];
+            this.state[lastKey] = nexIState[lastKey] as TState[typeof lastKey];
         }
     }
 
-    private _makeStateProxy(state: IState) {
+    private _makeStateProxy(state: TState) {
         return new Proxy(state, {
-            set: (target: IState, item: string, value: unknown) => {
-                target[item] = value;
+            set: (target: TState, item: string, value: unknown) => {
+                target[item as keyof TState] = value as TState[keyof TState];
                 if (!this._isBatching) {
                     this._meta.state = this.state;
                     this.eventBus().emit(
                         Store.EVENTS.FLOW_SDU,
                         this._meta.state,
-                        target
+                        target,
                     );
                 }
                 return true;

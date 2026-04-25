@@ -3,7 +3,7 @@ import Link from '../../../components/link/link';
 import avatarImage from '../../../assets/img/noavatar.svg';
 import { compile } from '../../../modules/templator';
 import { template } from './user_page.tmpl';
-import backButton from '../../../components/backButton/backButton';
+import BackButton from '../../../components/backButton/backButton';
 import {
     handleFormSubmit,
     registerFormElements,
@@ -29,6 +29,7 @@ import env from '../../../utils/env';
 import '../profile.css';
 import { store } from '../../../store';
 import ImageFile from '../../../components/imageFile/imageFile';
+import { IUser } from '../../../types/models';
 export default class Profile extends Block {
     constructor() {
         super('main', {
@@ -44,7 +45,7 @@ export default class Profile extends Block {
                     AuthControllers.LogOut();
                 },
             }),
-            LinkBack: new backButton({
+            LinkBack: new BackButton({
                 className: 'back',
             }),
             AvatarChoose: new ImageFile({
@@ -185,7 +186,7 @@ export default class Profile extends Block {
         });
     }
 
-    setField(formDate: Record<string, string>) {
+    setField(formDate: IUser | null) {
         if (!formDate) {
             return;
         }
@@ -200,11 +201,12 @@ export default class Profile extends Block {
         const { elements } = formElement as HTMLFormElement;
 
         const fields = Array.from(elements).filter(
-            (el) => el.nodeName === 'INPUT'
+            (el) => el.nodeName === 'INPUT',
         );
 
         fields.forEach((field: HTMLInputElement) => {
-            field.value = formDate[field.name];
+            const value = formDate[field.name as keyof IUser];
+            field.value = value === null || value === undefined ? '' : String(value);
         });
     }
 

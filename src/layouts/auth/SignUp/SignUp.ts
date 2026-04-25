@@ -136,11 +136,11 @@ export default class SignUpPage extends Block {
                         onInput: (value: string) => {
                             const password: HTMLInputElement | null =
                                 this.getContent().querySelector(
-                                    '[name=password]'
+                                    '[name=password]',
                                 );
                             const SecondPassword: HTMLInputElement | null =
                                 this.getContent().querySelector(
-                                    '[name=second_password]'
+                                    '[name=second_password]',
                                 );
 
                             if (!password || !SecondPassword) {
@@ -152,7 +152,7 @@ export default class SignUpPage extends Block {
                                 this.props.repeatedPasswordValidate();
                             } else {
                                 SecondPassword.setCustomValidity(
-                                    'Пароли не совпадают'
+                                    'Пароли не совпадают',
                                 );
                                 this.props.repeatedPasswordValidate();
                             }

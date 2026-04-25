@@ -14,7 +14,7 @@ interface INewChatForm {
     onSubmit: (formData: Record<string, string>) => void;
 }
 
-export default class newChat extends Block {
+export default class NewChat extends Block {
     constructor(props: INewChatForm) {
         super('div', {
             className: 'new-chat-form',

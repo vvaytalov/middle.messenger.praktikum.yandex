@@ -3,11 +3,12 @@ import Block from '../../modules/Block';
 import { compile } from '../../modules/templator';
 import User from '../user/user';
 import Button from '../button/button';
+import { IUser } from '../../types/models';
 import './userList.css';
 
 interface IUserList {
     className?: string;
-    users: unknown[];
+    users: IUser[];
     buttonLabel?: string;
     onApply: (usersId: number[]) => void;
 }
@@ -24,7 +25,7 @@ class UserList extends Block {
                 if (this.props.selectedUsers.includes(userId)) {
                     const updatedSelectedUsers = [...this.props.selectedUsers];
                     const userIndex = updatedSelectedUsers.findIndex(
-                        (user) => user === userId
+                        (user) => user === userId,
                     );
                     updatedSelectedUsers.splice(userIndex, 1);
                     this.props.selectedUsers = updatedSelectedUsers;

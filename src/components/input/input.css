@@ -50,6 +50,12 @@
     line-height: 1.5;
 }
 
+textarea.input__field {
+    resize: none;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
 .input__field::placeholder {
     color: var(--color-secondary);
     opacity: 0.7;

@@ -89,12 +89,12 @@ class Templator {
             // Найти вложения в тег компонента ({{ children }})
             const { children } =
                 found.match(
-                    /<(?<tag>[A-Z]+\w+).*?>(?<children>.*?)<\/\k<tag>>/s
+                    /<(?<tag>[A-Z]+\w+).*?>(?<children>.*?)<\/\k<tag>>/s,
                 )?.groups || {};
             if (children) {
                 const compiledChildren = this.compile(
                     () => children,
-                    this.context
+                    this.context,
                 );
                 setTimeout(() => {
                     value.setProps({
@@ -107,13 +107,13 @@ class Templator {
             if ('of' in props) {
                 if (this.context[props.of] === undefined) {
                     throw new Error(
-                        `Не обнаружен контекст ${props.of}[] для компонента ${key}`
+                        `Не обнаружен контекст ${props.of}[] для компонента ${key}`,
                     );
                 }
 
                 if (!value?.prototype?.constructor) {
                     throw new Error(
-                        `Контекст ${key} должен быть функцией-конструктором`
+                        `Контекст ${key} должен быть функцией-конструктором`,
                     );
                 }
 
@@ -141,7 +141,7 @@ class Templator {
             if (Array.isArray(value) && typeof props.key === 'string') {
                 if (!('key' in props)) {
                     throw new Error(
-                        'Компонентам внутри итерации необходим уникальный key="number", указывающий на экземпляр в массиве'
+                        'Компонентам внутри итерации необходим уникальный key="number", указывающий на экземпляр в массиве',
                     );
                 }
                 const { key } = props;
@@ -171,7 +171,7 @@ class Templator {
 
     public compile(
         templateFunction: (props: IProps) => string,
-        context: IProps
+        context: IProps,
     ): string {
         this.context = context;
         const template = templateFunction(context);
@@ -183,7 +183,7 @@ class Templator {
 function join(templates: string[]) {
     if (!Array.isArray(templates)) {
         throw new Error(
-            `Функция join ожидает массив, был передан ${typeof templates}`
+            `Функция join ожидает массив, был передан ${typeof templates}`,
         );
     }
     return templates.join('');

@@ -5,6 +5,6 @@ export function queryStringify(data: Object) {
 
     return Object.entries(data).reduce(
         (acc, [key, val], i) => `${acc}${i === 0 ? '?' : '&'}${key}=${val}`,
-        ''
+        '',
     );
 }

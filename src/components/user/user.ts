@@ -3,23 +3,16 @@ import defaultAvatar from '../../assets/img/noavatar.svg';
 import Block from '../../modules/Block';
 import { compile } from '../../modules/templator';
 import env from '../../utils/env';
+import { IUser } from '../../types/models';
 import './user.css';
 
-interface IUser {
-    id: number;
-    login: string;
-    email: string;
-    avatar: string | null;
-    first_name: string;
-    second_name: string;
-    display_name: string | null;
-    phone: string;
+interface IUserProps extends IUser {
     onClick: (userID: number) => void;
     selectedUsers: number[];
 }
 
 class User extends Block {
-    constructor(props: IUser) {
+    constructor(props: IUserProps) {
         super('li', {
             className: 'user',
             classNameRoot: props.selectedUsers.includes(props.id)

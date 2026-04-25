@@ -27,13 +27,19 @@ export default class Popup extends Block {
             onClose: props.onClose ?? (() => {}),
         });
         this.handleOverlay = this.handleOverlay.bind(this);
+        this.handleEsc = this.handleEsc.bind(this);
         this.togglePopup = this.togglePopup.bind(this);
     }
 
     handleOverlay(evt: MouseEvent) {
         if (!(evt.target as HTMLElement).closest('.popup__card')) {
             this.togglePopup(false);
-            document.removeEventListener('mousedown', this.handleOverlay);
+        }
+    }
+
+    handleEsc(evt: KeyboardEvent) {
+        if (evt.key === 'Escape') {
+            this.togglePopup(false);
         }
     }
 
@@ -45,10 +51,12 @@ export default class Popup extends Block {
         if (isOpen) {
             popupElement.className = this.props.classNameRootOpen;
             document.addEventListener('mousedown', this.handleOverlay);
+            document.addEventListener('keydown', this.handleEsc);
             this.props.onOpen();
         } else {
             popupElement.className = this.props.classNameRoot;
             document.removeEventListener('mousedown', this.handleOverlay);
+            document.removeEventListener('keydown', this.handleEsc);
             this.props.onClose();
         }
     }
@@ -63,5 +71,10 @@ export default class Popup extends Block {
 
     render() {
         return compile(template, this.props);
+    }
+
+    onDestroy() {
+        document.removeEventListener('mousedown', this.handleOverlay);
+        document.removeEventListener('keydown', this.handleEsc);
     }
 }

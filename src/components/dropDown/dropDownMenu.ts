@@ -37,7 +37,7 @@ export default class DropDownMenu extends Block {
                             item.onClick();
                             this.toggleMenu(false);
                         },
-                    })
+                    }),
             ),
         });
         this.handleOverlay = this.handleOverlay.bind(this);

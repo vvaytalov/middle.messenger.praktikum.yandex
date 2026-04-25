@@ -8,7 +8,7 @@ interface ILink {
     className?: string;
 }
 
-export default class backButton extends Block {
+export default class BackButton extends Block {
     constructor(props: ILink) {
         super('div', {
             className: props.className ?? '',

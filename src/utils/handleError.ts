@@ -1,7 +1,9 @@
 import { router } from '../index';
+import { showErrorToast } from './toast';
 
 export function handleError(error: XMLHttpRequest) {
     if (!error || !error.response) {
+        showErrorToast('Что-то пошло не так. Открываем страницу ошибки');
         return router.go('/500');
     }
 
@@ -18,6 +20,6 @@ export function handleError(error: XMLHttpRequest) {
         return;
     }
 
-    console.error('[handleError]', reason);
+    showErrorToast(reason || 'Произошла ошибка');
     return Promise.reject(error);
 }

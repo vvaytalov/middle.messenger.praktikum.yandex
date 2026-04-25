@@ -16,6 +16,8 @@ interface IInput {
     useValidation?: () => void;
     color?: string;
     value?: string;
+    multiline?: boolean;
+    rows?: number;
 }
 
 export default class Input extends Block {
@@ -31,6 +33,8 @@ export default class Input extends Block {
             value: props.value ?? '',
             placeholder: props.placeholder ?? props.label ?? '',
             type: props.type ?? 'text',
+            multiline: props.multiline ?? false,
+            rows: props.rows ?? 3,
             validation: props.validation ?? null,
             onInput: props.onInput ?? null,
             onValidate: props.onValidate ?? null,
@@ -40,7 +44,9 @@ export default class Input extends Block {
                     if (this.props.onInput) {
                         this.validate();
                         this.props.onInput(
-                            (evt.target as HTMLInputElement).value,
+                            (
+                                evt.target as HTMLInputElement | HTMLTextAreaElement
+                            ).value,
                         );
                     }
                 },
@@ -59,7 +65,7 @@ export default class Input extends Block {
 
     validate() {
         if (this.props.onValidate) {
-            const inputElement: HTMLInputElement | null =
+            const inputElement: HTMLInputElement | HTMLTextAreaElement | null =
                 this.getContent().querySelector(
                     `.${this.props.classNameInput}`,
                 );

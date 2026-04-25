@@ -33,8 +33,8 @@ export function generateForm(props: IForm, formClassName: string) {
             <div class='${formClassName}__input-field'>
                 ${join(
                     props.fields.map(
-                        (_: unknown, i: number) => `<Input key="${i}" />`
-                    )
+                        (_: unknown, i: number) => `<Input key="${i}" />`,
+                    ),
                 )}
             </div>
             ${
@@ -45,8 +45,8 @@ export function generateForm(props: IForm, formClassName: string) {
                         props.buttons.map(
                             (_: unknown, index: number) => `
                       <Button key="${index}" />
-                    `
-                        )
+                    `,
+                        ),
                     )}
                   </div>
                 `
@@ -58,7 +58,7 @@ export function generateForm(props: IForm, formClassName: string) {
 
 export function validateForm(
     form: HTMLFormElement | null,
-    cb?: (isValid: boolean) => void
+    cb?: (isValid: boolean) => void,
 ) {
     if (!form) {
         throw new Error('Форма для валидации не найдена');
@@ -85,13 +85,18 @@ export function handleFormSubmit(evt: Event): Record<string, string> {
     }
     evt.preventDefault();
     const { elements } = evt.target as HTMLFormElement;
-    const fields = Array.from(elements).filter((el) => el.nodeName === 'INPUT');
+    const fields = Array.from(elements).filter((el) => {
+        return el.nodeName === 'INPUT' || el.nodeName === 'TEXTAREA';
+    });
     const formData = fields.reduce(
-        (acc: Record<string, string>, field: HTMLInputElement) => {
+        (
+            acc: Record<string, string>,
+            field: HTMLInputElement | HTMLTextAreaElement,
+        ) => {
             acc[field.name] = field.value;
             return acc;
         },
-        {}
+        {},
     );
     return formData;
 }
@@ -99,13 +104,13 @@ export function handleFormSubmit(evt: Event): Record<string, string> {
 export function registerFormElements(props: IProps) {
     if (!props.form.fields || !props.form.buttons) {
         throw new Error(
-            'Необходимо создать в props.form массивы fields[] и buttons[]'
+            'Необходимо создать в props.form массивы fields[] и buttons[]',
         );
     }
     props.Input = props.form.fields.map(
-        (field: IFormField) => new Input(field)
+        (field: IFormField) => new Input(field),
     );
     props.Button = props.form.buttons.map(
-        (button: IFormButton) => new Button(button)
+        (button: IFormButton) => new Button(button),
     );
 }
