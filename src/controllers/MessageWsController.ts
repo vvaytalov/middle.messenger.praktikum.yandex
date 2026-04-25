@@ -1,4 +1,18 @@
 import env from '../utils/env';
+import {
+    applyHistoryBatch,
+    clearMessages,
+    prependRealtimeChatMessage,
+    setActiveChatToken,
+    setMessageConnectionStatus,
+} from '../utils/chatPageState';
+import { getChatMessages } from '../utils/chatSelectors';
+import {
+    isMessageHistoryPayload,
+    isRealtimeMessage,
+} from '../utils/messageState';
+import { showErrorToast, showInfoToast } from '../utils/toast';
+import { MessageWebSocketAction, MessageWebSocketEvent } from '../utils/messageProtocol';
 import { store } from '../store';
 
 export interface IMessageWebSocketConnect {
@@ -12,11 +26,14 @@ export interface IMessageWebSocketGet {
 }
 
 class MessageController {
-    private _ws: WebSocket;
-    private _userId: number;
-    private _chatId: number;
-    private _token: string;
-    private _ping: any;
+    private _ws: WebSocket | null = null;
+    private _userId: number | null = null;
+    private _chatId: number | null = null;
+    private _token: string | null = null;
+    private _ping: ReturnType<typeof setInterval> | null = null;
+    private _reconnectTimeout: ReturnType<typeof setTimeout> | null = null;
+    private _reconnectAttempts = 0;
+    private _pendingActionsByChatId: Record<number, MessageWebSocketAction[]> = {};
 
     constructor() {
         this._handleOpen = this._handleOpen.bind(this);
@@ -26,6 +43,9 @@ class MessageController {
     }
 
     private _addEvents() {
+        if (!this._ws) {
+            return;
+        }
         this._ws.addEventListener('open', this._handleOpen);
         this._ws.addEventListener('message', this._handleMassage);
         this._ws.addEventListener('error', this._handleError);
@@ -33,6 +53,9 @@ class MessageController {
     }
 
     private _removeEvents() {
+        if (!this._ws) {
+            return;
+        }
         this._ws.removeEventListener('open', this._handleOpen);
         this._ws.removeEventListener('message', this._handleMassage);
         this._ws.removeEventListener('error', this._handleError);
@@ -40,90 +63,198 @@ class MessageController {
     }
 
     private _handleOpen() {
+        this._reconnectAttempts = 0;
+        setMessageConnectionStatus('open');
         this.getMessages({ offset: 0 });
+        this._flushPendingActions();
         this._ping = setInterval(() => {
-            this._ws.send(JSON.stringify({ type: 'ping' }));
+            this._sendRawAction({ type: 'ping' });
         }, 10000);
     }
 
     private _handleMassage(evt: MessageEvent) {
-        console.log('💬 _handleMassage', evt.data);
-        const data = JSON.parse(evt.data);
+        if (evt.currentTarget !== this._ws) {
+            return;
+        }
 
-        if (Array.isArray(data)) {
+        const data = JSON.parse(evt.data) as MessageWebSocketEvent;
+
+        if (isMessageHistoryPayload(data)) {
             if (!data.length) {
-                store.setState({ messages: [] });
-            } else if (data[0].id === 0) {
-                store.setState({ messages: data.map((item) => item) });
-            } else {
-                const messages = [
-                    ...store.state.messages,
-                    ...data.map((item) => item),
-                ];
-                store.setState({ messages });
+                if (!getChatMessages(store.state).length) {
+                    clearMessages();
+                }
+                return;
             }
-        } else if (typeof data === 'object' && data.type === 'message') {
-            const messages = [data, ...store.state.messages];
-            store.setState({ messages });
+
+            applyHistoryBatch(data);
+            return;
+        }
+
+        if (isRealtimeMessage(data)) {
+            prependRealtimeChatMessage({
+                ...data,
+                pending_action: null,
+                is_optimistic: false,
+            });
         }
     }
 
     private _handleError(evt: ErrorEvent) {
-        console.log('💬 _handleError', evt.message);
+        if (evt.currentTarget !== this._ws) {
+            return;
+        }
+
+        setMessageConnectionStatus('error');
+        showErrorToast(evt.message || 'ÐžÑˆÐ¸Ð±ÐºÐ° ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ Ñ ÑÐµÑ€Ð²ÐµÑ€Ð¾Ð¼ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ð¹');
     }
 
-    private _handleClose(evt: CloseEventInit) {
-        this._removeEvents();
-        if (evt.wasClean) {
-            console.log('💬 Соединение закрыто чисто');
-        } else {
-            console.log('💬 Обрыв соединения');
+    private _handleClose(evt: CloseEvent) {
+        if (evt.currentTarget && evt.currentTarget !== this._ws) {
+            return;
         }
+
+        this._clearPing();
+        this._removeEvents();
+
+        if (this._ws && evt.currentTarget === this._ws) {
+            this._ws = null;
+        }
+
+        setMessageConnectionStatus(
+            evt.code === 1006 ? 'reconnecting' : 'closed',
+        );
+
+        if (!evt.wasClean && evt.code !== 1006) {
+            showInfoToast('Ð¡Ð¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ðµ Ñ Ñ‡Ð°Ñ‚Ð¾Ð¼ Ð·Ð°ÐºÑ€Ñ‹Ñ‚Ð¾');
+        }
+
         if (evt.code === 1006) {
-            this._reconaction();
+            this._scheduleReconnect();
         }
     }
 
     public connect(options: IMessageWebSocketConnect) {
+        this._clearReconnectTimeout();
+        this._clearPing();
+        this._detachCurrentSocket();
         this._userId = options.userId;
         this._chatId = options.chatId;
         this._token = options.token;
+        setActiveChatToken(options.token);
+        setMessageConnectionStatus('connecting');
         this._ws = new WebSocket(
-            `${env.HOST_WS}/${options.userId}/${options.chatId}/${options.token}`
+            `${env.HOST_WS}/${options.userId}/${options.chatId}/${options.token}`,
         );
         this._addEvents();
     }
 
     public getMessages(options: IMessageWebSocketGet) {
-        this._ws.send(
-            JSON.stringify({
-                content: options.offset.toString(),
-                type: 'get old',
-            })
-        );
+        this._sendRawAction({
+            content: options.offset.toString(),
+            type: 'get old',
+        });
     }
 
-    private _reconaction() {
-        this.connect({
-            userId: this._userId,
-            chatId: this._chatId,
-            token: this._token,
+    private _scheduleReconnect() {
+        if (!this._userId || !this._chatId || !this._token) {
+            return;
+        }
+
+        this._clearReconnectTimeout();
+        const timeout = Math.min(1000 * 2 ** this._reconnectAttempts, 5000);
+        this._reconnectAttempts += 1;
+        this._reconnectTimeout = setTimeout(() => {
+            this.connect({
+                userId: this._userId as number,
+                chatId: this._chatId as number,
+                token: this._token as string,
+            });
+        }, timeout);
+    }
+
+    private _clearReconnectTimeout() {
+        if (this._reconnectTimeout) {
+            clearTimeout(this._reconnectTimeout);
+            this._reconnectTimeout = null;
+        }
+    }
+
+    private _clearPing() {
+        if (this._ping) {
+            clearInterval(this._ping);
+            this._ping = null;
+        }
+    }
+
+    private _detachCurrentSocket() {
+        if (!this._ws) {
+            return;
+        }
+
+        this._removeEvents();
+        this._ws.close();
+        this._ws = null;
+    }
+
+    private _flushPendingActions() {
+        const activeChatId = this._chatId;
+
+        if (!activeChatId || !this._pendingActionsByChatId[activeChatId]?.length) {
+            return;
+        }
+
+        const queuedActions = [...this._pendingActionsByChatId[activeChatId]];
+        this._pendingActionsByChatId[activeChatId] = [];
+        queuedActions.forEach((action) => {
+            this._sendRawAction(action);
         });
     }
 
     public leave() {
-        clearInterval(this._ping);
-        this._ws.close();
-        this._removeEvents();
+        this._clearReconnectTimeout();
+        this._clearPing();
+        this._pendingActionsByChatId = {};
+        this._detachCurrentSocket();
+        setActiveChatToken(null);
+        setMessageConnectionStatus('closed');
     }
 
     public sendMessage(message: string) {
-        this._ws.send(
-            JSON.stringify({
-                content: message,
-                type: 'message',
-            })
-        );
+        return this._dispatchAction({
+            content: message,
+            type: 'message',
+        });
+    }
+
+    private _queueAction(chatId: number, action: MessageWebSocketAction) {
+        this._pendingActionsByChatId[chatId] = [
+            ...(this._pendingActionsByChatId[chatId] || []),
+            action,
+        ];
+    }
+
+    private _sendRawAction(action: MessageWebSocketAction) {
+        if (!this._ws || this._ws.readyState !== WebSocket.OPEN) {
+            return false;
+        }
+
+        this._ws.send(JSON.stringify(action));
+        return true;
+    }
+
+    private _dispatchAction(action: MessageWebSocketAction) {
+        const activeChatId = this._chatId;
+
+        if (!activeChatId) {
+            return false;
+        }
+
+        if (!this._sendRawAction(action)) {
+            this._queueAction(activeChatId, action);
+        }
+
+        return true;
     }
 }
 
