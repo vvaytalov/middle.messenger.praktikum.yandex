@@ -3,6 +3,13 @@ import { router } from '../index';
 import { store } from '../store';
 import { handleError } from '../utils/handleError';
 import { hideSpinner, showSpinner } from '../utils/spinner';
+import { getActiveChatId } from '../utils/chatSelectors';
+import {
+    clearMessages,
+    resetActiveChat,
+    setActiveChat,
+} from '../utils/chatPageState';
+import { showErrorToast } from '../utils/toast';
 import MessageController from './MessageWsController';
 
 export interface IChatApiAddUser {
@@ -27,16 +34,17 @@ class ChatController {
     }
 
     public request() {
+        store.setState({
+            isChatsLoading: true,
+        });
         showSpinner();
         return ChatApi.request()
             .then((chats) => {
                 store.setState({
                     chats,
                 });
-                if (!store.state.chatId) {
-                    store.setState({
-                        chatId: chats[0]?.id || null,
-                    });
+                if (!getActiveChatId(store.state)) {
+                    setActiveChat(chats[0]?.id || null, null);
                 }
                 return chats;
             })
@@ -45,6 +53,9 @@ class ChatController {
                 handleError(error);
             })
             .finally(() => {
+                store.setState({
+                    isChatsLoading: false,
+                });
                 hideSpinner();
             });
     }
@@ -52,7 +63,6 @@ class ChatController {
     public addUserChat(data: IChatApiAddUser) {
         return ChatApi.addChatUser(data)
             .then(() => {
-                console.log('Пользователь добавлен');
                 MessageController.sendMessage('Пользователь добавлен в чат');
             })
             .catch(handleError);
@@ -60,9 +70,7 @@ class ChatController {
 
     public deleteUserChat(data: IChatApiAddUser) {
         return ChatApi.deleteUserChat(data)
-            .then(() => {
-                console.log('Пользователь удален');
-            })
+            .then(() => undefined)
             .catch(handleError);
     }
 
@@ -82,9 +90,47 @@ class ChatController {
             .catch(handleError);
     }
 
-    public removeChat() {
-        return ChatApi.removeChat(store.state.chatId).then(() => {
-            this.request();
+    public removeChat(chatId: number = getActiveChatId(store.state) || 0) {
+        if (!chatId) {
+            showErrorToast('Чат не выбран');
+            return Promise.resolve(null);
+        }
+
+        const isActiveChat = chatId === getActiveChatId(store.state);
+
+        if (isActiveChat) {
+            MessageController.leave();
+            clearMessages();
+        }
+
+        return ChatApi.removeChat(chatId).then(() => {
+            return this.request().then((chats) => {
+                if (!isActiveChat) {
+                    return chats;
+                }
+
+                const nextChatId = chats?.[0]?.id || null;
+                if (!nextChatId) {
+                    resetActiveChat();
+                } else {
+                    setActiveChat(nextChatId, null);
+                }
+
+                const currentUser = store.state.currentUser;
+
+                if (!nextChatId || !currentUser) {
+                    return chats;
+                }
+
+                return this.requestMessageToken(nextChatId).then(({ token }) => {
+                    MessageController.connect({
+                        userId: currentUser.id,
+                        chatId: nextChatId,
+                        token,
+                    });
+                    return chats;
+                });
+            });
         });
     }
 }
