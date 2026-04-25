@@ -8,3 +8,14 @@
     flex-grow: 1;
     user-select: none;
 }
+
+.chat-card-list__item_skeleton {
+    pointer-events: none;
+}
+
+.chat-card-list__empty-state {
+    padding: 20px 12px;
+    color: var(--colorGray);
+    font-size: 14px;
+    text-align: center;
+}

@@ -10,11 +10,21 @@
     border: 1px solid transparent;
 }
 
+.chat-card_skeleton {
+    background: rgba(255, 255, 255, 0.03);
+    animation: chatCardPulse 1.4s ease-in-out infinite;
+}
+
 .chat-card:hover {
     cursor: pointer;
     background: var(--colorGray100);
     border: 1px solid transparent;
     transform: translateY(-1px);
+}
+
+.chat-card:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
 }
 
 .chat-card-list__item {
@@ -42,10 +52,25 @@
     grid-row: 1 / 3;
 }
 
+.chat-card__avatar_skeleton {
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        rgba(255, 255, 255, 0.12) 50%,
+        rgba(255, 255, 255, 0.06) 100%
+    );
+}
+
 .chat-card__name-wrapper {
     display: flex;
     align-items: center;
     min-width: 0;
+}
+
+.chat-card__name-wrapper_skeleton,
+.chat-card__last-message_skeleton {
+    display: flex;
+    align-items: center;
 }
 
 .chat-card__group-marker {
@@ -103,4 +128,41 @@
     justify-self: flex-end;
     grid-column: 3;
     grid-row: 2;
+}
+
+.chat-card__updated-at_skeleton {
+    width: 42px;
+    height: 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.chat-card__line {
+    height: 12px;
+    border-radius: 999px;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0.06) 0%,
+        rgba(255, 255, 255, 0.16) 50%,
+        rgba(255, 255, 255, 0.06) 100%
+    );
+}
+
+.chat-card__line_title {
+    width: 120px;
+}
+
+.chat-card__line_message {
+    width: 180px;
+}
+
+@keyframes chatCardPulse {
+    0%,
+    100% {
+        opacity: 0.88;
+    }
+
+    50% {
+        opacity: 1;
+    }
 }

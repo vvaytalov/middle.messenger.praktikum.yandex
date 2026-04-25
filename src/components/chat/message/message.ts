@@ -4,31 +4,26 @@ import defaultAvatar from '../../../assets/img/noavatar.svg';
 import Block from '../../../modules/Block';
 
 import './message.css';
-import { store } from '../../../store';
 import formatDate from '../../../utils/formatDate';
+import { IMessageListItem } from '../../../types/models';
 
-interface IMessage {
-    id: string;
-    chat_id: number;
-    user_id: number;
-    type: string;
-    content: string;
-    file: string | null;
-    is_read: boolean;
-    time: string;
-    avatar: string;
+interface IMessageProps extends IMessageListItem {
+    onReply?: (messageId: number) => void;
+    onEdit?: (messageId: number) => void;
+    onDelete?: (messageId: number) => void;
+    onForward?: (messageId: number) => void;
 }
 
 export default class Message extends Block {
-    constructor(props: IMessage) {
+    constructor(props: IMessageProps) {
         super('li', {
             className: 'message',
             classNameRoot:
-                props.user_id === store.state.currentUser.id
+                props.isOwnMessage
                     ? 'message message_outgoing-message'
                     : 'message',
             classNameDate:
-                props.user_id === store.state.currentUser.id
+                props.isOwnMessage
                     ? 'message__date message__date_outgoing-message'
                     : 'message__date',
             id: props.id,
@@ -40,7 +35,75 @@ export default class Message extends Block {
             time: formatDate(props.time),
             avatar: props.avatar ?? defaultAvatar,
             formattedDate: props.time,
+            canReply: props.canReply,
+            canEdit: props.canEdit,
+            canDelete: props.canDelete,
+            canForward: props.canForward,
+            isEdited: props.isEdited,
+            isDeleted: props.isDeleted,
+            isPending: props.isPending,
+            pendingAction: props.pendingAction,
+            replyPreview: props.replyPreview,
+            messageBodyClass: props.isDeleted
+                ? 'message__text message__text_deleted'
+                : 'message__text',
+            messageMetaStatus: props.isPending
+                ? `${props.pendingAction || 'message'}...`
+                : props.isEdited
+                    ? 'edited'
+                    : '',
+            metaStatusClass: props.isPending || props.isEdited
+                ? 'message__status'
+                : 'message__status message__status_hidden',
+            replyClass: props.replyPreview
+                ? 'message__reply'
+                : 'message__reply message__reply_hidden',
+            replyActionClass: props.canReply
+                ? 'message__action'
+                : 'message__action message__action_hidden',
+            editActionClass: props.canEdit
+                ? 'message__action'
+                : 'message__action message__action_hidden',
+            deleteActionClass: props.canDelete
+                ? 'message__action'
+                : 'message__action message__action_hidden',
+            forwardActionClass: props.canForward
+                ? 'message__action'
+                : 'message__action message__action_hidden',
+            onReply: props.onReply,
+            onEdit: props.onEdit,
+            onDelete: props.onDelete,
+            onForward: props.onForward,
+            events: {
+                click: (evt: MouseEvent) => this.handleClick(evt),
+            },
         });
+    }
+
+    private handleClick(evt: MouseEvent) {
+        const target = evt.target as HTMLElement;
+        const action = target.closest<HTMLButtonElement>('[data-message-action]')
+            ?.dataset.messageAction;
+
+        if (!action) {
+            return;
+        }
+
+        if (action === 'reply' && this.props.onReply) {
+            this.props.onReply(this.props.id);
+        }
+
+        if (action === 'edit' && this.props.onEdit) {
+            this.props.onEdit(this.props.id);
+        }
+
+        if (action === 'delete' && this.props.onDelete) {
+            this.props.onDelete(this.props.id);
+        }
+
+        if (action === 'forward' && this.props.onForward) {
+            this.props.onForward(this.props.id);
+        }
     }
 
     render() {

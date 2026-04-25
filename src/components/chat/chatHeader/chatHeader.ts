@@ -10,6 +10,8 @@ import DropDownMenu from '../../dropDown/dropDownMenu';
 
 import './chatHeader.css';
 import { store } from '../../../store';
+import { IAppState } from '../../../types/models';
+import { getActiveChat } from '../../../utils/chatSelectors';
 
 interface IChatHeader {
     name: string;
@@ -56,10 +58,8 @@ class ChatHeader extends Block {
     }
 
     public componentDidMount(): void {
-        (this as any)._unsubscribe = store.subscribe((state) => {
-            this.props.name =
-                state.chats.find((chat: any) => chat.id === state?.chatId)
-                    ?.title || 'Выберете или создайте чат';
+        (this as any)._unsubscribe = store.subscribe((state: IAppState) => {
+            this.props.name = getActiveChat(state)?.title || 'Выберете или создайте чат';
         });
     }
 

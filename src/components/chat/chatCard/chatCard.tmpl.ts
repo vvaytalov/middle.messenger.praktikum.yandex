@@ -1,7 +1,7 @@
 import { IProps } from '../../../modules/Block';
 
 export const template = (props: IProps) => `
-  <template class="{{ classNameRoot }}">
+  <template class="{{ classNameRoot }}" tabindex="0">
     <img
       class="{{ className }}__avatar"
       alt="Аватар пользователя"
@@ -19,5 +19,6 @@ export const template = (props: IProps) => `
             : ''
     }
     <date class="{{ className }}__updated-at" datetime="{{ time }}">{{ formatted_time }}</date>
+    <ChatContextMenu />
   </template>
 `;

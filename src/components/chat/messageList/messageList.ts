@@ -2,12 +2,17 @@ import { compile } from '../../../modules/templator';
 import { template } from './messageList.tmpl';
 import Block from '../../../modules/Block';
 import Message from '../message/message';
+import { IMessageListItem } from '../../../types/models';
 
 import './messageList.css';
 import debounce from '../../../utils/debounce';
 interface IMessageList {
-    messages: any[];
+    messages: IMessageListItem[];
     onEndList?: (length: number) => void;
+    onReply?: (messageId: number) => void;
+    onEdit?: (messageId: number) => void;
+    onDelete?: (messageId: number) => void;
+    onForward?: (messageId: number) => void;
 }
 
 export default class MessageList extends Block {
@@ -19,6 +24,10 @@ export default class MessageList extends Block {
             Message,
             messages: props.messages,
             onEndList: props.onEndList,
+            onReply: props.onReply,
+            onEdit: props.onEdit,
+            onDelete: props.onDelete,
+            onForward: props.onForward,
             events: {
                 scroll: (evt: Event) => this.handleScrollWithDebounce(evt),
             },
@@ -27,7 +36,7 @@ export default class MessageList extends Block {
         this.handleScrollWithDebounce = debounce.call(
             this,
             this.handleScroll,
-            400
+            400,
         );
         this.handleScroll = this.handleScroll.bind(this);
     }

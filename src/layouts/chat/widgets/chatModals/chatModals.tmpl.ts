@@ -1,7 +1,8 @@
 export const template = () => `
   <template class="{{ className }}">
-    <Sidebar />
-    <Main />
-    <Modals />
+    <UsersManager />
+    <NewChatPopup>
+      <NewChatForm />
+    </NewChatPopup>
   </template>
 `;

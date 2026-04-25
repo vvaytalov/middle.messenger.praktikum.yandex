@@ -1,226 +1,187 @@
-import AddChatUserForm from '../../components/addChatUserForm/addChatUserForm';
 import Button from '../../components/button/button';
 import ChatHeader from '../../components/chat/chatHeader/chatHeader';
 import ChatCardList from '../../components/chat/chatListCard/chatListCard';
 import MessageInput from '../../components/chat/messageInput/messageInput';
 import MessageList from '../../components/chat/messageList/messageList';
+import UserSearchResults from '../../components/chat/userSearchResults/userSearchResults';
 import Input from '../../components/input/input';
 import Link from '../../components/link/link';
+import NewChat from '../../components/newChat/newChat';
 import Popup from '../../components/popup/popup';
-import UserList from '../../components/userList/userList';
-import {
-    ChatController,
-    MessageController,
-    UserController,
-} from '../../controllers/index';
 import Block from '../../modules/Block';
 import { compile } from '../../modules/templator';
 import { store } from '../../store';
+import { IUser } from '../../types/models';
+import { getActiveChatId, getChatSearchQuery } from '../../utils/chatSelectors';
+import { setChatModalState } from '../../utils/chatPageState';
+import { getMessageComposerState } from '../../utils/messageSelectors';
+import { showErrorToast } from '../../utils/toast';
 import { template } from './chat.tmpl';
-import newChat from '../../components/newChat/newChat';
+import ChatPageController from './lib/ChatPageController';
+import ChatMain from './widgets/chatMain/chatMain';
+import ChatModals from './widgets/chatModals/chatModals';
+import ChatSidebar from './widgets/chatSidebar/chatSidebar';
+import ChatUsersManager from './widgets/chatUsersManager/chatUsersManager';
 
 import './chat.css';
+
 export default class Chat extends Block {
+    private pageController: ChatPageController;
+
     constructor() {
+        let pageController: ChatPageController;
+
+        const searchInput = new Input({
+            placeholder: 'ÐŸÐ¾Ð¸ÑÐº',
+            type: 'search',
+            onInput: (value) => pageController.handleSearchInput(value),
+        });
+
+        const chatCardList = new ChatCardList({
+            chats: store.state.chats,
+            isLoading: store.state.isChatsLoading,
+            hasQuery: false,
+            onSelect: (chatId) => pageController.handleChatSelect(chatId),
+            onDelete: (chatId) => pageController.handleDeleteChat(chatId),
+        });
+
+        const searchResults = new UserSearchResults({
+            users: [],
+            isLoading: false,
+            hasQuery: false,
+            canAddToChat: Boolean(getActiveChatId(store.state)),
+            onAddUser: (userId) => {
+                pageController
+                    .handleAddUser(userId, searchResults.props.users as IUser[])
+                    .then((users) => {
+                        searchResults.setProps({
+                            users,
+                        });
+                    })
+                    .catch(() => {
+                        showErrorToast('ÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð´Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ');
+                    });
+            },
+        });
+
+        const usersManager = new ChatUsersManager();
+
+        const chatHeader = new ChatHeader({
+            name: 'vvaytalov',
+            onAddContact: () => usersManager.openAddUserPopup(),
+            onRemoveContact: () => usersManager.openDeleteUserPopup(),
+            onRemoveChat: () => pageController.handleRemoveActiveChat(),
+        });
+
+        const messageList = new MessageList({
+            messages: [],
+            onEndList: (length) => pageController.handleMessageListEnd(length),
+            onReply: (messageId) => pageController.handleMessageReply(messageId),
+            onEdit: (messageId) => pageController.handleMessageEdit(messageId),
+            onDelete: (messageId) => pageController.handleMessageDelete(messageId),
+            onForward: (messageId) => pageController.handleMessageForward(messageId),
+        });
+
+        const messageInput = new MessageInput({
+            chatId: getActiveChatId(store.state),
+            composer: getMessageComposerState(store.state),
+            onMessageSend: ({ message }) => pageController.handleComposerSubmit(message),
+            onCancelComposer: () => pageController.handleComposerCancel(),
+        });
+
+        const profileLink = new Link({
+            to: '/profile',
+            label: 'ÐŸÑ€Ð¾Ñ„Ð¸Ð»ÑŒ',
+        });
+
+        const newChatPopup = new Popup({
+            classMix: 'new-chat-popup',
+            title: 'Ð¡Ð¾Ð·Ð´Ð°Ñ‚ÑŒ Ñ‡Ð°Ñ‚',
+            onOpen: () => setChatModalState({ isNewChatOpen: true }),
+            onClose: () => setChatModalState({ isNewChatOpen: false }),
+        });
+
+        const newChatButton = new Button({
+            label: 'ÐÐ¾Ð²Ñ‹Ð¹ Ñ‡Ð°Ñ‚',
+            light: false,
+            onClick: () => newChatPopup.show(),
+        });
+
+        const newChatForm = new NewChat({
+            onSubmit: (formData) => {
+                pageController.handleCreateChat(formData.title).then(() => {
+                    newChatPopup.hide();
+                });
+            },
+        });
+
         super('div', {
             className: 'chat-page',
             chats: store.state.chats,
-            SearchInput: new Input({
-                placeholder: 'Поиск',
-                type: 'search',
+            searchQuery: getChatSearchQuery(store.state),
+            SearchInput: searchInput,
+            SearchResults: searchResults,
+            ChatCardList: chatCardList,
+            ChatHeader: chatHeader,
+            MessageList: messageList,
+            MessageInput: messageInput,
+            Link: profileLink,
+            NewChatPopup: newChatPopup,
+            NewChatButton: newChatButton,
+            NewChatForm: newChatForm,
+            UsersManager: usersManager,
+            Sidebar: new ChatSidebar({
+                SearchInput: searchInput,
+                SearchResults: searchResults,
+                ChatCardList: chatCardList,
+                Link: profileLink,
+                NewChatButton: newChatButton,
             }),
-            ChatCardList: new ChatCardList({
-                chats: store.state.chats,
-                onSelect: (chatId) => {
-                    store.setState({ messages: [] });
-                    MessageController.leave();
-                    store.setState({ chatId });
-                    localStorage.setItem('last_select-chat_id', `${chatId}`),
-                        this.reqChat(chatId);
-                },
+            Main: new ChatMain({
+                ChatHeader: chatHeader,
+                MessageList: messageList,
+                MessageInput: messageInput,
             }),
-            ChatHeader: new ChatHeader({
-                name: 'vvaytalov',
-                onAddContact: () => {
-                    this.props.AddChatUserPopup.show();
-                },
-                onRemoveContact: () => this.props.DeleteChatUserPopup.show(),
-                onRemoveChat: () => ChatController.removeChat(),
-            }),
-            MessageList: new MessageList({
-                messages: [],
-                onEndList: (length) => {
-                    if (length && (length % 20 === 0)) {
-                        MessageController.getMessages({ offset: length });
-                    }
-                  },
-            }),
-            MessageInput: new MessageInput({
-                onMessageSend: ({ message }) => {
-                    MessageController.sendMessage(message),
-                        this.props.MessageList.scrollToLastMessage();
-                },
-            }),
-            Link: new Link({
-                to: '/profile',
-                label: 'Профиль',
-            }),
-            NewChatPopup: new Popup({
-                classMix: 'new-chat-popup',
-                title: 'Создать чат',
-            }),
-            NewChatButton: new Button({
-                label: 'Новый чат',
-                light: false,
-                onClick: () => this.props.NewChatPopup.show(),
-            }),
-            NewChatForm: new newChat({
-                onSubmit: (formData) => {
-                    ChatController.create({
-                        title: formData.title,
-                    }).then(() => this.props.NewChatPopup.hide());
-                },
-            }),
-            selectedUsers: [],
-            AddUserList: new UserList({
-                users: [],
-                onApply: (userId) => {
-                    if (userId && userId.length > 0) {
-                        ChatController.addUserChat({
-                            users: userId,
-                            chatId: store.state.chatId,
-                        });
-                        this.props.AddChatUserPopup.hide();
-                    } else {
-                        const searchInput = document.querySelector('.add-chat-user-form__form input[name="login"]') as HTMLInputElement;
-                        if (searchInput && searchInput.value) {
-                            UserController.search({ login: searchInput.value }).then((users: any) => {
-                                if (users && users.length > 0) {
-                                    ChatController.addUserChat({
-                                        users: [users[0].id],
-                                        chatId: store.state.chatId,
-                                    });
-                                    this.props.AddChatUserPopup.hide();
-                                } else {
-                                    console.error('Пользователь не найден');
-                                }
-                            });
-                        }
-                    }
-                },
-            }),
-            AddChatUserForm: new AddChatUserForm({
-                onSubmit: (formData) => {
-                    UserController.search({
-                        login: formData.login,
-                    }).then((users) => {
-                        this.props.AddUserList.setProps({
-                            users,
-                        });
-                    });
-                },
-            }),
-            AddChatUserPopup: new Popup({
-                classMix: 'add-contact-popup',
-                title: 'Добавить пользователя',
-                onOpen: () => {
-                    this.props.AddUserList.setProps({
-                        users: [],
-                        selectedUsers: [],
-                    });
-                },
-            }),
-
-            DeleteChatUserPopup: new Popup({
-                classMix: 'delete-contact-popup',
-                title: 'Удалить пользователя',
-                onOpen: () => {
-                    this.props.DeleteUserList.setProps({
-                        users: [],
-                        selectedUsers: [],
-                    });
-                    ChatController.requestUserChat(store.state.chatId).then(
-                        (users) => {
-                            const usersRemove = users.filter((user: any) => {
-                                return user.id !== store.state.currentUser.id;
-                            });
-                            this.props.DeleteUserList.setProps({
-                                users: usersRemove,
-                            });
-                        }
-                    );
-                },
-            }),
-
-            DeleteUserList: new UserList({
-                className: 'user-list',
-                users: [],
-                buttonLabel: 'Удалить',
-                onApply: (userId) => {
-                    if (!this.props.DeleteUserList.props.users.length) {
-                        return;
-                    }
-                    ChatController.deleteUserChat({
-                        users: userId,
-                        chatId: store.state.chatId,
-                    });
-                    this.props.DeleteChatUserPopup.hide();
-                },
+            Modals: new ChatModals({
+                UsersManager: usersManager,
+                NewChatPopup: newChatPopup,
+                NewChatForm: newChatForm,
             }),
         });
-    }
 
-    public reqMessage(token: any = store.state.token): void {
-        if (!store.state.currentUser) {
-            return;
-        }
-        MessageController.connect({
-            userId: store.state.currentUser.id,
-            chatId: store.state.chatId,
-            token,
+        pageController = new ChatPageController({
+            getSearchQuery: () => String(this.props.searchQuery || ''),
+            setSearchQuery: (value) => {
+                this.props.searchQuery = value;
+            },
+            setChatListState: (state) => {
+                this.props.ChatCardList.setProps(state);
+            },
+            setUserSearchState: (state) => {
+                this.props.SearchResults.setProps(state);
+            },
+            setMessageListState: (messages) => {
+                this.props.MessageList.setProps({ messages });
+            },
+            setMessageInputChatId: (chatId) => {
+                if (this.props.MessageInput.props.chatId !== chatId) {
+                    this.props.MessageInput.setProps({ chatId });
+                }
+            },
+            setMessageComposerState: (composer) => {
+                this.props.MessageInput.setProps({
+                    composer,
+                });
+            },
+            scrollToLastMessage: () => {
+                this.props.MessageList.scrollToLastMessage();
+            },
         });
-    }
-
-    public reqChat(chatId: number): void {
-        if (!chatId) {
-            return;
-        }
-
-        ChatController.requestMessageToken(chatId).then(({ token }) => {
-            store.setState({ chatId });
-            this.reqMessage(token);
-        });
+        this.pageController = pageController;
     }
 
     componentDidMount() {
-        (this as any)._unsubscribers = [];
-        const getChat = localStorage.getItem('last_select-chat_id');
-
-        if (getChat) {
-            store.setState({
-                chatId: +getChat,
-            });
-        }
-
-        ChatController.request().then(() => {
-            this.reqChat(store.state.chatId);
-        });
-
-        (this as any)._unsubscribers.push(
-            store.subscribe((state) => {
-                this.props.ChatCardList.setProps({
-                    chats: state.chats,
-                });
-            })
-        );
-
-        (this as any)._unsubscribers.push(
-            store.subscribe((state) => {
-                this.props.MessageList.setProps({
-                    messages: state.messages,
-                });
-            })
-        );
+        this.pageController.mount();
     }
 
     render() {
@@ -228,16 +189,6 @@ export default class Chat extends Block {
     }
 
     onDestroy() {
-        if ((this as any)._unsubscribers) {
-            (this as any)._unsubscribers.forEach((unsub: () => void) => unsub());
-        }
-        (this as any)._unsubscribers = [];
-        if (store.state.chats.length) {
-            MessageController.leave();
-        }
-        store.setState({
-            chats: [],
-            messages: [],
-        });
+        this.pageController.destroy();
     }
 }

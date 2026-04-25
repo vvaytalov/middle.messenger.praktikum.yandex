@@ -7,10 +7,12 @@ import Error500Page from './layouts/error/500/500';
 import ChangePassword from './layouts/profile/change_password/change_password';
 import Profile from './layouts/profile/user_page/user_page';
 import Router from './modules/Router';
+import { initToasts } from './utils/toast';
 
 export const router = new Router('.body');
 
 document.addEventListener('DOMContentLoaded', () => {
+    initToasts();
     router
         .setUnprotectedPaths(['/sign-in', '/sign-up', '/500'])
         .onRoute(AuthControllers.CheckAuth)

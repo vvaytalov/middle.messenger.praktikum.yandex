@@ -5,15 +5,13 @@ import { store } from '../../../store';
 import defaultIcon from '../../../assets/img/noavatar.svg';
 import './chatCard.css';
 import formatDate from '../../../utils/formatDate';
+import ChatContextMenu from '../chatContextMenu/chatContextMenu';
+import { IChat } from '../../../types/models';
+import { getActiveChatId } from '../../../utils/chatSelectors';
 
-interface IChatCard {
-    id: number;
-    created_by: number;
-    title: string;
-    avatar: string | null;
-    last_message: {} | null;
-    unread_count: number;
+interface IChatCard extends IChat {
     onClick: (chatId: number) => void;
+    onDelete: (chatId: number) => void;
 }
 
 class ChatCard extends Block {
@@ -21,7 +19,7 @@ class ChatCard extends Block {
         super('div', {
             className: 'chat-card',
             classNameRoot:
-                props.id === store.state.chatId
+                props.id === getActiveChatId(store.state)
                     ? 'chat-card chat-card__active'
                     : 'chat-card',
             id: props.id,
@@ -31,10 +29,44 @@ class ChatCard extends Block {
             avatar: props.avatar ?? defaultIcon,
             last_message: props.last_message || '',
             onClick: props.onClick,
+            onDelete: props.onDelete,
+            ChatContextMenu: new ChatContextMenu({
+                chatId: props.id,
+                onDelete: props.onDelete,
+            }),
             events: {
-                click: () => this.props.onClick(this.props.id),
+                click: (evt: MouseEvent) => this.handleClick(evt),
+                contextmenu: (evt: MouseEvent) => this.handleContextMenu(evt),
+                keydown: (evt: KeyboardEvent) => this.handleKeyDown(evt),
             },
         });
+    }
+
+    private handleClick(evt: MouseEvent) {
+        if ((evt.target as HTMLElement).closest('.chat-context-menu')) {
+            return;
+        }
+        this.props.ChatContextMenu.close();
+        this.props.onClick(this.props.id);
+    }
+
+    private handleContextMenu(evt: MouseEvent) {
+        evt.preventDefault();
+        this.props.ChatContextMenu.open({
+            x: evt.clientX,
+            y: evt.clientY,
+        });
+    }
+
+    private handleKeyDown(evt: KeyboardEvent) {
+        if (evt.key === 'ContextMenu' || (evt.shiftKey && evt.key === 'F10')) {
+            evt.preventDefault();
+            const { top, right } = this.getContent().getBoundingClientRect();
+            this.props.ChatContextMenu.open({
+                x: right - 12,
+                y: top + 12,
+            });
+        }
     }
 
     render() {

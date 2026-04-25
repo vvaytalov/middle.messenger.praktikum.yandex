@@ -22,9 +22,8 @@
 }
 
 .message__text {
-    position: relative;
     max-width: 480px;
-    margin: 0 0 4px;
+    margin: 0;
     padding: 8px 12px;
     color: var(--color-white);
     border-radius: 12px 12px 12px 0px;
@@ -35,22 +34,97 @@
     overflow-wrap: break-word;
 }
 
+.message__text_deleted {
+    opacity: 0.7;
+    font-style: italic;
+}
+
+.message__body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.message__reply {
+    max-width: 480px;
+    padding: 6px 10px;
+    border-left: 2px solid rgba(255, 255, 255, 0.45);
+    color: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+.message__reply_hidden {
+    display: none;
+}
+
 .message_outgoing-message .message__text {
     border-radius: 12px 12px 0px 12px;
     background: var(--color-background-message);
 }
 
+.message__meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.message_outgoing-message .message__meta {
+    justify-content: flex-end;
+}
+
+.message__actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+}
+
+.message:hover .message__actions,
+.message:focus-within .message__actions {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.message__action {
+    padding: 0;
+    color: rgba(255, 255, 255, 0.65);
+    border: none;
+    background: transparent;
+    font: inherit;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.message__action_hidden {
+    display: none;
+}
+
+.message__action:hover {
+    color: rgba(255, 255, 255, 0.95);
+}
+
 .message__date {
     font-size: 11px;
-    position: relative;
     display: inline-block;
-    margin-left: 8px;
     user-select: none;
     white-space: nowrap;
     color: rgba(255, 255, 255, 0.6);
-    vertical-align: bottom;
 }
 
 .message__date_outgoing-message {
     color: rgba(255, 255, 255, 0.6);
+}
+
+.message__status {
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.message__status_hidden {
+    display: none;
 }
