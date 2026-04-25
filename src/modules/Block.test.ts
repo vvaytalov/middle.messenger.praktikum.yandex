@@ -28,7 +28,7 @@ describe('Блок', () => {
                 componentRenderAfterProps = true;
             }
 
-            return `<template class="button">Click me!</template>`;
+            return '<template class="button">Click me!</template>';
         }
     }
 

@@ -13,8 +13,8 @@ describe('HTTPTransport', () => {
                 } else {
                     done(
                         new Error(
-                            'Ожидался массив объектов с ключом postId и значением 1'
-                        )
+                            'Ожидался массив объектов с ключом postId и значением 1',
+                        ),
                     );
                 }
             })
@@ -39,8 +39,8 @@ describe('HTTPTransport', () => {
                 } else {
                     done(
                         new Error(
-                            "Ожидался объект с ключом title и значением 'foo'"
-                        )
+                            "Ожидался объект с ключом title и значением 'foo'",
+                        ),
                     );
                 }
             })
