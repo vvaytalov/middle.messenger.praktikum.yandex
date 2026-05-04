@@ -169,6 +169,10 @@ export default class Chat extends Block {
                 }
             },
             setMessageComposerState: (composer) => {
+                if (this.props.MessageInput.props.composer === composer) {
+                    return;
+                }
+
                 this.props.MessageInput.setProps({
                     composer,
                 });

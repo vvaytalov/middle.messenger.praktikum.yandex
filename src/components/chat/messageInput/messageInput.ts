@@ -105,9 +105,14 @@ export default class MessageInput extends Block {
     }
 
     componentDidUpdate() {
+        const shouldRestoreFocus = this.isMessageFieldFocused();
+
         this.loadDraft(this.props.chatId);
         this.syncComposerValue();
         window.setTimeout(() => {
+            if (shouldRestoreFocus) {
+                this.focusMessageField();
+            }
             this.autoResize();
         }, 0);
         return true;
@@ -135,6 +140,32 @@ export default class MessageInput extends Block {
         ) as HTMLTextAreaElement | null;
     }
 
+    private setMessageValue(value: string) {
+        const messageField = this.getMessageField();
+
+        if (messageField?.value === value) {
+            return;
+        }
+
+        this.props.MessageInput.setProps({
+            value,
+        });
+    }
+
+    private isMessageFieldFocused() {
+        const messageField = this.getMessageField();
+
+        return Boolean(messageField && document.activeElement === messageField);
+    }
+
+    private focusMessageField() {
+        const messageField = this.getMessageField();
+
+        messageField?.focus({
+            preventScroll: true,
+        });
+    }
+
     private autoResize() {
         const messageField = this.getMessageField();
 
@@ -149,9 +180,7 @@ export default class MessageInput extends Block {
     private loadDraft(chatId: number | null) {
         const draft = getChatDraft(chatId);
 
-        this.props.MessageInput.setProps({
-            value: draft,
-        });
+        this.setMessageValue(draft);
     }
 
     private syncComposerValue() {
@@ -159,9 +188,7 @@ export default class MessageInput extends Block {
             return;
         }
 
-        this.props.MessageInput.setProps({
-            value: this.props.composer.target.content,
-        });
+        this.setMessageValue(this.props.composer.target.content);
     }
 
     private handleKeyDown(evt: KeyboardEvent) {
@@ -209,6 +236,7 @@ export default class MessageInput extends Block {
             message,
         });
         window.setTimeout(() => {
+            this.focusMessageField();
             this.autoResize();
         }, 0);
     }
