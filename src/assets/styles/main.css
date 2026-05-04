@@ -10,7 +10,10 @@ body {
     letter-spacing: var(--letterSpacing);
     margin: 0;
     color: var(--color-white);
-    background-color: var(--color-background);
+    min-width: 320px;
+    background:
+        radial-gradient(circle at top left, rgba(61, 143, 255, 0.12), transparent 34vw),
+        linear-gradient(135deg, #111418 0%, #171a20 48%, #101318 100%);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -18,9 +21,10 @@ body {
 
 main {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
     justify-content: center;
     align-items: center;
+    padding: 24px;
 }
 
 * {
@@ -32,6 +36,13 @@ input,
 textarea {
     font: inherit;
     letter-spacing: inherit;
+}
+
+a,
+button,
+input,
+textarea {
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* Custom scrollbar for dark theme */

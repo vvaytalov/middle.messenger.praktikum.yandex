@@ -2,13 +2,15 @@
     display: flex;
     flex-direction: column-reverse;
     margin: 0;
-    padding: 0;
+    padding: 18px 0;
     list-style: none;
-    background-image: url('../../../assets/img/chat-bg.jpg');
-    background-position: top left;
-    background-size: 650px;
+    background-image: url('../../../assets/img/chat-bg.png');
+    background-position: center top;
+    background-size: 560px;
     background-repeat: repeat;
     background-color: var(--color-chat-bg);
     gap: 12px;
     overflow-anchor: none;
+    border-radius: var(--borderRadius);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
 }

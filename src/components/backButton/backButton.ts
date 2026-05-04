@@ -15,6 +15,7 @@ export default class BackButton extends Block {
             Link: new Link({
                 to: '/',
                 className: 'link_back',
+                label: 'Назад',
             }),
         });
     }

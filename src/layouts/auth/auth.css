@@ -4,16 +4,18 @@
     text-align: center;
     font-size: var(--fontSizeHeader);
     font-weight: 700;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
     margin-bottom: calc(2 * var(--space));
 }
 
 .auth__main {
     width: 100%;
     max-width: 400px;
-    padding: 40px 32px;
-    background: var(--color-background-aside);
-    border-radius: 16px;
+    padding: 42px 34px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.055), transparent 120px),
+        var(--color-background-aside);
+    border-radius: var(--borderRadius);
     box-shadow: var(--shadow-panel);
     border: 1px solid var(--color-border);
 }

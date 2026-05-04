@@ -2,6 +2,7 @@ node_modules
 .parcel-cache/*
 .DS_Store
 .cache/*
+.codex-run
 
 dist/
 test-results/
