@@ -22,8 +22,8 @@ interface IForm {
 
 export type IFormButton = {
     type: 'submit';
-    label: 'Сохранить новый пароль';
-    color: 'primary';
+    label: string;
+    color?: 'primary';
     onClick: () => void;
 };
 

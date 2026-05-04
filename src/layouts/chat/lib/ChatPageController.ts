@@ -247,7 +247,7 @@ export default class ChatPageController {
         }
 
         MessageActionsController.startForward(message);
-        showInfoToast('ÐŸÐµÑ€ÐµÑÑ‹Ð»ÐºÐ° Ð¿Ð¾Ð´Ð³Ð¾Ñ‚Ð¾Ð²Ð»ÐµÐ½Ð° Ð² composer state');
+        showInfoToast('Пересылка подготовлена в composer state');
     }
 
     public handleComposerSubmit(message: string) {

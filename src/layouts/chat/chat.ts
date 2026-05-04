@@ -32,7 +32,7 @@ export default class Chat extends Block {
         let pageController: ChatPageController;
 
         const searchInput = new Input({
-            placeholder: 'ÐŸÐ¾Ð¸ÑÐº',
+            placeholder: 'Поиск',
             type: 'search',
             onInput: (value) => pageController.handleSearchInput(value),
         });
@@ -59,7 +59,7 @@ export default class Chat extends Block {
                         });
                     })
                     .catch(() => {
-                        showErrorToast('ÐÐµ ÑƒÐ´Ð°Ð»Ð¾ÑÑŒ Ð´Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ Ð¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÐµÐ»Ñ');
+                        showErrorToast('Не удалось добавить пользователя');
                     });
             },
         });
@@ -91,18 +91,18 @@ export default class Chat extends Block {
 
         const profileLink = new Link({
             to: '/profile',
-            label: 'ÐŸÑ€Ð¾Ñ„Ð¸Ð»ÑŒ',
+            label: 'Профиль',
         });
 
         const newChatPopup = new Popup({
             classMix: 'new-chat-popup',
-            title: 'Ð¡Ð¾Ð·Ð´Ð°Ñ‚ÑŒ Ñ‡Ð°Ñ‚',
+            title: 'Создать чат',
             onOpen: () => setChatModalState({ isNewChatOpen: true }),
             onClose: () => setChatModalState({ isNewChatOpen: false }),
         });
 
         const newChatButton = new Button({
-            label: 'ÐÐ¾Ð²Ñ‹Ð¹ Ñ‡Ð°Ñ‚',
+            label: 'Новый чат',
             light: false,
             onClick: () => newChatPopup.show(),
         });
@@ -178,9 +178,6 @@ export default class Chat extends Block {
             },
         });
         this.pageController = pageController;
-    }
-
-    componentDidMount() {
         this.pageController.mount();
     }
 
@@ -189,6 +186,6 @@ export default class Chat extends Block {
     }
 
     onDestroy() {
-        this.pageController.destroy();
+        this.pageController?.destroy();
     }
 }

@@ -8,10 +8,10 @@ export const REGEX_NAME: string = '[-A-Za-zА-Яа-я.\\s]*';
 export const REGEX_TEL: string = '(\\+?[0-9])\\s?\\(?[0-9]{3}\\)?\\s?[0-9]{7}$';
 export const REGEX_TEXT: string = '[-A-Z0-9a-zА-Яа-я.\\s]*';
 
-//REG_MESSAGE
+// REG_MESSAGE
 export const PASSWORD_MSG: string = 'Добавьте заглавную букву или цифру';
 export const TEL_MSG: string = 'Поле в формате: +79996431241';
 export const NAME_MSG: string = 'Буквы, дефис или точка';
 export const LOGIN_MSG: string = 'Англ. буквы, от 3 до 16 символов';
 export const MAIL_MSG: string = 'Поле в формате email';
-export const VALUE: string = 'Обязательно поле';
+export const VALUE: string = 'Обязательное поле';

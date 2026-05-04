@@ -44,8 +44,14 @@ class Templator {
             // Ключ пропса (левая часть до =)
             const [propsKey] = prop.match(/[^<][\w.]+/) || [];
 
+            if (!propsKey) {
+                return;
+            }
+
             // Получаем значение после =
-            const propValue = prop.split(/="/)[1].replace(/"/, '').trim();
+            const propValue = (prop.split(/="/)[1] || '')
+                .replace(/"/, '')
+                .trim();
             // Проверяем, является ли ключом к контексту (prop="{{ key }}")
             const { key: propValueContextKey } =
                 propValue.match(/{{\s*?(?<key>\w+?)\s*?}}/)?.groups || {};
@@ -73,7 +79,11 @@ class Templator {
     // Обработчик вхождений шаблона
     private _handleFound(found: string) {
         // Извлекаем имя ключа
-        const [key]: RegExpMatchArray = found.match(/[\w.]+/) || [];
+        const [key] = found.match(/[\w.]+/) || [];
+
+        if (!key) {
+            return found;
+        }
         // Получаем значение из контекста по ключу
         const value = this._getValueFromContext(key);
 

@@ -37,11 +37,11 @@ export default class UserSearchResults extends Block {
 
     render() {
         const users = this.props.users || [];
-        this.props.classNameRoot =
+        const classNameRoot =
             this.props.hasQuery || this.props.isLoading || users.length
                 ? 'user-search-results'
                 : 'user-search-results user-search-results_hidden';
-        this.props.UserResultItem = users.map(
+        const UserResultItem = users.map(
             (user: IUser) =>
                 new UserSearchResultItem({
                     ...user,
@@ -50,6 +50,10 @@ export default class UserSearchResults extends Block {
                 }),
         );
 
-        return compile(template, this.props);
+        return compile(template, {
+            ...this.props,
+            classNameRoot,
+            UserResultItem,
+        });
     }
 }

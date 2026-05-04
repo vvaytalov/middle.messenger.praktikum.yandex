@@ -16,6 +16,7 @@ import {
 
 import '../auth.css';
 import AuthControllers from '../../../controllers/AuthControllers';
+
 export default class SignInPage extends Block {
     constructor() {
         super('main', {
@@ -24,7 +25,7 @@ export default class SignInPage extends Block {
             returnLinkText: 'Нет аккаунта?',
             returnLink: './sign-up',
             Link: new Link({
-                label: 'Нет аккаунта ?',
+                label: 'Нет аккаунта?',
                 to: '/sign-up',
             }),
             form: {

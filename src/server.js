@@ -2,6 +2,7 @@ const express = require('express');
 const history = require('connect-history-api-fallback');
 const path = require('path');
 const helmet = require('helmet');
+const { createCspDirectives } = require('./config/csp');
 const app = express();
 const PORT = 3000;
 const port = process.env.PORT || PORT;
@@ -36,21 +37,9 @@ app.use(helmet.referrerPolicy());
 app.use(helmet.xssFilter());
 app.use(helmet.contentSecurityPolicy({
     useDefaults: false,
-    directives: {
-        'default-src': [
-            "'self'",
-            'https://ya-praktikum.tech',
-            'wss://ya-praktikum.tech',
-            'ws://localhost:*',
-            'https://fonts.gstatic.com',
-            "'unsafe-inline'",
-        ],
-        'script-src': [
-            "'self'",
-            "'unsafe-eval'",
-            "'sha256-76e59211187dd5d7e249ceafe9c45ee205997'",
-        ],
-    },
+    directives: createCspDirectives({
+        isDevelopment: process.env.NODE_ENV === 'development',
+    }),
 }));
 
 

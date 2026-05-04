@@ -106,7 +106,7 @@ class MessageController {
         }
 
         setMessageConnectionStatus('error');
-        showErrorToast(evt.message || 'ÐžÑˆÐ¸Ð±ÐºÐ° ÑÐ¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ñ Ñ ÑÐµÑ€Ð²ÐµÑ€Ð¾Ð¼ ÑÐ¾Ð¾Ð±Ñ‰ÐµÐ½Ð¸Ð¹');
+        showErrorToast(evt.message || 'Ошибка соединения с сервером сообщений');
     }
 
     private _handleClose(evt: CloseEvent) {
@@ -126,7 +126,7 @@ class MessageController {
         );
 
         if (!evt.wasClean && evt.code !== 1006) {
-            showInfoToast('Ð¡Ð¾ÐµÐ´Ð¸Ð½ÐµÐ½Ð¸Ðµ Ñ Ñ‡Ð°Ñ‚Ð¾Ð¼ Ð·Ð°ÐºÑ€Ñ‹Ñ‚Ð¾');
+            showInfoToast('Соединение с чатом закрыто');
         }
 
         if (evt.code === 1006) {

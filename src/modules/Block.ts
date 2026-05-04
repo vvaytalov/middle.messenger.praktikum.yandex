@@ -1,6 +1,6 @@
-import { v4 as uuid } from 'uuid';
 import EventBus from './eventBus';
 import getElementsFromString from '../utils/getTemplate';
+import createId from '../utils/createId';
 
 export type IProps = Record<string, any>;
 
@@ -30,7 +30,7 @@ export default class Block {
             props,
         };
 
-        this._uuid = uuid();
+        this._uuid = createId();
 
         this.props = this._makePropsProxy({ ...props, _uuid: this._uuid });
         this.eventBus = () => eventBus;
