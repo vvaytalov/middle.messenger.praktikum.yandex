@@ -31,6 +31,8 @@ import { store } from '../../../store';
 import ImageFile from '../../../components/imageFile/imageFile';
 import { IUser } from '../../../types/models';
 export default class Profile extends Block {
+    private _unsubscribe: (() => void) | undefined;
+
     constructor() {
         super('main', {
             className: 'profile',
@@ -211,23 +213,28 @@ export default class Profile extends Block {
     }
 
     public componentDidMount(): void {
-        (this as any)._unsubscribe = store.subscribe((state) => {
-            this.setField(state.currentUser);
+        this._unsubscribe = store.subscribe((state) => {
+            const currentUser = state.currentUser;
 
-            this.props.AvatarChoose.props.src = state.currentUser?.avatar
-                ? env.HOST_RESOURCES + state.currentUser?.avatar
-                : avatarImage;
+            queueMicrotask(() => {
+                this.setField(currentUser);
+            });
 
             this.props.AvatarChoose.setProps({
-                title: '@' + state.currentUser?.display_name,
+                src: currentUser?.avatar
+                    ? env.HOST_RESOURCES + currentUser.avatar
+                    : avatarImage,
+                title: currentUser?.display_name
+                    ? `@${currentUser.display_name}`
+                    : '',
             });
         });
     }
 
     public onDestroy(): void {
-        if ((this as any)._unsubscribe) {
-            (this as any)._unsubscribe();
-            (this as any)._unsubscribe = null;
+        if (this._unsubscribe) {
+            this._unsubscribe();
+            this._unsubscribe = undefined;
         }
     }
 
