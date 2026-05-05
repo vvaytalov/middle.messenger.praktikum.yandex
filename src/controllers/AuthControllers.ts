@@ -11,7 +11,19 @@ class AuthControllers {
             .then(() => {
                 router.go('/');
             })
-            .catch(handleError)
+            .catch((e) => {
+                if (getErrorReason(e) !== 'Cookie is not valid') {
+                    return handleError(e);
+                }
+
+                return AuthAPI.LogOut()
+                    .catch(() => {})
+                    .then(() => AuthAPI.SignIn(user))
+                    .then(() => {
+                        router.go('/');
+                    })
+                    .catch(handleError);
+            })
             .finally(() => {
                 hideSpinner();
             });
