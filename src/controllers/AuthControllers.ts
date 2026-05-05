@@ -1,7 +1,7 @@
 import AuthAPI, { IAuthSignInApi, IAuthSignUpApi } from '../api/AuthApi';
 import { router } from '../index';
 import { store } from '../store';
-import { handleError } from '../utils/handleError';
+import { getErrorReason, handleError } from '../utils/handleError';
 import { hideSpinner, showSpinner } from '../utils/spinner';
 
 class AuthControllers {
@@ -37,6 +37,11 @@ class AuthControllers {
                 });
             })
             .catch((e) => {
+                if (getErrorReason(e) === 'Cookie is not valid') {
+                    router.go('/sign-in');
+                    return;
+                }
+
                 handleError(e);
                 router.go('/sign-in');
             });

@@ -1,19 +1,26 @@
 import { router } from '../index';
 import { showErrorToast } from './toast';
 
+export function getErrorReason(error: XMLHttpRequest) {
+    if (!error || !error.response) {
+        return '';
+    }
+
+    try {
+        const parsed = JSON.parse(error.response);
+        return parsed.reason || '';
+    } catch {
+        return error.response;
+    }
+}
+
 export function handleError(error: XMLHttpRequest) {
     if (!error || !error.response) {
         showErrorToast('Что-то пошло не так. Открываем страницу ошибки');
         return router.go('/500');
     }
 
-    let reason = '';
-    try {
-        const parsed = JSON.parse(error.response);
-        reason = parsed.reason || '';
-    } catch {
-        reason = error.response;
-    }
+    const reason = getErrorReason(error);
 
     if (reason === 'User already in system') {
         router.go('/');
