@@ -47,15 +47,17 @@ class AuthControllers {
                 store.setState({
                     currentUser: user,
                 });
+                return true;
             })
             .catch((e) => {
                 if (getErrorReason(e) === 'Cookie is not valid') {
                     router.go('/sign-in');
-                    return;
+                    return false;
                 }
 
-                handleError(e);
+                void Promise.resolve(handleError(e)).catch(() => {});
                 router.go('/sign-in');
+                return false;
             });
     }
 

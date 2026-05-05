@@ -10,6 +10,9 @@ describe('Router', () => {
     class Profile extends Block {}
 
     let callbackCounter: number = 0;
+    const waitForRoute = () => new Promise((resolve) => {
+        setTimeout(resolve, 0);
+    });
 
     router
         .setUnprotectedPaths(['/about'])
@@ -21,22 +24,27 @@ describe('Router', () => {
         .use('/profile', Profile)
         .start();
 
-    it('Смена роута', () => {
+    it('changes route', async () => {
         router.go('/');
+        await waitForRoute();
         router.go('/about');
+        await waitForRoute();
 
         expect(router.history.length).to.eq(3);
     });
 
-    it('Получение пути', () => {
+    it('gets current path', async () => {
         router.go('/profile');
+        await waitForRoute();
 
         const { pathname } = router.currentRoute || {};
 
         expect(pathname).to.eq('/profile');
     });
 
-    it('Вызов onRoute', () => {
+    it('calls onRoute for protected routes', async () => {
+        await waitForRoute();
+
         expect(callbackCounter).to.eq(3);
     });
 });

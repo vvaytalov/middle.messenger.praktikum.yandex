@@ -1,14 +1,17 @@
 import Route from './Route';
 import Block from './Block';
 
+type TRouteCallback = () => boolean | void | Promise<boolean | void>;
+
 export default class Router {
     public routes: Route[];
     public history: History;
     private _currentRoute: Route | null;
     private _rootQuery: string;
     private _pathnames: string[];
-    private _onRouteCallback: () => void;
+    private _onRouteCallback: TRouteCallback;
     private _unprotectedPaths: `/${string}`[];
+    private _routeRequestId: number;
     static __instance: Router;
 
     constructor(rootQuery: string) {
@@ -23,6 +26,7 @@ export default class Router {
         this._currentRoute = null;
         this._rootQuery = rootQuery;
         this._onRouteCallback = () => {};
+        this._routeRequestId = 0;
 
         Router.__instance = this;
     }
@@ -51,18 +55,35 @@ export default class Router {
     public start() {
         window.onpopstate = () => {
             const pathname = this._hasRoute(window.location.pathname);
-            this._onRoute(pathname);
+            void this._onRoute(pathname);
         };
 
         const pathname = this._hasRoute(window.location.pathname);
-        this._onRoute(pathname);
+        void this._onRoute(pathname);
     }
 
-    private _onRoute(pathname: string) {
+    private async _onRoute(pathname: string) {
         const route = this.getRoute(pathname);
+        const routeRequestId = this._routeRequestId + 1;
+        this._routeRequestId = routeRequestId;
 
         if (!route) {
             return;
+        }
+
+        if (!this._unprotectedPaths.includes(pathname as `/${string}`)) {
+            try {
+                const canRender = await this._onRouteCallback();
+                if (
+                    routeRequestId !== this._routeRequestId
+                    || canRender === false
+                ) {
+                    return;
+                }
+            } catch {
+                this.go('/sign-in');
+                return;
+            }
         }
 
         if (this._currentRoute) {
@@ -72,13 +93,9 @@ export default class Router {
         this._currentRoute = route;
 
         route.render();
-
-        if (!this._unprotectedPaths.includes(pathname as `/${string}`)) {
-            this._onRouteCallback();
-        }
     }
 
-    public onRoute(callback: () => void) {
+    public onRoute(callback: TRouteCallback) {
         this._onRouteCallback = callback;
         return this;
     }
@@ -90,7 +107,7 @@ export default class Router {
 
     public go(pathname: string) {
         this.history.pushState({}, '', pathname);
-        this._onRoute(pathname);
+        void this._onRoute(pathname);
     }
 
     public back() {
