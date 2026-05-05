@@ -31,8 +31,6 @@ import { store } from '../../../store';
 import ImageFile from '../../../components/imageFile/imageFile';
 import { IUser } from '../../../types/models';
 export default class Profile extends Block {
-    private _unsubscribe: (() => void) | undefined;
-
     constructor() {
         super('main', {
             className: 'profile',
@@ -166,6 +164,7 @@ export default class Profile extends Block {
         registerFormElements(this.props);
         this.validate = this.validate.bind(this);
         this.setField = this.setField.bind(this);
+        this.setField(store.state.currentUser);
     }
 
     validate() {
@@ -193,6 +192,18 @@ export default class Profile extends Block {
             return;
         }
 
+        if (Array.isArray(this.props.Input)) {
+            this.props.Input.forEach((input: Block) => {
+                const value = formDate[input.props.name as keyof IUser];
+                input.setProps({
+                    value:
+                        value === null || value === undefined
+                            ? ''
+                            : String(value),
+                });
+            });
+        }
+
         const formElement: HTMLFormElement | null =
             this.getContent().querySelector(`.${this.props.className}`);
 
@@ -213,12 +224,12 @@ export default class Profile extends Block {
     }
 
     public componentDidMount(): void {
-        this._unsubscribe = store.subscribe((state) => {
+        (this as any)._unsubscribe = store.subscribe((state) => {
             const currentUser = state.currentUser;
 
-            queueMicrotask(() => {
+            window.setTimeout(() => {
                 this.setField(currentUser);
-            });
+            }, 0);
 
             this.props.AvatarChoose.setProps({
                 src: currentUser?.avatar
@@ -232,9 +243,9 @@ export default class Profile extends Block {
     }
 
     public onDestroy(): void {
-        if (this._unsubscribe) {
-            this._unsubscribe();
-            this._unsubscribe = undefined;
+        if ((this as any)._unsubscribe) {
+            (this as any)._unsubscribe();
+            (this as any)._unsubscribe = null;
         }
     }
 
